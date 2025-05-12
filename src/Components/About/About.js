@@ -1,5 +1,5 @@
 import React from 'react'
-import Fshirt from '../../Image/black-red.png' 
+import Fshirt from '../../Image/SportShirt.png' 
 // import Info from '../../Help'
 
 function About() {

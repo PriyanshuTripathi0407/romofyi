@@ -16,7 +16,6 @@ function Register() {
 
   const postData = async (formData) => {
     const response = await PostData(formData);
-    // console.log(response, "+++++++");
     if (formData) {
       alert("Registered Successfully!! ")
     }

@@ -13,3 +13,7 @@ export const PutData = (id,data)=>{
     return axios.put(`${API_BASE_URL}/register/${id}`,data);
 }
  
+export const DeleteData = (id,data)=>{
+    return axios.put(`${API_BASE_URL}/register/${id}`,data);
+}
+ 

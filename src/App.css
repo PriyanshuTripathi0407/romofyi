@@ -235,6 +235,13 @@
   cursor: pointer;
 }
 
+.productad img{
+  width: 100%;
+  height: 20%;
+  object-fit: contain;  
+  border-radius: 10px;
+}
+
 
 
 .productad h3 {

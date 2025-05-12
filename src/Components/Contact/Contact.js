@@ -1,5 +1,5 @@
 import React from 'react'
-import Banner from '../../Image/ban_img.png'
+import Banner from '../../Image/BannerGirl.png'
 
 function Contact() {
   function Submit(){

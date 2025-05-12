@@ -6,7 +6,7 @@ import twitter from '../../Image/twitter.png'
 import linkedin from '../../Image/in.png'
 import insta from '../../Image/insta.png'
 import email from '../../Image/email.png'
-import romo from '../../Image/logo.png'
+import romo from '../../Image/romofyilogo.png'
 import bag from '../../Image/shoppingbag.png'
 import search from '../../Image/search.png'
 
