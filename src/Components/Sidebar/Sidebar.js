@@ -48,7 +48,7 @@ function Sidebar() {
     return (
         <div className='adminDraw'>         
             <div className='draw'>
-            <h1>Welcome to Admin Dashboard</h1>
+            <h1>Welcome to User Dashboard</h1>
                 {/* Drawer with placement from the left */}
                 <Drawer
                     title="Dashboard"

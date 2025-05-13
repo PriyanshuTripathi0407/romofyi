@@ -1,13 +1,18 @@
-import { Button } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import UserInfo from '../../Components/Header/UserInfo';
+import Sidebar from '../../Components/Sidebar/Sidebar';
+
 const Dashboard = () => {
   return (
-    <div className='Dashboard'>
-      <h1>e-COMMERCE DASHBOARD</h1>
-      <ul>
-        <Link to='custom'><Button> Register </Button> </Link>
-      </ul>
+    <div className='container-fluid' >
+      <div className='row'>
+          <UserInfo />
+        <div className='col-md-4'>
+        </div>
+        <div className='col-md-8'>
+
+        </div>
+      </div>
+
     </div>
   )
 }

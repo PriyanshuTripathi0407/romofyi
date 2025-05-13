@@ -3,10 +3,11 @@ import './Cart.css';
 
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
+    console.log(cartProduct,"This is cartproduct of Cart.js")
     const handleIncrease = (id) => {
         setCartProduct((prevCart) =>
             prevCart.map((item) =>
-                item.id === id ? { ...item, count: (item.count || 1) + 1 } : item
+                item.product_id === id ? { ...item, count: (item.count || 1) + 1 } : item
             )
         );
     };
@@ -14,7 +15,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
     const handleDecrease = (id) => {
         setCartProduct((prevCart) =>
             prevCart.map((item) =>
-                item.id === id && (item.count || 1) > 1
+                item.product_id === id && (item.count || 1) > 1
                     ? { ...item, count: (item.count || 1) - 1 }
                     : item
             )
@@ -22,7 +23,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
     };
 
     const handleDelete = (id) => {
-        const filterItem = cartProduct.filter((item) => item.id !== id);
+        const filterItem = cartProduct.filter((item) => item.product_id !== id);
         setCartProduct(filterItem);
     };
 
@@ -31,11 +32,11 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
         if (numericValue >= 1) {
             setCartProduct((prevCart) =>
                 prevCart.map((item) =>
-                    item.id === id ? { ...item, count: numericValue } : item
+                    item.product_id === id ? { ...item, count: numericValue } : item
                 )
             );
         }
-    };
+    };  
 
     return (
         <div className='addCart'>
@@ -59,33 +60,33 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                         </thead>
                         <tbody>
                             {cartProduct.map((i, index) => (
-                                <tr key={i.id}>
+                                <tr key={i.product_id}>
                                     <td>{index + 1}</td>
-                                    <td>{i.id}</td>
+                                    <td>{i.product_id}</td>
                                     <td>
                                         <div className='productShow'>
-                                            <img src={i.image} alt='Product' />
-                                            <div>{i.tittle}</div>
+                                            <img src={i.product_image} alt='Product' />
+                                            <div>{i.product_name}</div>
                                         </div>
                                     </td>
-                                    <td>&#8377;{i.price}</td>
+                                    <td>&#8377;{i.product_price}</td>
                                     <td>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <button onClick={() => handleDecrease(i.id)}>-</button>
+                                            <button onClick={() => handleDecrease(i.product_id)}>-</button>
                                             <input
                                                 type='number'
                                                 min='1'
                                                 max='20'
                                                 value={i.count || 1}
                                                 onChange={(e) => handleChange(i.id, e.target.value)}
-                                                style={{ width: '50px', margin: '0 5px' }}
+                                                style={{ width: '30px', margin: '0 5px' }}
                                             />
-                                            <button onClick={() => handleIncrease(i.id)}>+</button>
+                                            <button onClick={() => handleIncrease(i.product_id)}>+</button>
                                         </div>
                                     </td>
-                                    <td>&#8377;{(i.count || 1) * i.price}</td>
+                                    <td>&#8377;{(i.count || 1) * i.product_price}</td>
                                     <td>
-                                        <button onClick={() => handleDelete(i.id)}>Delete</button>
+                                        <button onClick={() => handleDelete(i.product_id)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}

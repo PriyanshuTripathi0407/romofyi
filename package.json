@@ -14,6 +14,7 @@
     "animate.css": "^4.1.1",
     "antd": "^5.24.2",
     "axios": "^1.8.4",
+    "bootstrap": "^5.3.6",
     "icons": "^1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

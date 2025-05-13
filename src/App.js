@@ -19,27 +19,37 @@ import Stock from './Components/Product/Stock.js'
 import ProductoftheDay from './Components/Product/ProductoftheDay.js'
 import Login from './Admin/Login.js';
 import Dashboard from './Admin/Dashboard/Dashboard.js';
-import AddToCart from './Components/AddtoCart/AddToCart.js';
+// import AddToCart from './Components/AddtoCart/AddToCart.js';
 import product from './Components/Product/ProductData.js'
+import AddProductData from './Components/Product/AddProductData.js'
 import Cart from './Components/AddtoCart/Cart.js'
 import CustomerRegister from './Admin/Registration/Register.js'
+import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
 
 function App() {
-  const [loginId, setloginId]= useState(false)
+  const [loginId, setloginId] = useState(false)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
+  const [dbData, setdbData]= useState([])
+
+  const handleGetData = async () => {
+    const response = await getData()
+    setdbData(response.data);
+    console.log(response.data, " This is response from db in App.js")
+  }
 
   console.log("Product Id is : ", productId)
   useEffect(() => {
-    const filterProductData = product.filter((product) => product.id === productId);
-    setCartProduct([...cartProduct,...filterProductData])
+    handleGetData()
+    const filterProductData = dbData.filter((product) => product.product_id === productId);
+    setCartProduct([...cartProduct, ...filterProductData])
   }, [productId]);
 
   return (
     (loginId) ?
       <BrowserRouter>
         {/* <Header cartProduct={cartProduct}/> */}
-        <Sidebar />        
+        <Sidebar />
         <Routes>
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/custom' element={<CustomerRegister />}></Route>
@@ -54,8 +64,10 @@ function App() {
           <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
           <Route path='/order' element={<Order />}></Route>
           <Route path='/review' element={<Review />}></Route>
+          <Route path='/addproduct' element={<AddProductData />}></Route>
           <Route path='/stock' element={<Stock products={product} />}></Route>
-          <Route path='/addtoCart' element={<AddToCart />}></Route>
+          
+          {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
           <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
         </Routes>
         <Footer />
@@ -79,7 +91,7 @@ function App() {
             <Route path='/order' element={<Order />}></Route>
             <Route path='/review' element={<Review />}></Route>
             <Route path='/stock' element={<Stock />}></Route>
-            <Route path='/addtoCart' element={<AddToCart />}></Route>
+            {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
             <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
           </Routes>
           <Footer />
