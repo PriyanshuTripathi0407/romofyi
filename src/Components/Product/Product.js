@@ -6,12 +6,12 @@ import Rating from '@mui/material/Rating';
 
 function Product({ setproductId }) {
   const [RegData, setRegData] = useState([])
+
   function handleCart(id) {
     setproductId(id);
-    console.log(id, " This is id")
+    // console.log(id, " This is id")
     // alert(" Added to Cart Successfully !!")
   }
-
   useEffect(() => {
     handleGetData();
   }, [])
@@ -19,8 +19,9 @@ function Product({ setproductId }) {
   const handleGetData = async () => {
     const response = await getData()
     setRegData(response.data);
-    console.log(response.data, " This is response from db in Product.js")
+    // console.log(response.data, " This is response from db in Product.js")
   }
+
 
   function truncateText(text, wordLimit) {
     const words = text.split(' ');
@@ -39,26 +40,33 @@ function Product({ setproductId }) {
               <div key={i.product_id} className='card_container' >
                 <div className='ImgWrapper'>
                   <img src={i.product_image} alt='Image' className='animate__animated animate__flip' />
-                </div> 
-                <div className='info'>
-                  <h4> ID: {i.product_id}</h4>
-                  <h3> Price: &#8377;{i.product_price}</h3>
                 </div>
-                <h2 className='title_name'> {i.product_name}</h2>
+                <div className='info'>
+                  <p> ID: <strong> {i.product_id}</strong></p>
+                  <p> <strong> &#8377;{i.product_price}</strong></p>
+                </div>
+                <h4 className='title_name'> {i.product_name}</h4> 
                 {i.product_tag && i.product_tag.length > 0 ?
                   (i.product_tag.map((tag, index) => (
-                    <span key={tag.id} >
-                      {tag.name}
-                    </span>
+                    <div className='tagname' key={tag.id} >{tag.name}</div>
                   ))
-                ) :
-                (<> </>)}
+                  ) :
+                  (<div > </div>)}
 
-                <p>{truncateText(i.product_description, 30)}<a href='#'>View More</a> </p>
-                <div className='product_info'>
-                  <h4> Rating: {i.product_id}</h4>
-                  <h3> Discount: &#8377;{i.product_price}</h3>
-                </div>
+                <p className='description'>{truncateText(i.product_description, 25)}</p>
+                <button><a href='#'>View More</a> </button> <hr/>
+                <div>
+                  <p style={{ display: 'flex', alignItems: 'center' }}>
+                    <strong>Ratings:</strong>
+                    <Rating
+                      name={`read-only-rating-${i.product_id}`}
+                      value={parseFloat(i.product_rating) || 0}
+                      precision={0.5}
+                      readOnly
+                    />
+                  </p>
+                  <p> <strong>Discount:</strong> <strong>{(parseInt(i.product_price) / 100)}</strong>%</p>
+                </div> <hr/>
                 <button onClick={() => handleCart(i.product_id)}> ADD TO CART</button>
               </div>
             ))}

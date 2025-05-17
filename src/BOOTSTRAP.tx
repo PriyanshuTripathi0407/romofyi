@@ -1,0 +1,139 @@
+/* These are the ready-made classes Bootstrap provides for layout, spacing, display, text, 
+and more — typically used inline in HTML. */
+
+ /* Spacing (Margin & Padding)
+Margin
+html
+Copy
+Edit
+m-0 to m-5         All sides 
+mt-*, mb-*, ml-*, mr-*  Top, Bottom, Left, Right 
+mx-*, my-*        Horizontal, Vertical */
+/* Padding
+html
+Copy
+Edit
+p-0 to p-5         /* All sides 
+pt-*, pb-*, pl-*, pr-*    Top, Bottom, Left, Right 
+px-*, py-*         Horizontal, Vertical */
+/* Auto Margin
+html
+Copy
+Edit
+ml-auto, mr-auto, mx-auto
+📐 2. Sizing
+html
+Copy
+Edit
+w-25, w-50, w-75, w-100, mw-100  /* Widths 
+h-25, h-50, h-75, h-100, mh-100   Heights 
+vw-100, vh-100                   Viewport width/height */
+/* 📦 3. Display Utilities
+html
+Copy
+Edit
+d-none
+d-inline
+d-inline-block
+d-block
+d-grid
+d-flex
+d-inline-flex
+With breakpoints:
+
+html
+Copy
+Edit
+d-sm-none, d-md-block, d-lg-flex, etc.
+🧲 4. Flexbox Utilities
+html
+Copy
+Edit
+d-flex, d-inline-flex
+flex-row, flex-column
+flex-wrap, flex-nowrap
+justify-content-start / center / end / between / around
+align-items-start / center / end / stretch
+align-self-start / center / end / auto
+order-0 to order-5, order-first, order-last
+flex-fill, flex-grow-1, flex-shrink-0
+📊 5. Grid Utilities
+html
+Copy
+Edit
+row-cols-1 to row-cols-6
+g-0 to g-5       Gap spacing  */
+/* col-auto, col, col-1 to col-12
+offset-*, offset-md-*, etc.
+🎨 6. Text Utilities
+html
+Copy
+Edit
+text-start, text-center, text-end
+text-lowercase, text-uppercase, text-capitalize
+font-weight-bold, font-weight-normal, fw-light, fw-semibold
+fst-italic, fst-normal     Font style */
+/* lh-1, lh-sm, lh-base, lh-lg
+text-nowrap, text-truncate, text-break
+Color:
+
+html
+Copy
+Edit
+text-primary, text-secondary, text-success, text-danger, text-warning, text-info, text-light, text-dark, text-muted, text-white, text-body
+🎨 7. Background Utilities
+html
+Copy
+Edit
+bg-primary, bg-secondary, bg-success, bg-danger, bg-warning, bg-info, bg-light, bg-dark, bg-white, bg-transparent
+🧰 8. Position Utilities
+html
+Copy
+Edit
+position-static, position-relative, position-absolute, position-fixed, position-sticky
+top-0, bottom-0, start-0, end-0
+translate-middle, translate-middle-x, translate-middle-y
+🔲 9. Border Utilities
+html
+Copy
+Edit
+border
+border-0, border-top-0, border-end-0, border-bottom-0, border-start-0
+border-primary, border-secondary, etc.
+rounded, rounded-top, rounded-end, rounded-bottom, rounded-start, rounded-circle, rounded-pill
+⬛ 10. Visibility / Overflow / Shadow / Z-Index
+html
+Copy
+Edit
+visible, invisible
+overflow-auto, overflow-hidden, overflow-visible, overflow-scroll
+shadow, shadow-sm, shadow-lg, shadow-none
+z-0 to z-3
+📌 11. Opacity
+html
+Copy
+Edit
+opacity-0, opacity-25, opacity-50, opacity-75, opacity-100
+🔍 12. Interaction / Cursor / Pointer Events
+html
+Copy
+Edit
+pe-none, pe-auto      Pointer events */
+/* user-select-all, user-select-auto, user-select-none
+cursor-pointer, cursor-default, etc.
+📱 13. Responsive Utilities (Prefix with sm, md, lg, xl, xxl)
+html
+Copy
+Edit
+d-none d-sm-block
+m-sm-2, p-md-4
+flex-lg-row, align-items-xl-center
+🛠 14. Helpers and Miscellaneous
+html
+Copy
+Edit
+clearfix
+stretched-link
+ratio-1x1, ratio-16x9
+vh-100, vw-100
+img-fluid, img-thumbnail */

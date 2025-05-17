@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Cart.css';
+import { getData,PostData,PutData,DeleteData } from '../../API/CartAPI/CartAPI';
 
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
+    
 
     console.log(cartProduct,"This is cartproduct of Cart.js")
     const handleIncrease = (id) => {
@@ -46,6 +48,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                 </div>
             ) : (
                 <div>
+
                     <table>
                         <thead>
                             <tr>

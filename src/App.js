@@ -21,7 +21,6 @@ import Login from './Admin/Login.js';
 import Dashboard from './Admin/Dashboard/Dashboard.js';
 // import AddToCart from './Components/AddtoCart/AddToCart.js';
 import product from './Components/Product/ProductData.js'
-import AddProductData from './Components/Product/AddProductData.js'
 import Cart from './Components/AddtoCart/Cart.js'
 import CustomerRegister from './Admin/Registration/Register.js'
 import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
@@ -64,7 +63,6 @@ function App() {
           <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
           <Route path='/order' element={<Order />}></Route>
           <Route path='/review' element={<Review />}></Route>
-          <Route path='/addproduct' element={<AddProductData />}></Route>
           <Route path='/stock' element={<Stock products={product} />}></Route>
           
           {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
