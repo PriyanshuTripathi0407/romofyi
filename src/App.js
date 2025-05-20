@@ -29,7 +29,7 @@ function App() {
   const [loginId, setloginId] = useState(false)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
-  const [dbData, setdbData]= useState([])
+  const [dbData, setdbData] = useState([])
 
   const handleGetData = async () => {
     const response = await getData()
@@ -64,7 +64,7 @@ function App() {
           <Route path='/order' element={<Order />}></Route>
           <Route path='/review' element={<Review />}></Route>
           <Route path='/stock' element={<Stock products={product} />}></Route>
-          
+
           {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
           <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
         </Routes>
@@ -76,6 +76,7 @@ function App() {
           <Header cartProduct={cartProduct} />
           <Routes>
             <Route path='/' element={<Home />}></Route>
+            {/* <Route path='/' element={<Dashboard />}></Route> */}
             <Route path='/cart' element={<Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />}></Route>
             <Route path='/about' element={<About />}></Route>
             <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
