@@ -1,9 +1,23 @@
-.addCart{height: 100vh; margin: 20px;}
-.addCart table{border: 1px solid #000; text-align: center; padding: 0px 5px;}
-.addCart table thead{background-color: lightgray;}
-.addCart table tr td{border: 1px solid lightgray; padding: 2px;}
-.productShow{display: flex;}
+.cartContainer{border: 1px solid black; display: flex;margin: 10px; width: 100%; }
+
+
+.addCart{height: 70vh; margin: 20px; border: 1px solid black; text-align: center;}
+.addCart table{border: none; text-align: center; padding: 0px 5px; margin: 20px;}
+.addCart table tbody tr{border-bottom: 1px solid lightgray;}
+.addCart table thead{background-color: #183661; color: gold;}
+.addCart table tr td{border: none; padding: 2px;width: 100px;}
+.productShow{display: flex; gap: 10px;}
 .productShow img{ height: 30px; width: 30px; }
-
-
-
+.paymentDetails{height: max-content; border: 5px solid gold; margin: 20px 0px;background-color: #183661; color: gold;}
+.paymentDetails .priceInfo .item{ display: flex; justify-content: space-between; padding: 0px 10px;}
+.paymentDetails .priceInfo .item p{margin: 0px;}
+.paymentDetails h1{font-size: 20px; color: gold; padding: 5px 10px; border-bottom: 1px solid gold;}
+.addCart table tr td .productName{width: max-content;}
+.addCart table tr td .cartOperation{display: flex; align-items: center;}
+.addCart table tr td .cartOperation button{border: none; background-color: #183661; color: gold; font-size: 20px; font-weight: bold; height: max-content; padding:  0px 10px;}
+.addCart table tr td .cartOperation input{border: none; background-color: lightgray; outline: none; width: 50px; padding: 0px 0px 0px 10px;}
+.action{background-color: #183661; height: 30px; font-size:2px; width: 30px; border-radius: 50%; color: gold;}
+.action:hover{background-color: gold; color: #183661;}
+.addCart table tr td .cartOperation button:hover{background-color: gold; color: #183661;}
+.productPayment{height: max-content; border: 5px solid gold; margin: 20px 0px;background-color: #183661; color: gold;}
+.productPayment h1{font-size: 20px; padding: 10px;}

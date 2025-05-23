@@ -1,38 +1,65 @@
-import React from 'react'
-import Shoe1 from '../../Image/cshoes1.png'
-import Shoe3 from '../../Image/cshoes3.png'
-import Shoe5 from '../../Image/cshoes5.png'
-import Shirt3 from '../../Image/cshirt3.png'
-import Product from './Product.js'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { getData } from '../../API/ProductAPI/ProductAPI.js';
+import './HomeProduct.css';
+import Rating from '@mui/material/Rating';
 
 function HomeProduct() {
-    const product1 = [
-        { id: 'SH1', image: Shoe1, tittle: 'SKY-BLUE SHOE CARDIGAN', price:'30.00' },
-        { id: 'SH3', image: Shoe3, tittle: 'WHITE-BLACK SHOE CARDIGAN', price: '$30.00' },
-        { id: 'SI4', image: Shirt3, tittle: 'BLUE SHIRT CARDIGAN', price: '$25.00' },
-        { id: 'SH10', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00' }
-      ]
 
-      function Demo(){
-        <Product/>
+  const nav = useNavigate();  
+  const [dbproduct, setProduct] = useState([]);
+
+  useEffect(() => {
+    handleGetData();
+  }, [])
+
+  const handleGetData = async () => {
+    const response = await getData()
+    setProduct(response.data);
+    console.log(response.data, " This is response from db in Category.js")
+  }
+
+  const uniqueByCategory = (arr) => {
+    const categoryMap = new Map();
+    for (const item of arr) {
+      if (!categoryMap.has(item.product_category)) {
+        categoryMap.set(item.product_category, item);
       }
+    }
+    return Array.from(categoryMap.values());
+  };
+
+  // Assuming your array is named 'productData'
+  const productData = uniqueByCategory(dbproduct);
+  console.log(productData, " This is filtered Data in Category.js")
+
+
+  const showProductDetails = (e) => {
+    nav('/productDetails', { state: e }, { replace: true })
+  }
+
 
   return (
-    <div className='' >
-        <h1 style={{border:'12px solid white',borderBottomColor:' gold'}}>Featured Product</h1>
-        <div style={{ display: 'inline-flex', columnGap: '25px', marginLeft:'120px' }}>
-          {
-            product1.map(i => (
-              <div className='productad' key={i.id} onClick={Demo}>
-                <img src={i.image} alt='' />
-                <h2> {i.tittle}</h2>
-                <h4> ID: {i.id}</h4>
-                <h3> Price: {i.price}</h3>
-              </div>
-            ))
-          }
-        </div>
-      
+    <div className='homeProduct' >
+      <h1>Featured Product</h1>
+      <div className='product'>
+        {
+          productData.map(i => (
+            <div className='productad' key={i.product_id} onClick={() => showProductDetails(i)}>
+              <img src={i.product_image} alt='' />
+              {/* <p>{i.product_tag}</p> */}
+              <p> <Rating name="half-rating-read" defaultValue={i.product_rating} precision={0.5} readOnly /></p>
+              <p className='productName'> {i.product_name.toUpperCase()}</p>
+              {/* {i.product_tag.map((i)=>(
+                  <p>{i}</p>
+                ))} */}
+
+              <p className='productPrice'> &#8377;{parseInt(i.product_price)}</p>
+            </div>
+          ))
+        }
+      </div>
+
     </div>
   )
 }

@@ -3,14 +3,16 @@ import 'animate.css';
 import { getData, PostData, PutData, DeleteData } from '../../API/ProductAPI/ProductAPI.js'
 import './Product.css'
 import Rating from '@mui/material/Rating';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function Product({ setproductId }) {
+  const message= ()=> toast(" Added to Cart Successfully")
   const [RegData, setRegData] = useState([])
 
-  function handleCart(id) {
+  function handleCart(id,pName) {
     setproductId(id);
-    // console.log(id, " This is id")
-    // alert(" Added to Cart Successfully !!")
+    message();
   }
   useEffect(() => {
     handleGetData();
@@ -32,6 +34,7 @@ function Product({ setproductId }) {
 
   return (
     <div className='row'>
+      <ToastContainer/>
       <h1>Products of the Day </h1> <hr />
       <div className='product_container'>
         <div className='card'>
@@ -67,7 +70,8 @@ function Product({ setproductId }) {
 
                 <p className='description'>{truncateText(i.product_description, 25)}</p>
                 <button><a href='#'>View More</a> </button> <hr/>
-                <button onClick={() => handleCart(i.product_id)}> ADD TO CART</button>
+                <button onClick={()=> handleCart(i.product_id)} > ADD TO CART</button>
+            
               </div>
             ))}
         </div>

@@ -1,0 +1,7 @@
+.loginContainer{display:flex; justify-content:center;align-items: center; text-align: center; margin: 0px; background-color: none; padding: 10px;}
+.formContainer{text-align:center;background-color: goldenrod;font-weight: 700; color:darkblue; width:max-content; text-align: center;  border-radius: 15px;}
+.formContainer h1{ margin: 0px; padding:10px; font-size: 20px !important; font-weight: 700; background-color: #183661; color: gold;border-radius: 15px;}
+.formContainer .item{display: flex; justify-content:left; align-items: center; padding: 0 20px; margin: 0px;}
+.submitbtn{margin-bottom: 30px; font-weight: 600;}
+.info .reglink{color:steelblue; }
+/* .info a{text-decoration: none;} */

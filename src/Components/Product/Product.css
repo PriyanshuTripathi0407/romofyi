@@ -1,4 +1,4 @@
-hr{background-color: gold; height: 5px;}
+hr{padding: 0px 0px; margin: 0px 0px;}
 .product_container{width: 100%; background-color: #fff; display: flex; justify-content: start; align-items: center; flex-wrap: wrap; height: auto; flex-direction: row;}
 .product_container h1{color: yellow; font-size: 30px; font-weight: 800;}
 .card{display:flex; justify-content:center; flex-wrap:wrap; flex-direction: row !important;  }

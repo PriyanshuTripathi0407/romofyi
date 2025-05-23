@@ -1,104 +1,119 @@
-import React from 'react'
-import { useNavigate,useLocation } from 'react-router-dom'
-import Shoe1 from '../../Image/cshoes1.png'
-import Shoe2 from '../../Image/cshoes2.png'
-import Shoe3 from '../../Image/cshoes3.png'
-import Shoe4 from '../../Image/cshoes4.png'
-import Shoe5 from '../../Image/cshoes5.png'
-import Shirt1 from '../../Image/cshirt1.png'
-import Shirt2 from '../../Image/cshirt2.png'
-import Shirt3 from '../../Image/cshirt3.png'
-import Shirt4 from '../../Image/cshirt4.png'
-import Shirt5 from '../../Image/cshirt5.png'
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom'
+import { getData } from '../../API/ProductAPI/ProductAPI.js'
+import './ShowProductDetails.css'
+import Rating from '@mui/material/Rating';
+import SellIcon from '@mui/icons-material/Sell';
+import DescriptionIcon from '@mui/icons-material/Description';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 
-function ShowProductDetails() {
+
+function ShowProductDetails({ setproductId }) {
   const navigate = useNavigate()
   const locate = useLocation()
-  const product = [
-    { id: 'SH1', image: Shoe1, tittle: 'SKY-BLUE SHOE CARDIGAN', price: '$30.00', type: 'Shoe', },
-    { id: 'SI2', image: Shirt2, tittle: 'PURPLE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt', },
-    { id: 'SH3', image: Shoe3, tittle: 'WHITE-BLACK SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI4', image: Shirt3, tittle: 'BLUE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH5', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SH6', image: Shoe3, tittle: 'WHITE-BLACK SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SH7', image: Shoe1, tittle: 'SKY-BLUE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SH8', image: Shoe4, tittle: 'SHORT BOOT CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SH9', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SH10', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI1', image: Shirt1, tittle: 'GREEN SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH2', image: Shoe2, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI3', image: Shirt5, tittle: 'WHITE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH4', image: Shoe4, tittle: 'SHORT BOOT CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI5', image: Shirt1, tittle: 'GREEN SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI6', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI7', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI8', image: Shirt5, tittle: 'WHITE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI9', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI10', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH1', image: Shoe1, tittle: 'SKY-BLUE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI2', image: Shirt2, tittle: 'PURPLE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH3', image: Shoe3, tittle: 'WHITE-BLACK SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI4', image: Shirt3, tittle: 'BLUE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH5', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI6', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH7', image: Shoe1, tittle: 'SKY-BLUE SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI8', image: Shirt5, tittle: 'WHITE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH9', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: '' },
-    { id: 'SH10', image: Shoe5, tittle: 'BLACK-WHITE SHOE CARDIGAN', price: '$30.00', type: '' },
-    { id: 'SI1', image: Shirt1, tittle: 'GREEN SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI2', image: Shirt2, tittle: 'PURPLE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI  3', image: Shirt5, tittle: 'WHITE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI4', image: Shirt3, tittle: 'BLUE SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI5', image: Shirt1, tittle: 'GREEN SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH6', image: Shoe3, tittle: 'WHITE-BLACK SHOE CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI7', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SH8', image: Shoe4, tittle: 'SHORT BOOT CARDIGAN', price: '$30.00', type: 'Shoe' },
-    { id: 'SI9', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' },
-    { id: 'SI10', image: Shirt4, tittle: 'RED SHIRT CARDIGAN', price: '$25.00', type: 'Shirt' }
-  ]
+  const [dbproduct, setProduct] = useState([])
+  useEffect(() => {
+    handleGetData();
+  }, [])
 
-  const findProduct = product.find(i => (i.id === locate.state.id))
-  const filterProduct = product.filter(i => (i.type.toLowerCase().includes(locate.state.type.toLowerCase())))
-
-  function send(e){
-    navigate('/productDetails',{state:e},{ replace: true })
-    // console.log(e)
+  const handleGetData = async () => {
+    const response = await getData()
+    setProduct(response.data);
+    console.log(response.data, " This is response from db in Show Product Detail.js")
   }
+
+  function handleCart(id) {
+    alert("Your product is added to cart successfully !! ")
+    setproductId(id);
+  }
+
+  function handleNext() {
+    navigate('/product');
+  }
+
+  const findProduct = locate.state
+  console.log(findProduct, " This is findProduct in Show Product Detail.js")
+  // const filterProduct = dbproduct.filter(i => (i.type.toLowerCase().includes(locate.state.type.toLowerCase())))
+
+  // function send(e) {
+  //   navigate('/productDetails', {state: e}, { replace: true })
+  //   // console.log(e)
+  // }
 
   return (
     <div>
-      <div className='showproduct'>
-        <div>
-          <img src={findProduct.image}></img>
-        </div>
-        <div style={{ textAlign: 'left' }}>
-          <p> <b> ID: </b> {findProduct.id}</p>
-          <p> <b> Product: </b> {findProduct.tittle}</p>
-          <p> <b> Price: </b>{findProduct.price}</p>
-          <p> <b> Details: </b>This is Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br /> Reiciendis dolore similique officia corporis veniam modi rerum iste.<br /> Dolorum ut provident est rem qui quibusdam, neque unde,id iure <br /> laboriosam quo tempore asperiores ad libero sed voluptatum,nesciunt quae <br /> modi impedit. Est, aut iusto error amet assumenda inventore! <br/> 
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit.<br /> Reiciendis dolore similique officia corporis veniam modi rerum iste.<br /> Dolorum ut provident est rem qui quibusdam, neque unde,id iure <br /> laboriosam quo tempore asperiores ad libero sed voluptatum,nesciunt quae </p>
-          <div style={{ display: 'flex', columnGap: '20px' }}>
-            <div>
-              <button>ADD TO CART</button>
-              <button>BUY NOW</button>
-            </div>
-            <div>
-              <button>Apply COUPON</button>
-              <button>NEXT</button>
-            </div>
-
+      <div className='showproductHead'>
+        <h1><span className='txt-back'>{findProduct.product_name} </span> Product Details</h1>
+      </div>
+      <div className='showproductDetail'>
+        <div className='showproductleft'>
+          <div className='showproductImage'>
+            <img src={findProduct.product_image} alt='Product Image' className='w-100' />
           </div>
-
+          <div className='showOffer'>
+            <div>
+              <button onClick={() => handleCart(findProduct.product_id)}> <ShoppingCartOutlinedIcon style={{ color: 'aqua' }} /> ADD TO CART</button>
+              <button><SellIcon style={{ color: 'orangered' }} /> Apply Coupons</button>
+            </div>
+          </div>
+        </div>
+        <div className='showproductInfo'>
+          <div className='item'>
+            <p><b>Product ID:</b></p>
+            <p>This product is uniquely identified by the ID <span className='txt-light'> <b>{findProduct.product_id}</b> </span>, which helps in tracking and managing inventory.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Product Name:</b></p>
+            <p>You are viewing <span className='txt-light'><b>{findProduct.product_name}</b> </span>, a top-rated item in our collection known for its quality and performance.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Price:<CreditCardIcon style={{ color: 'goldenrod' }} /> </b></p>
+            <p>This item is available for just <span className='txt-light'> <b>{findProduct.product_price}</b> </span>. It offers great value for the features it provides.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Description: <DescriptionIcon style={{ color: 'violet' }} /> </b></p>
+            <p>{findProduct.product_description} <br />This description gives an overview of what you can expect from the product in terms of usability, style, and build quality.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Brand: <SellIcon style={{ color: 'green' }} /></b></p>
+            <p>Manufactured by <span className='txt-light'>  <b>{findProduct.product_brand || "a reputed brand"}</b> </span>, ensuring reliability and customer satisfaction.</p>
+          </div><hr />
+          <div className='item'>
+            <p><b>Category:</b></p>
+            <p>This product falls under the <b>{findProduct.product_category || "general merchandise"}</b> category, making it suitable for a variety of use cases.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Availability:</b></p>
+            <p>{findProduct.in_stock ? "This product is currently in stock and ready to be shipped." : "Sorry, this product is currently out of stock. Please check back soon."}</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Customer Ratings: <Rating name="half-rating-read" defaultValue={findProduct.product_rating} precision={0.5} readOnly /></b></p>
+            <p>Rated <b>{findProduct.product_rating || "N/A"}</b> by our customers, reflecting the overall satisfaction and experience with this item.</p>
+          </div> <hr />
+          <div className='item'>
+            <p><b>Shipping Info:</b></p>
+            <p>{findProduct.shipping_info || "Standard shipping available. Expected delivery within 3-5 business days."}</p>
+          </div>
         </div>
       </div>
 
+      {/* Action Buttons */}
 
-      <div className='product'>
+      <div className='showOffer'>
+        <div>
+          <button><ShoppingBagOutlinedIcon style={{ color: 'orange' }} /> BUY NOW</button>
+          <button onClick={() => handleNext()}>CONTINUE SHOPPING <EastOutlinedIcon style={{ color: 'yellowgreen' }} /></button>
+        </div>
+      </div>
+      {/* <div className='product'>
         <h1 style={{ textAlign: 'left' }}>Recommended Products </h1>
         <div style={{ display: 'flex', flexWrap: 'wrap', marginLeft: '70px', columnGap: '60px', rowGap: '35px' }} >
           {
             filterProduct.map(i => (
-              <div className='productad' onClick={()=>send(i)}>
+              <div className='productad' onClick={() => send(i)}>
                 <img src={i.image} alt='' />
                 <h2> {i.tittle}</h2>
                 <h4> ID: {i.id}</h4>
@@ -108,7 +123,7 @@ function ShowProductDetails() {
             ))
           }
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

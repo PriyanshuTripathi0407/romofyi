@@ -1,0 +1,13 @@
+.showproductDetail{background-color: #fff; height: 100vh; border: 10px solid gold; display: flex; justify-content: center; margin: 15px 10px; align-items: center; padding:15px; width: 100vw;}
+.showproductDetail .showproductleft{border: 15px solid #f1eded; height: max-content;width: 80vw; background-color: #fff; display: flex; align-items: center; flex-direction: column; padding: 10px 10px;}
+.showproductDetail .showproductleft .showproductImage{height: 400px; border: 1px solid #183661;}
+.showproductDetail .showproductleft .showproductImage img{ height: 100%; width: 100%; object-fit: contain;}
+.showproductDetail .showproductInfo{border-top: 10px solid #f1eded; border-bottom: 10px solid #f1eded; height:85vh; text-align: center; overflow: scroll; padding: 20px 10px;}
+
+.showproductDetail .showproductInfo .item{padding: 15px 20px; display: flex;align-items:start; justify-content:left; gap: 50px; text-align: left;}
+.txt-back{background-color: lightblue; padding: 0px 10px; border-radius: 20px;}
+.txt-light{background-color:gold; color:black !important; padding: 5px 10px;  border-radius :8px;font-weight:bold;}
+.showproductHead h1{text-align: center; color: #183661; height: 60px;padding: 10px 0px;margin: 5px 0px; font-weight:900;}
+.showOffer{display: flex; justify-content: center; align-items: center; height: 50px; flex-wrap: wrap; }
+.showOffer button{margin: 5px;border: none; outline: none; background-color: #183661; color: yellow; font-weight: bold; height: 40px; padding: 5px 10px;border-radius: 10px;}
+

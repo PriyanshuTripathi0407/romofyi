@@ -82,9 +82,9 @@ function App() {
             <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
             <Route path='/fashion' element={<Fashion />}></Route>
             <Route path='/shirt' element={<Shirt />}></Route>
-            <Route path='/news' element={<News />}></Route>
+            <Route path='/ne1s' element={<News />}></Route>
             <Route path='/contact' element={<Contact />}></Route>
-            <Route path='/productDetails' element={<ShowProductDetails />}></Route>
+            <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId}/>}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
             <Route path='/order' element={<Order />}></Route>
