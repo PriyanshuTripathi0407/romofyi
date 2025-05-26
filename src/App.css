@@ -6,20 +6,7 @@
 
 
 
-.head2 { text-align: center; padding: 0 20px; background-color: whitesmoke;  /* height: 40px; */ display: flex;  align-items: center;  justify-content: space-between;  font-size: 14px;  font-family: sans-serif;}
 
-.head2 ul {  display: flex;  justify-content: space-between;  align-items: center;  column-gap: 20px;  list-style: none;  cursor: pointer;  border: 1px solid black;  padding: 0px 20px;}
-
-.head2 button {  background-color: #183661;  width: max-content;  color: white;  border: 1px solid #183661;padding: 2px 10px;  border-radius: 40px;  font-size: 15px;  cursor: pointer;}
-
-.head3 {
-  height: 60px;
-  background-color: #183661;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 20px;
-}
 
 .inp {
   height: 40px;
@@ -32,25 +19,6 @@
 }
 
 
-
-.head3 ul,
-.head3 ul li {
-  display: flex;
-  column-gap: 80px;
-  list-style: none;
-  color: gold;
-  /* text-decoration:none; */
-}
-
-.head3 a {
-  text-decoration: none;
-}
-
-.head3 ul li:hover {
-  cursor: pointer;
-  color: white;
-  transition: all 0.2s;
-}
 
 .inp input {
   padding: 10px 20px;
@@ -126,16 +94,6 @@
   border-radius: 40px;
 }
 
-.advertise {
-  padding-top: 20px;
-  background-color: #183661;
-  height: 200px;
-  border: 8px solid gold;
-  padding-left: 0px;
-  width: 250px;
-  text-align: center;
-  cursor: pointer;
-}
 
 .Dashboard{height: 60vh; text-align: center;}
 .Dashboard h1{font-size: 72px;
@@ -334,15 +292,7 @@
 
 /* From Uiverse.io by ammarsaa */
 .form {
-  margin-left: 10px;
-  text-align: left;
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: #183661;
-  border: 12px solid gold;
-  color: gold;
-  width: 400px;
+  
 }
 
 .form button {
@@ -351,45 +301,20 @@
 }
 
 .adv {
-  margin-top: 20px;
-  padding-top: 20px;
-  background-color: white;
-  height: 680px;
-  border: 8px solid gold;
-  padding-left: 0px;
-  width: 1000px;
-  text-align: center;
-  cursor: pointer;
-  display: flex;
-  column-gap: 10px;
+
 }
 
 .adv h1 {
-  text-align: center;
-  font-family: cursive;
-  font-size: 100px;
-  font-size: 9999;
-  color: #183661;
-  background-color: gold;
-  border: 2px solid gold;
+
 }
 
 .adv p {
-  margin-top: -15px;
-  text-align: left;
-  margin-left: 15px;
-  font-family: cursive;
-  font-size: 20px;
+ 
 }
 
 
 .title {
-  margin-top: 5px;
-  font-size: 40px;
-  font-weight: 900;
-  text-align: center;
-  color: #183661;
-  text-shadow: 2px 2px #fff;
+
 }
 
 .flex {
@@ -408,26 +333,12 @@
 }
 
 .form input {
-  background-color: transparent;
-  color: gold;
-  padding: 20px 05px 05px 10px;
-  border: 1px solid #fff;
-  border-radius: 10px;
-  width: 300px;
 
 }
 
 
 .submit {
-  border: none;
-  outline: none;
-  padding: 10px;
-  border-radius: 10px;
-  color: #183661;
-  font-size: 16px;
-  font-weight: 600;
-  transform: .3s ease;
-  background-color: gold;
+ 
 }
 
 .submit:hover {

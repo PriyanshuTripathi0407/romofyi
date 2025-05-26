@@ -1,8 +1,7 @@
-hr{padding: 0px 0px; margin: 0px 0px;}
 .product_container{width: 100%; background-color: #fff; display: flex; justify-content: start; align-items: center; flex-wrap: wrap; height: auto; flex-direction: row;}
 .product_container h1{color: yellow; font-size: 30px; font-weight: 800;}
 .card{display:flex; justify-content:center; flex-wrap:wrap; flex-direction: row !important;  }
-.card_container{height: auto; width: 20%; border-radius: 10px; background-color: #fff; text-align: center; box-shadow: 2px 2px 10px gold, -2px -2px 10px gold; margin: 20px; position: relative; padding-bottom: 20px; }
+.card_container{height: auto; width: 30%; border-radius: 10px; background-color: #fff; text-align: center; box-shadow: 2px 2px 10px gold, -2px -2px 10px gold; margin: 15px; position: relative; padding-bottom: 20px; }
 .ImgWrapper{  padding: 5px; background-color: #fff; border-radius: 10px;margin: 10px 10px;}
 .ImgWrapper img{height: 150px; width: 150px;object-fit: contain;}
 .card_container .info{display: flex; justify-content: space-between; background-color: gold;}
@@ -16,3 +15,9 @@ hr{padding: 0px 0px; margin: 0px 0px;}
 .card_container .description{font-size: 14px; font-weight: 600; }  
 .card button{border: none; outline: none; background-color: #046c7a; color: gold; height: 30px; padding: 5px 10px; border-radius: 10px; font-weight: 600; }
 .card button a{text-decoration: none; color: white;}
+.filtercontainer p{font-weight: bold; margin: 0px;}
+.filtercontainer p:hover{cursor: pointer ; transition: all 0.3 ease-in-out;}
+.filtercontainer ul{list-style: none; margin: 0px; }
+.filtercontainer ul li{margin: 2px;text-align: center; color: #183661; border: 1px solid gold; border-radius: 10px; padding: 2px;}
+.filtercontainer ul li:hover{background-color: #183661; color: gold; cursor: pointer;}
+.filtercontainer .filterby{margin-bottom:20px; color: #183661; background-color: gold;}

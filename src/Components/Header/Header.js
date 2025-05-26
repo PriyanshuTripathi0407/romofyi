@@ -1,69 +1,52 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import '../../App.css'
-import fb from '../../Image/fb.png' 
-import twitter from '../../Image/twitter.png'
-import linkedin from '../../Image/in.png'
-import insta from '../../Image/insta.png'
-import email from '../../Image/email.png'
+import './Header.css'
 import romo from '../../Image/romofyilogo.png'
 import bag from '../../Image/shoppingbag.png'
-import search from '../../Image/search.png'
+import XIcon from '@mui/icons-material/X';
+import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
+import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
+export default function Header({ cartProduct }) {
 
-function Header({cartProduct}) {
-    const nav = useNavigate();
-    function send(e) {
-        nav('/login',{ replace: true });
-    }
     return (
-        <div>
-
+       
             <div className='head2'>
-                <div>
-                    <ul >
-                        <li> <img src={email} alt='' /> </li>
-                        <li><img src={fb} alt=''></img></li>
-                        <li><img src={twitter} alt=''></img></li>
-                        <li><img src={linkedin} alt=''></img></li>
-                        <li><img src={insta} alt=''></img></li>
-                    </ul>
-                </div>
+
                 <div>
                     <Link to='/' > <img src={romo} alt=''></img> </Link>
                 </div>
-                <div >
-                    <img src={bag} alt=''></img>
-                    <span> {cartProduct.count} </span>
-                </div>
-                <div>
-                    <Link to='/login' > <button>Login</button>  </Link>
-                </div>
-                <div>
-                    <Link to='/register' > <button>Register</button>  </Link>
-                </div>
-            </div>
+                <ul >
+                    <li> <MailOutlineOutlinedIcon fontSize='small' /> </li>
+                    <li><FacebookOutlinedIcon fontSize='small' /></li>
+                    <li><XIcon fontSize='small' /></li>
+                    <li><LinkedInIcon fontSize='small' /></li>
+                    <li><InstagramIcon fontSize='small' /></li>
+                </ul>
+               
 
-            <div className='head3'>
-                <div>
-                    <ul>
-                        <Link to='/' > <li>HOME</li>  </Link>
-                        <Link to='/cart'> <li>CART</li>  </Link>
-                        <Link to='/product' > <li>PRODUCTS</li>  </Link>
-                        <Link to='/fashion' > <li>FASHION</li>  </Link>
-                        <Link to='/news' > <li>NEWS</li>  </Link>
-                        <Link to='/contact' > <li>CONTACT</li>  </Link>
-
+                {/* <div className='head3'>
+                    <ul className='navbar-menu'>
+                        <Link to='/' > <li><HomeOutlinedIcon/> HOME</li>  </Link>
+                        <Link to='/product' > <li><WidgetsIcon/> PRODUCTS</li>  </Link>
+                        <Link to='/fashion' > <li> <DiamondIcon/> FASHION</li>  </Link>
+                        <Link to='/contact' > <li><ContactSupportIcon/> CONTACT</li>  </Link>
+                        <Link to='/news' > <li> <NewspaperIcon/> NEWS</li>  </Link>
+                        <Link to='/login' > <li><AccountCircleIcon/> LOGIN</li>  </Link>
+                        <Link to='/register' > <li><HowToRegOutlinedIcon/> REGISTRATION</li>  </Link>
                     </ul>
-                </div>
-                <div className='inp'>
-                    <input type='text' placeholder='Search here...' />
-                    <img src={search} alt='' />
-                </div>
+                </div> */}
             </div>
 
-        </div>
+        
     )
 }
 
-export default Header
+
+
+
+
+
+

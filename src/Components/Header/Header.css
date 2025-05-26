@@ -1,0 +1,14 @@
+
+.head2 { text-align: center; background-color: whitesmoke;  display: flex;  align-items: center;  justify-content: space-around;  font-size: 14px; padding:0px 10px;}
+
+.head2 ul { display: flex;  justify-content: space-between;  align-items: center;  column-gap: 40px;  list-style: none;  cursor: pointer; margin: 0px;}
+
+.head2 ul li svg{ color: #183661;}
+.head2 ul li svg:hover{transform: scale(1.2); color: gold; background-color: #183661; border-radius:10px;}
+
+.head3 a { text-decoration: none;}
+.head3 .navbar-menu {background-color: #183661; display: flex; justify-content: space-between; align-items: center; list-style: none; font-size: 18px; padding: 5px 20px; margin: 0px; }
+
+.head3 .navbar-menu li {color: gold; display: flex; align-items: center; gap: 4px; cursor: pointer;}
+
+.head3 .navbar-menu li:hover{color:white; transition: all 0.2s;}

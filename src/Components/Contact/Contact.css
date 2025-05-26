@@ -1,0 +1,12 @@
+.contactContainer{display:flex; justify-content: space-between;align-items: center; }
+.contactContainer .formContainer{margin: 10px;text-align: left; padding: 20px; border-radius:20px; background-color: #183661; border: 12px solid gold; color: gold; width: 30%;}
+.contactContainer .formContainer .title{ margin-top: 5px; font-size: 40px; font-weight: 900; text-align: center;  color: #183661; text-shadow: 2px 2px 3px gold, -2px -2px gold;}
+.contactContainer .formContainer input{background-color: transparent; color: gold; padding:5px 10px; border: 1px solid #fff;  border-radius: 10px; width: 300px;}
+.contactContainer .formContainer button{ padding: 5px; border-radius: 10px; color: #183661; font-size: 16px; font-weight: 600; transform: .3s ease; background-color: gold; margin: 0px 100px;}
+.contactContainer .advertise {margin: 5px; background-color: white;height: 90vh; border-radius: 20px; border: 12px solid gold;text-align: center; cursor: pointer; display: flex; column-gap: 10px; width: 100%; display: flex;}
+.contactContainer .advertise .info{padding: 0px;}
+.contactContainer .advertise .info h1{  text-align: center; font-family: cursive;font-size: 100px; color: #183661;  background-color: gold; border: 2px solid gold;}
+.contactContainer .advertise .info p{ margin:5px 10px; text-align: left;font-family: cursive;font-size: 20px;}
+.contactContainer .advertise .banner img{ object-fit: contain; height: 100%;  padding: 10px;}
+
+

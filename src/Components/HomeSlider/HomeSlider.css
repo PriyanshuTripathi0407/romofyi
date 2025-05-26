@@ -1,7 +1,7 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css'); 
 @import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css'); 
 
-.home-slider{ position: relative; height: 50vh; width: 100vw; padding: 30px 30px;}
+.home-slider{ position: relative; height: 50vh;  padding: 30px 30px; overflow: hidden;}
 .slick-arrow{position: absolute;top: 50%; width: 20px !important; height: 20px !important; border-radius: 50%;background-color: lightgray; z-index: 100; transition: all 0.2s ease-in-out;box-shadow: 0 3px 6px rgba(197, 80, 80, 0.16), 0 3px 6px rgba(0,0,0,0.23);}
 .slick-next{right: 30px !important;}
 .slick-prev{left: 10px !important;}
@@ -12,7 +12,7 @@
 .home-slider .slick-dots button{width: 50px !important; height: 10px !important; font-size: 10px !important;}
 .home-slider .slick-dots button::before{width: 50px !important; height: 15px !important; font-size: 10px !important;}
 .slick-active button::before{color: #183661 !important;}
-
+/* .home-slider .item{height: 250px; width: 200px;} */
 .home-slider .item img{height: 250px; object-fit: contain; border: 10px solid #183661; border-radius: 20px; padding: 20px 30px;}
 
 

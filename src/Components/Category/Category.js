@@ -7,7 +7,7 @@ import Pent from '../../Image/ipent.png'
 import tshirt from '../../Image/it_shart.png'
 import card from '../../Image/ijakit.png'
 import top from '../../Image/ihelbet.png'
-
+import './Category.css'
 
 
 
@@ -22,7 +22,7 @@ const Category = () => {
         setProduct(response.data);
         console.log(response.data, " This is response from db in Category.js")
     }
-    
+
     const uniqueByCategory = (arr) => {
         const categoryMap = new Map();
         for (const item of arr) {
@@ -32,7 +32,7 @@ const Category = () => {
         }
         return Array.from(categoryMap.values());
     };
-    
+
     // Assuming your array is named 'allProducts'
     const productData = uniqueByCategory(dbproduct);
     console.log(productData, " This is filtered Data in Category.js")
@@ -55,16 +55,15 @@ const Category = () => {
         nav('/shirt', { state: e }, { replace: true })
     }
     return (
-        <div>
-            <div style={{ display: 'flex',marginTop:'10px' }}>
-                {product.map(i => (
-                    <div className='advertise' key={i.tittle} onClick={() => send(i.tittle)} >
-                        <img src={i.image} alt='' />
-                        <h2 style={{ color: 'yellow', fontFamily: 'cursive', fontSize: '18px' }}>{i.tittle}</h2>
-                    </div>
-                ))}
-            </div>
+        <div className='categoryContainer'>
+            {product.map(i => (
+                <div className='advertise' key={i.tittle} onClick={() => send(i.tittle)} >
+                    <img src={i.image} alt='' />
+                    <h2 style={{ color: 'yellow', fontFamily: 'cursive', fontSize: '18px' }}>{i.tittle}</h2>
+                </div>
+            ))}
         </div>
+
     )
 }
 

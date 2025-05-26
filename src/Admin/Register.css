@@ -1,0 +1,8 @@
+.registerContainer{display:flex;justify-content:center; align-items:center; margin: 10px; }
+.registerContainer .formContainer{text-align:left; background-color:gold; font-weight:700;color:darkblue; width: max-content;padding: 20px; }
+.registerContainer .formContainer h1{text-align:center; margin:5px;padding:10px;}
+.registerContainer .formContainer button{text-align:center; margin:5px;padding:10px;}
+.registerContainer .formContainer .Nameinfo{ padding: 0 20px;}
+
+
+

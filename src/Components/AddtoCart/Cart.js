@@ -4,6 +4,7 @@ import { getData, PostData, PutData, DeleteData } from '../../API/CartAPI/CartAP
 import PaymentIcon from '@mui/icons-material/Payment';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
 
@@ -120,6 +121,9 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                 </div>
                 <div className='productPayment'>
                     <h1>Continue to Payment <ArrowCircleRightOutlinedIcon/></h1>
+                </div>
+                <div className='productPayment'>
+                    <h1><ArrowCircleLeftOutlinedIcon/> Back to Shopping </h1>
                 </div>
             </div>
         </div>

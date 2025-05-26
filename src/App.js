@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // import {Link} from 'react-router-dom'
 import Header from './Components/Header/Header.js'
+import NavbarMenu from './Components/Header/NavbarMenu.js';
+import UserMenuItems from './Components/Header/UserMenuItems.js';
 import Home from './Components/Home/Home.js'
 import Footer from './Components/Footer/Foooter.js'
 import Product from './Components/Product/Product.js'
@@ -48,6 +50,7 @@ function App() {
     (loginId) ?
       <BrowserRouter>
         {/* <Header cartProduct={cartProduct}/> */}
+        <UserMenuItems/>
         <Sidebar />
         <Routes>
           <Route path='/dashboard' element={<Dashboard />}></Route>
@@ -74,6 +77,7 @@ function App() {
       <BrowserRouter>
         <div>
           <Header cartProduct={cartProduct} />
+          <NavbarMenu/>
           <Routes>
             <Route path='/' element={<Home />}></Route>
             {/* <Route path='/' element={<Dashboard />}></Route> */}
