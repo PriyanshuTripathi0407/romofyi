@@ -5,7 +5,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-
+import romo from '../../Image/BannerGirl.png'
 import './Header.css'
 
 export default function UserMenuItems() {
@@ -13,13 +13,13 @@ export default function UserMenuItems() {
     <>
       <div className='head3'>
         <ul className="navbar-menu">
-          <li><AccountCircleIcon fontSize="small" /> My Account</li>
+          <li className='logo'><img src={romo}/> Romofyi </li>
           <li><HomeIcon fontSize="small" /> Home</li>
           <li><StorefrontIcon fontSize="small" /> Shopping Port</li>
           <li><ShoppingCartOutlinedIcon /> Cart</li>
           <li><ListAltIcon fontSize="small" /> Orders</li>
-          <li><FavoriteIcon fontSize="small" /> Wishlist</li>
-          <li><LogoutIcon fontSize="small" /> Logout</li>
+          <li><FavoriteIcon fontSize="small" /> Wishlist</li>          
+          <li><AccountCircleIcon fontSize="small" /> Account</li>
         </ul>
       </div>
     </>

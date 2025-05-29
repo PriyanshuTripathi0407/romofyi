@@ -6,13 +6,15 @@ import Subscribe from '../Subscribe/Subscribe'
 import Help from '../Help/Help.js'
 import HomeSlider from '../HomeSlider/HomeSlider.js'
 import Category from '../Category/Category.js'
+
 function Home() {
+
   return (
     <div>     
       <HomeSlider/>
-      <Category/>
+      <Category fromArray={0} toArray={6} />
       <HomeProduct />
-      <Category/>
+      <Category fromArray={5} toArray={11}/>
       <Fashion />
       <News />
       <Subscribe />

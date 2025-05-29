@@ -12,6 +12,10 @@ class AppUserModelAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductModelAdmin(admin.ModelAdmin):
-    list_display=['id','product_name','product_id','product_category','product_description','product_oldprice','product_newprice','product_image','product_discount']
+    list_display=['id','product_name','product_id','product_category','short_description','product_oldprice','product_newprice','product_image','product_discount']
 
+    def short_description(self, obj):
+        return (obj.product_description[:15] + '...') if len(obj.product_description) > 15 else obj.product_description
+
+    short_description.short_description = 'Description'
 

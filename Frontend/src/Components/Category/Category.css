@@ -7,10 +7,20 @@
 
 .categoryContainer .advertise {
     padding: 20px;
+    margin: 0px 10px;
     background-color: #183661;
     height: 200px;
     border: 8px solid gold;
-    width: 220px;
-    text-align: center;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
 }
+
+.categoryContainer .advertise .ImageWrapper{height: 100px; width: 120px; border-radius: 2%; }
+
+.categoryContainer .advertise .ImageWrapper img{ background-color: gold; width: 100%; height: 100%; object-fit: contain; border-radius: 10px;}
+
+.categoryContainer .advertise h2{margin: 10px 0px; color:gold; font-size:14px; font-weight: 600; }

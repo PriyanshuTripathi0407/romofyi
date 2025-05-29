@@ -7,6 +7,7 @@ import UserMenuItems from './Components/Header/UserMenuItems.js';
 import Home from './Components/Home/Home.js'
 import Footer from './Components/Footer/Foooter.js'
 import Product from './Components/Product/Product.js'
+import NewArrivals from './Components/Product/NewArrivals.js'
 import Fashion from './Components/Fashion/Fashion.js'
 import About from './Components/About/About.js'
 import News from './Components/News/News.js'
@@ -22,13 +23,13 @@ import ProductoftheDay from './Components/Product/ProductoftheDay.js'
 import Login from './Admin/Login.js';
 import Dashboard from './Admin/Dashboard/Dashboard.js';
 // import AddToCart from './Components/AddtoCart/AddToCart.js';
-import product from './Components/Product/ProductData.js'
+
 import Cart from './Components/AddtoCart/Cart.js'
 import CustomerRegister from './Admin/Registration/Register.js'
 import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
 
 function App() {
-  const [loginId, setloginId] = useState(false)
+  const [loginId, setloginId] = useState(true)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setdbData] = useState([])
@@ -50,13 +51,15 @@ function App() {
     (loginId) ?
       <BrowserRouter>
         {/* <Header cartProduct={cartProduct}/> */}
-        <UserMenuItems/>
+        <Header cartProduct={cartProduct} />
+        <UserMenuItems />
         <Sidebar />
         <Routes>
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/custom' element={<CustomerRegister />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/product' element={<Product />}></Route>
+          <Route path='/newarrivals' element={<NewArrivals />}></Route>          
           <Route path='/fashion' element={<Fashion />}></Route>
           <Route path='/shirt' element={<Shirt />}></Route>
           <Route path='/news' element={<News />}></Route>
@@ -66,7 +69,7 @@ function App() {
           <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
           <Route path='/order' element={<Order />}></Route>
           <Route path='/review' element={<Review />}></Route>
-          <Route path='/stock' element={<Stock products={product} />}></Route>
+          {/* <Route path='/stock' element={<Stock products={product} />}></Route> */}
 
           {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
           <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
@@ -77,18 +80,19 @@ function App() {
       <BrowserRouter>
         <div>
           <Header cartProduct={cartProduct} />
-          <NavbarMenu/>
+          <NavbarMenu />
           <Routes>
             <Route path='/' element={<Home />}></Route>
             {/* <Route path='/' element={<Dashboard />}></Route> */}
             <Route path='/cart' element={<Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />}></Route>
             <Route path='/about' element={<About />}></Route>
+            <Route path='/newarrivals' element={<NewArrivals />}></Route>
             <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
             <Route path='/fashion' element={<Fashion />}></Route>
             <Route path='/shirt' element={<Shirt />}></Route>
             <Route path='/ne1s' element={<News />}></Route>
             <Route path='/contact' element={<Contact />}></Route>
-            <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId}/>}></Route>
+            <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId} />}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
             <Route path='/order' element={<Order />}></Route>

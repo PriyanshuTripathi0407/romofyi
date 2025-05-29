@@ -76,7 +76,7 @@ class Product(models.Model):
     
     product_rating = models.DecimalField(max_digits=3, decimal_places=1, choices=RATING_CHOICES, default=0.0, null=True)
     
-    product_discount = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    product_discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def generate_product_id(self):
         # Get the first letter of product_name
@@ -90,24 +90,24 @@ class Product(models.Model):
         # Combine everything to generate the product ID
         return f"{product_name_initial}{category_initial}{product_id_number}"
 
+    def generate_discount(self):
+        if self.product_oldprice and self.product_newprice:          
+                discount = (self.product_oldprice - self.product_newprice) 
+                self.product_discount = discount           
+        else:
+            self.product_discount = None
+    
     def save(self, *args, **kwargs):
+        self.generate_discount()
         if not self.pk:  # If the object is being created, not updated
             super(Product, self).save(*args, **kwargs)  # Save first to generate pk
         if not self.product_id:  # Now generate product_id
             self.product_id = self.generate_product_id()
-        super(Product, self).save(*args, **kwargs)
 
         # Auto-calculate discount if prices are present
-        if self.product_oldprice and self.product_newprice:
-            try:
-                discount = ((self.product_oldprice - self.product_newprice) / self.product_oldprice) * 100
-                self.discount_percent = round(discount, 2)
-            except ZeroDivisionError:
-                self.discount_percent = 0.00
-        else:
-            self.discount_percent = None
 
-        super().save(*args, **kwargs)
+        super(Product, self).save(*args, **kwargs)
+        # super().save(*args, **kwargs) 
 
 
     def __str__(self):

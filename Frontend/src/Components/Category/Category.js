@@ -11,7 +11,7 @@ import './Category.css'
 
 
 
-const Category = () => {
+const Category = ({ fromArray, toArray }) => {
     const [dbproduct, setProduct] = useState([])
     useEffect(() => {
         handleGetData();
@@ -20,35 +20,23 @@ const Category = () => {
     const handleGetData = async () => {
         const response = await getData()
         setProduct(response.data);
-        console.log(response.data, " This is response from db in Category.js")
+        // console.log(response.data, " This is response from db in Category.js")
     }
 
     const uniqueByCategory = (arr) => {
         const categoryMap = new Map();
         for (const item of arr) {
-            if (!categoryMap.has(item.product_category)) {
-                categoryMap.set(item.product_category, item);
+            const categoryName = item.product_category?.name;
+            if (categoryName && !categoryMap.has(categoryName)) {
+                categoryMap.set(categoryName, item);
             }
         }
         return Array.from(categoryMap.values());
     };
 
-    // Assuming your array is named 'allProducts'
     const productData = uniqueByCategory(dbproduct);
-    console.log(productData, " This is filtered Data in Category.js")
+    // console.log(productData, " This is filtered Data in Category.js")
 
-
-
-
-
-    const product = [
-        { image: Shoe, tittle: 'SHOES' },
-        { image: UnderWear, tittle: 'SHIRTS' },
-        { image: Pent, tittle: 'PANTS & SOCKS' },
-        { image: tshirt, tittle: 'T-SHIRT & TANKSTOP' },
-        { image: card, tittle: 'CARDIGANS & JUMPERS' },
-        { image: top, tittle: 'TOP & HAT' }
-    ]
     const nav = useNavigate()
 
     function send(e) {
@@ -56,10 +44,12 @@ const Category = () => {
     }
     return (
         <div className='categoryContainer'>
-            {product.map(i => (
-                <div className='advertise' key={i.tittle} onClick={() => send(i.tittle)} >
-                    <img src={i.image} alt='' />
-                    <h2 style={{ color: 'yellow', fontFamily: 'cursive', fontSize: '18px' }}>{i.tittle}</h2>
+            {productData.slice(fromArray, toArray).map(i => (
+                <div className='advertise' key={i.tittle} onClick={() => send(i.product_category.name)} >
+                    <div className='ImageWrapper'>
+                        <img src={i.product_image} alt='Product Image' />
+                    </div>
+                    <h2>{i.product_category.name.toUpperCase()}</h2>
                 </div>
             ))}
         </div>

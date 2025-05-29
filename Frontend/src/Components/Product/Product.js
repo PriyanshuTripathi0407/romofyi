@@ -6,6 +6,8 @@ import Rating from '@mui/material/Rating';
 import { ToastContainer, toast } from 'react-toastify';
 import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
+import DiscountIcon from '@mui/icons-material/Discount';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
   const [showPricefilter, setshowPricefilter] = useState(false);
@@ -90,23 +92,46 @@ function Product({ setproductId }) {
         <div className='col-10'>
           <div className='product_container'>
 
-
             <div className='card'>
-              {ProductData 
+
+              {ProductData
                 .filter((i) =>
                   !productCategory || (i.product_category && i.product_category.name === productCategory)
                 )
                 .map((i, index) => (
                   <div key={index} className='card_container' >
-                    <div className='ImgWrapper'>
-                      <img src={i.product_image} alt='Image' className='animate__animated animate__flip' />
+                    <div className='first'>
+                      <div className='ImgWrapper'>
+                        {i.product_tag && i.product_tag.length > 0 ?
+                          (i.product_tag.map((tag, index) => (
+                            <div className='tagname' key={tag.id} >{tag.name}</div>
+                          ))
+                          ) :
+                          (<div > </div>)}
+                        <FavoriteBorderOutlinedIcon />
+                        <img src={i.product_image} alt='Image' className='animate__animated animate__flip' />
+                      </div>
+                      <div className='info'>
+                        <p> <strong> <span className='txt-id'> {i.product_id} </span> </strong> </p>
+                        <p> <strong> {i.product_name}<br /> @<span className='txt-price'> &#8377;{i.product_price}</span> </strong></p>
+                        <p className='description'>{truncateText(i.product_description, 10)}</p>
+
+                        <button><a href='#'>View Details</a> </button>
+                      </div>
                     </div>
-                    <div className='info'>
-                      <p> ID: <strong> {i.product_id}</strong></p>
-                      <p> <strong> &#8377;{i.product_price}</strong></p>
+                    <div className='review'>
+                      <Rating
+                        name={`read-only-rating-${i.product_id}`}
+                        value={parseFloat(i.product_rating) || 0}
+                        precision={0.5}
+                        readOnly
+                      />
+                      <p> <strong>
+                        <u>{(parseInt(i.product_rating) * 10)} Reviews</u>
+                      </strong></p>
                     </div>
-                    <div>
-                      <p style={{ display: 'flex', alignItems: 'center', padding: '' }}>
+                    {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <p style={{ display: 'flex', alignItems: 'center', width: 'max-content' }}>
                         <strong>Ratings:</strong>
                         <Rating
                           name={`read-only-rating-${i.product_id}`}
@@ -115,7 +140,7 @@ function Product({ setproductId }) {
                           readOnly
                         />
                       </p>
-                      <p> <strong>Discount:</strong> <strong>{(parseInt(i.product_price) / 100)}</strong>%</p>
+                      <p> <strong><DiscountIcon /></strong> <strong>{(parseInt(i.product_price) / 100)}</strong>%</p>
                     </div> <hr />
                     <h4 className='title_name'> {i.product_name}</h4>
                     {i.product_tag && i.product_tag.length > 0 ?
@@ -123,16 +148,15 @@ function Product({ setproductId }) {
                         <div className='tagname' key={tag.id} >{tag.name}</div>
                       ))
                       ) :
-                      (<div > </div>)}
+                      (<div > </div>)}*/}
 
-                    <p className='description'>{truncateText(i.product_description, 25)}</p>
-                    <button><a href='#'>View More</a> </button> <hr />
+
                     <button onClick={() => handleCart(i.product_id)} > ADD TO CART</button>
 
                   </div>
                 ))}
-            </div>
 
+            </div>
           </div>
         </div>
       </div>
