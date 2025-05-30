@@ -1,0 +1,8 @@
+.fashion{border: 10px solid #183661; height: auto; padding: 5px; width: 100%;}
+.fashion img{height: auto;}
+.fashion .slick-arrow{position: absolute;top: 50%; width: 20px !important; height: 20px !important; border-radius: 50%;background-color: lightgray; z-index: 100; transition: all 0.2s ease-in-out;box-shadow: 0 3px 6px rgba(197, 80, 80, 0.16), 0 3px 6px rgba(0,0,0,0.23);}
+.fashion .slick-next{right: 30px !important;}
+.fashion .slick-prev{left: 10px !important;}
+.fashion .slick-prev:before{content: "\f104" !important; font-family: FontAwesome; font-size: 15px;}
+.fashion .slick-next:before{content: "\f105" !important; font-family: FontAwesome; font-size: 15px;}
+.fashion .slick-arrow:hover{background-color: #000;}

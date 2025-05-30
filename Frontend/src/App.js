@@ -29,7 +29,7 @@ import CustomerRegister from './Admin/Registration/Register.js'
 import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
 
 function App() {
-  const [loginId, setloginId] = useState(true)
+  const [loginId, setloginId] = useState(false)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setdbData] = useState([])
@@ -90,7 +90,7 @@ function App() {
             <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
             <Route path='/fashion' element={<Fashion />}></Route>
             <Route path='/shirt' element={<Shirt />}></Route>
-            <Route path='/ne1s' element={<News />}></Route>
+            <Route path='/news' element={<News />}></Route>
             <Route path='/contact' element={<Contact />}></Route>
             <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId} />}></Route>
             <Route path='/register' element={<Register />}></Route>

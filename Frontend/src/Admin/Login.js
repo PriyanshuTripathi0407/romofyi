@@ -75,7 +75,7 @@ function Login({loginId,setloginId}) {
                     <Form.Item label='Role: ' name='role'  rules={[{ required: true, message: 'Please select role !!' }]}>
                         <Select
                             placeholder="Select Role.. "
-                            options={[{ value: 2, label: 'Admin' }, { value: 1, label: 'Customer' }, { value: 3, label: 'Seller' },]} />
+                            options={[{ value: 'admin', label: 'Admin' }, { value: 'cus', label: 'Customer' }, { value: 'ven', label: 'Vendor' },]} />
                     </Form.Item>
                 </div>
 

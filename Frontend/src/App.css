@@ -220,26 +220,6 @@ body{font-family: 'Roboto',sans-serif;}
   color: #183661;
 }
 
-.news {
-  text-align: center;
-  padding-left: 50px;
-}
-
-.news h2,
-.news h3 {
-  margin-top: -10px;
-  font-size: 19px;
-  font-weight: 400;
-  border: 2px none;
-  border-bottom: 1px solid #183661;
-}
-
-.news p {
-  margin-top: -2px;
-  text-align: left;
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.818);
-}
 
 .foot {
   margin-top: 20px;
@@ -252,10 +232,6 @@ body{font-family: 'Roboto',sans-serif;}
   background-color: #183661;
 }
 
-.news_head {
-  color: #183661;
-  background-color: gold;
-}
 
 .about {
   height: 700px;
