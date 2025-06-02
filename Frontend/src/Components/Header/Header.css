@@ -15,3 +15,7 @@
 .head3 .navbar-menu li:hover{color:white; transition: all 0.2s;}
 .head3 .navbar-menu .logo{font-family: cursive; font-size: 20px;}
 .head3 .navbar-menu .logo img{height: 30px; width: 30px; animation: spin 3s linear infinite; border-radius: 50%; border: 1px solid gold; object-fit: contain;}
+.info{cursor: pointer;}
+.info ul li:hover{color: #183661; font-weight: 600; }
+.info ul li:hover svg{color: #183661; }
+

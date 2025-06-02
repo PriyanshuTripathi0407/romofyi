@@ -187,38 +187,6 @@ body{font-family: 'Roboto',sans-serif;}
   margin-left: 325px;
 }
 
-.help {
-  background-color: #183661;
-  color: white;
-  height: 400px;
-  width: 100%;
-}
-
-.help_div {
-  text-align: center;
-  display: flex;
-  column-gap: 50px;
-  width: 100%;
-}
-
-.help_div div {
-  margin-left: 20px;
-  margin-right: 20px;
-}
-
-.help_img {
-  padding-left: 0px;
-  background-color: white;
-  border: 10px solid #183661;
-  border-radius: 20px;
-  height: 150px;
-  width: 300px;
-  margin-left: 100px;
-  margin-top: -80px;
-  text-align: center;
-  padding-top: 20px;
-  color: #183661;
-}
 
 
 .foot {

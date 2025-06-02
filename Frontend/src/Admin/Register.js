@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { Button, Input, Form, Table, Modal, Select } from 'antd'
+import { Form, Input, Button, Upload, Modal, Select, message, Avatar } from 'antd';
+import { UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { getData, PostData, PutData } from '../API/API'
 import { useForm } from 'antd/es/form/Form';
 import './Register.css'
+import { useNavigate } from 'react-router-dom';
 
 
 function Register() {
@@ -13,11 +15,13 @@ function Register() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [RegRecord, setRegRecord] = useState('');
   const [form] = useForm();
+  const navigate= useNavigate();
 
   const postData = async (formData) => {
     const response = await PostData(formData);
     if (formData) {
       alert("Registered Successfully!! ")
+      navigate('/login');
     }
     getRegistration();
   }
@@ -101,10 +105,12 @@ function Register() {
               <Select
                 placeholder="Select Role.. "
                 options={[{ value: 'Customer', label: 'Customer', },
-                { value: 'Seller', label: 'Seller', },]} />
+                { value: 'Admin', label: 'Admin', },
+                { value: 'Vendor', label: 'Vendor', },]} />
             </Form.Item>
+            
             <Form.Item label='Address' name='address' >
-              <Input type='text' size='large'/>
+              <Input type='text' size='large' />
             </Form.Item>
           </div>
           <Button htmlType='submit' >Register</Button>

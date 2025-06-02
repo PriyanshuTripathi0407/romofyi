@@ -27,12 +27,14 @@ import Dashboard from './Admin/Dashboard/Dashboard.js';
 import Cart from './Components/AddtoCart/Cart.js'
 import CustomerRegister from './Admin/Registration/Register.js'
 import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
+import UserInfo from './Components/Header/UserInfo.js';
 
 function App() {
   const [loginId, setloginId] = useState(false)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setdbData] = useState([])
+  
 
   const handleGetData = async () => {
     const response = await getData()
@@ -57,6 +59,7 @@ function App() {
         <Routes>
           <Route path='/dashboard' element={<Dashboard />}></Route>
           <Route path='/custom' element={<CustomerRegister />}></Route>
+          <Route path='/userinfo' element={<UserInfo loginId={loginId} setloginId={setloginId} />}></Route>
           <Route path='/about' element={<About />}></Route>
           <Route path='/product' element={<Product />}></Route>
           <Route path='/newarrivals' element={<NewArrivals />}></Route>          

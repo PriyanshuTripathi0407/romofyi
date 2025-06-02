@@ -16,6 +16,7 @@ import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlin
 
 
 import { useEffect, useState } from 'react';
+import Settings from '../../Components/Settings/Settings';
 
 const Dashboard = () => {
   const [index, setIndex] = useState(0);
@@ -33,6 +34,15 @@ const Dashboard = () => {
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
+
+   const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            const parsedData= JSON.parse(savedUser);
+            setUserData(parsedData.user)
+        }
+    }, []);
 
 
   var settings = {
@@ -183,15 +193,11 @@ const Dashboard = () => {
               <h4>Product 5</h4>
               <Rating name='read-only-rating' defaultValue={4.5} readOnly />
             </div>
-
-
-
           </Slider>
 
         </div>
 
-
-       
+ 
       </div>
 
     </div>

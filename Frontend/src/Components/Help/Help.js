@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../App.css'
+import './Help.css'
 import Money from '../../Image/icon_moneyback.png'
 import Gift from '../../Image/icon_giftpack.png'
 import ship from '../../Image/icon_deliverycar.png'

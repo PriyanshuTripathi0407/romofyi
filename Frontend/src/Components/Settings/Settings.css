@@ -1,0 +1,93 @@
+.settings {
+    z-index: 1000;
+    -webkit-backdrop-filter: blur(8px);
+    /* For Safari support */
+    backdrop-filter: blur(8px);
+    /* Applies the blur */
+    background-color: rgba(255, 255, 255, 0.2);
+    /* Optional translucent color */
+}
+
+.settings ul li:hover {
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.edit-profile-container,
+.complain,
+.contact {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #183661;
+    color: gold;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    color: gold;
+}
+
+.image-name-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 20px;
+}
+
+.info-container {
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+
+.upload-btn {
+    margin-top: 10px;
+}
+
+.profile-form .ant-form-item {
+    margin-bottom: 16px;
+}
+
+.profile-form .ant-form-item label {
+    color: gold;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.profile-form {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.about {
+    height: 150px;
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    max-width: 400px;
+}
