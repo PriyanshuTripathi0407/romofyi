@@ -12,7 +12,7 @@ class AppUser(AbstractUser):
     address= models.TextField()
     role= models.CharField(max_length=10,choices=Role)
     image= models.ImageField(upload_to='UserImage/')
-
+    shop_name=models.CharField(max_length=150, null=True,blank=True)
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -73,7 +73,7 @@ class Product(models.Model):
     product_description = models.TextField(null=True, blank=True)
     product_oldprice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     product_newprice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    
+    product_vendor= models.ForeignKey(AppUser, on_delete=models.CASCADE, limit_choices_to={'role': 'vendor'},null=True, blank=True)
     product_rating = models.DecimalField(max_digits=3, decimal_places=1, choices=RATING_CHOICES, default=0.0, null=True)
     
     product_discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
