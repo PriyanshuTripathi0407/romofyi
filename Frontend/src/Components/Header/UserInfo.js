@@ -15,36 +15,46 @@ const UserInfo = ({ loginId, setloginId }) => {
     const { logout } = useAuth();
     const [showSetting, setShowSetting] = useState(false)
     const navigate = useNavigate();
-    
-    
-    const [userData, setUserData] = useState({})
+    const BASE_URL = 'http://localhost:8000';
+
+    // const [userData, setUserData] = useState({})
+    // useEffect(() => {
+    //     const savedUser = localStorage.getItem('user');
+    //     if (savedUser) {
+    //         const parsedData = JSON.parse(savedUser);
+    //         setUserData(parsedData.user)
+    //     }
+    // }, []);
+
+    const [userData, setUserData] = useState({});
+
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
-            const parsedData= JSON.parse(savedUser);
-            setUserData(parsedData.user)
+            const parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user);
         }
     }, []);
 
-
+    useEffect(() => {
+        console.log(userData, "this user Data in UserInfo.js");
+    }, [userData]);
 
     function handleSettings() {
         setShowSetting(!showSetting)
     }
 
-    function handleLogOut() {       
+    function handleLogOut() {
         const login = () => setloginId(false);
         logout();
     }
-    const userName= "Romofyi";
-
-    console.log(userData, "this user Data in UserInfo.js")
+    const userName = "Romofyi";
     return (
         <div className='container-fluid'>
             <div className='row d-flex align-items-center'>
-                <div className='col-md-5'>
+                <div className='col-md-5 user'>
+                    <img src={`${BASE_URL}${userData.image}`} alt='User_Image' />
                     <h3>Hi {userData?.first_name || "ROMOFYI"}</h3>
-                    <img src={userData.image} alt='User_Image'/>
                 </div>
                 <div className='col-md-5 info'>
                     <ul className='d-flex align-items-center mt-2 list-unstyled gap-4' >

@@ -7,19 +7,31 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import romo from '../../Image/BannerGirl.png'
 import './Header.css'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function UserMenuItems() {
+  const BASE_URL = 'http://localhost:8000';
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const parsedData = JSON.parse(savedUser);
+      setUserData(parsedData.user)
+    }
+  }, []);
+
   return (
     <>
       <div className='head3'>
         <ul className="navbar-menu">
-          <li className='logo'><img src={romo}/> Romofyi </li>
-          <li><HomeIcon fontSize="small" /> Home</li>
-          <li><StorefrontIcon fontSize="small" /> Shopping Port</li>
-          <li><ShoppingCartOutlinedIcon /> Cart</li>
-          <li><ListAltIcon fontSize="small" /> Orders</li>
-          <li><FavoriteIcon fontSize="small" /> Wishlist</li>          
-          <li><AccountCircleIcon fontSize="small" /> Account</li>
+          <Link to='/dashboard'><li className='logo'><img src={userData.image ? `${BASE_URL}${userData.image}` : romo} /> Romofyi </li> </Link>
+          <Link to='/home'><li><HomeIcon fontSize="small" /> Home</li> </Link>
+          <Link to='/product'><li><StorefrontIcon fontSize="small" /> Shopping Port</li> </Link>
+          <Link to='/cart'><li><ShoppingCartOutlinedIcon /> Cart</li></Link>
+          <Link to='/order'><li><ListAltIcon fontSize="small" /> Orders</li></Link>
+          <Link to='/wishlist'> <li><FavoriteIcon fontSize="small" /> Wishlist</li> </Link>
+          <Link to='/setting'><li><AccountCircleIcon fontSize="small" /> Account</li> </Link>
         </ul>
       </div>
     </>

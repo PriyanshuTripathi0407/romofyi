@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
 // import {Link} from 'react-router-dom'
 import Header from './Components/Header/Header.js'
 import NavbarMenu from './Components/Header/NavbarMenu.js';
@@ -28,13 +29,15 @@ import Cart from './Components/AddtoCart/Cart.js'
 import CustomerRegister from './Admin/Registration/Register.js'
 import { getData, PostData, PutData, DeleteData } from './API/ProductAPI/ProductAPI.js'
 import UserInfo from './Components/Header/UserInfo.js';
+import Settings from './Components/Settings/Settings.js';
+import Wishlist from './Components/Wishlist/Wishlist.js';
 
 function App() {
   const [loginId, setloginId] = useState(false)
   const [productId, setproductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setdbData] = useState([])
-  
+
 
   const handleGetData = async () => {
     const response = await getData()
@@ -42,7 +45,7 @@ function App() {
     console.log(response.data, " This is response from db in App.js")
   }
 
-  console.log("Product Id is : ", productId)
+  // console.log("Product Id is : ", productId)
   useEffect(() => {
     handleGetData()
     const filterProductData = dbData.filter((product) => product.product_id === productId);
@@ -51,63 +54,70 @@ function App() {
 
   return (
     (loginId) ?
-      <BrowserRouter>
-        {/* <Header cartProduct={cartProduct}/> */}
-        <Header cartProduct={cartProduct} />
-        <UserMenuItems />
-        <Sidebar />
-        <Routes>
-          <Route path='/dashboard' element={<Dashboard />}></Route>
-          <Route path='/custom' element={<CustomerRegister />}></Route>
-          <Route path='/userinfo' element={<UserInfo loginId={loginId} setloginId={setloginId} />}></Route>
-          <Route path='/about' element={<About />}></Route>
-          <Route path='/product' element={<Product />}></Route>
-          <Route path='/newarrivals' element={<NewArrivals />}></Route>          
-          <Route path='/fashion' element={<Fashion />}></Route>
-          <Route path='/shirt' element={<Shirt />}></Route>
-          <Route path='/news' element={<News />}></Route>
-          <Route path='/contact' element={<Contact />}></Route>
-          <Route path='/productDetails' element={<ShowProductDetails />}></Route>
-          <Route path='/register' element={<Register />}></Route>
-          <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
-          <Route path='/order' element={<Order />}></Route>
-          <Route path='/review' element={<Review />}></Route>
-          {/* <Route path='/stock' element={<Stock products={product} />}></Route> */}
-
-          {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
-          <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
-        </Routes>
-        <Footer />
-      </BrowserRouter>
-      :
-      <BrowserRouter>
-        <div>
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+        <BrowserRouter>
+          {/* <Header cartProduct={cartProduct}/> */}
           <Header cartProduct={cartProduct} />
-          <NavbarMenu />
+          <UserMenuItems />
           <Routes>
-            <Route path='/' element={<Home />}></Route>
-            {/* <Route path='/' element={<Dashboard />}></Route> */}
-            <Route path='/cart' element={<Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />}></Route>
+            <Route path='/home' element={<Home />}></Route>
+            <Route path='/dashboard' element={<Dashboard />}></Route>
+            <Route path='/custom' element={<CustomerRegister />}></Route>
+            <Route path='/userinfo' element={<UserInfo loginId={loginId} setloginId={setloginId} />}></Route>
             <Route path='/about' element={<About />}></Route>
-            <Route path='/newarrivals' element={<NewArrivals />}></Route>
             <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
+            <Route path='/newarrivals' element={<NewArrivals />}></Route>
             <Route path='/fashion' element={<Fashion />}></Route>
             <Route path='/shirt' element={<Shirt />}></Route>
             <Route path='/news' element={<News />}></Route>
             <Route path='/contact' element={<Contact />}></Route>
-            <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId} />}></Route>
+            <Route path='/productDetails' element={<ShowProductDetails />}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
             <Route path='/order' element={<Order />}></Route>
+            <Route path='/setting' element={<Settings />}></Route>
             <Route path='/review' element={<Review />}></Route>
-            <Route path='/stock' element={<Stock />}></Route>
+            <Route path='/wishlist' element={<Wishlist />}></Route>
+            <Route path='/cart' element={<Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />}></Route>
+            <Route path='/order' element={<Order />}></Route>
+            {/* <Route path='/stock' element={<Stock products={product} />}></Route> */}
+
             {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
             <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
           </Routes>
           <Footer />
-        </div>
+        </BrowserRouter>
+      </SnackbarProvider>
+      :
+      <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} >
+        <BrowserRouter>
+          <div>
+            <Header cartProduct={cartProduct} />
+            <NavbarMenu />
+            <Routes>
+              <Route path='/' element={<Home />}></Route>
+              {/* <Route path='/' element={<Dashboard />}></Route> */}
+              <Route path='/cart' element={<Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />}></Route>
+              <Route path='/about' element={<About />}></Route>
+              <Route path='/newarrivals' element={<NewArrivals />}></Route>
+              <Route path='/product' element={<Product setproductId={setproductId} />}></Route>
+              <Route path='/fashion' element={<Fashion />}></Route>
+              <Route path='/shirt' element={<Shirt />}></Route>
+              <Route path='/news' element={<News />}></Route>
+              <Route path='/contact' element={<Contact />}></Route>
+              <Route path='/productDetails' element={<ShowProductDetails setproductId={setproductId} />}></Route>
+              <Route path='/register' element={<Register />}></Route>
+              <Route path='/login' element={<Login loginId={loginId} setloginId={setloginId} />}></Route>
+              <Route path='/review' element={<Review />}></Route>
+              <Route path='/stock' element={<Stock />}></Route>
+              {/* <Route path='/addtoCart' element={<AddtoCart   cartProduct={cartProduct} setCartProduct={setCartProduct}/>}></Route> */}
+              <Route path='/productoftheday' element={<ProductoftheDay />}></Route>
+            </Routes>
+            <Footer />
+          </div>
 
-      </BrowserRouter>
+        </BrowserRouter>
+      </SnackbarProvider>
   );
 }
 

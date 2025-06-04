@@ -18,4 +18,5 @@
 .info{cursor: pointer;}
 .info ul li:hover{color: #183661; font-weight: 600; }
 .info ul li:hover svg{color: #183661; }
-
+.user{display: flex; align-items: center; gap: 10px;}
+.user img{height: 30px; width: 30px; border-radius: 50%; border: 1px solid gold; object-fit: contain;}

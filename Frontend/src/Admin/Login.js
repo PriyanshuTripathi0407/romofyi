@@ -4,28 +4,45 @@ import { Button, Input, Form, Select, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { postData } from '../API/LoginAPI/LoginAPI';
+import { ToastContainer, toast } from 'react-toastify';
 import { useForm } from 'antd/es/form/Form';
-import {useAuth} from '../AuthContext';
+import { useAuth } from '../AuthContext';
+import { useSnackbar } from 'notistack';
+import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 
 function Login({ loginId, setloginId }) {
-    const {login} = useAuth();
-    const navigate= useNavigate();
+    const { login } = useAuth();
+    const navigate = useNavigate();
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    const InvalidCredentials = () => toast.error(" Invalid Credentials !!! ")
+    const successCredentials = () => toast.success(" Successfuly Logged In !! ")
+
 
     const getRegistration = async (formData) => {
-        console.log(formData, "This is my form Data");
-        const response = await postData(formData)
-        // setRegData(response.data)
-        // console.log(response, "Data from backend in Login js")
-        if (response.status === 200 && response.data.success) {
-            login(response.data);
-            message.success('Login successful!');
-            setloginId(true)
-            navigate('/')
-        } else {
-            message.error(response.data.error || 'Login failed');
+        try {
+            const response = await postData(formData);
+            if (response.status === 200 && response.data.success) {
+                login(response.data);
+                enqueueSnackbar("Logged In Successfully", { variant: 'success' })
+                setloginId(true);
+                navigate('/dashboard');
+            }
+        } catch (error) {
+            if (error.response?.status === 401) {
+                enqueueSnackbar("Invalid Credentials !! ", {
+                    variant: 'error', persist: false, action: (key) => (
+                        <p onClick={() => closeSnackbar(key)} style={{paddingTop:'12px', cursor:'pointer'}}><HighlightOffOutlinedIcon/></p>
+                    )
+                }) 
+            } else {
+                console.error('Unexpected error:', error);
+                message.error('Something went wrong. Please try again.');
+            }
         }
+    };
 
-    }
+
 
     console.log(getRegistration, " This is data in Login page ")
 
@@ -33,6 +50,7 @@ function Login({ loginId, setloginId }) {
 
     return (
         <div className='loginContainer' >
+            <ToastContainer />
             <Form className='formContainer' onFinish={getRegistration}>
                 <h1>LOGIN FORM</h1><br />
                 <div className='item'>

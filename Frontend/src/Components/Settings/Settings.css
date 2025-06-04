@@ -6,14 +6,25 @@
     /* Applies the blur */
     background-color: rgba(255, 255, 255, 0.2);
     /* Optional translucent color */
+    position: relative;
 }
 
+.settings .container {
+    height: 200px;
+    width: 203px;
+    position: absolute;
+    right: 2px;
+    top: -8px;
+    box-shadow: 0 2px 4px #183661;
+}
+
+.settings .container ul li{color: gold; margin: 2px 0;}
 .settings ul li:hover {
-    font-weight: bolder;
+    border: 1px solid gold;
     cursor: pointer;
 }
 
-.edit-profile-container,
+
 .complain,
 .contact {
     width: 50vw;
@@ -22,6 +33,21 @@
     text-align: center;
     flex-direction: column;
     margin: 30px auto;
+    padding: 30px;
+    background-color: #183661;
+    color: gold;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.edit-profile-container {
+    width: 55vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    margin: auto 5px;
     padding: 30px;
     background-color: #183661;
     color: gold;

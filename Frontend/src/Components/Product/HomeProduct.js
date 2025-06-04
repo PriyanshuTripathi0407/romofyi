@@ -16,7 +16,6 @@ function HomeProduct() {
   const handleGetData = async () => {
     const response = await getData()
     setProduct(response.data);
-    console.log(response.data, " This is response from db in Category.js")
   }
 
   const uniqueByCategory = (arr) => {
@@ -31,7 +30,6 @@ function HomeProduct() {
 
   // Assuming your array is named 'productData'
   const productData = uniqueByCategory(dbproduct);
-  console.log(productData, " This is filtered Data in Category.js")
 
 
   const showProductDetails = (e) => {

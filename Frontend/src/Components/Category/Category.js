@@ -44,8 +44,8 @@ const Category = ({ fromArray, toArray }) => {
     }
     return (
         <div className='categoryContainer'>
-            {productData.slice(fromArray, toArray).map(i => (
-                <div className='advertise' key={i.tittle} onClick={() => send(i.product_category.name)} >
+            {productData.slice(fromArray, toArray).map((i,index) => (
+                <div className='advertise' key={index} onClick={() => send(i.product_category.name)} >
                     <div className='ImageWrapper'>
                         <img src={i.product_image} alt='Product Image' />
                     </div>

@@ -1,0 +1,10 @@
+ .wishlistContainer{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative;}
+
+ .wishlist{background-color: #183661;box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; padding: 10px 5px; display: flex; flex-direction: row; height: 320px;}
+ .wishlist .item{font-weight: 500; font-size: 16px; font-family: cursive;}
+ .wishlist ul {display: grid; grid-template-columns: repeat(2,1fr);}
+ .wishlist ul li{ list-style:disc; margin: 0px 0px 10px 0px;}
+.ImageWrapper{height: 250px; width: 250px; margin: 5px; padding: 10px; text-align: center;}
+.ImageWrapper img{background-color: gold; height: 90%; width: 90%;  object-fit: contain; border: 1px solid gold;}
+.StatusWrapper{height: 80px; margin: 2px; border: 1px solid gold; padding: 10px; text-align: center;}
+.StatusWrapper img{ height: 60px;  width: 60px; margin: 0px 15px;  object-fit: contain; border: 1px solid gold; background-color: gold; border-radius: 10px;}
