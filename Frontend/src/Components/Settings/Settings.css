@@ -1,12 +1,6 @@
 .settings {
-    z-index: 1000;
-    -webkit-backdrop-filter: blur(8px);
-    /* For Safari support */
-    backdrop-filter: blur(8px);
-    /* Applies the blur */
-    background-color: rgba(255, 255, 255, 0.2);
-    /* Optional translucent color */
     position: relative;
+    z-index: 1000;
 }
 
 .settings .container {
@@ -86,10 +80,19 @@
     margin-bottom: 20px;
 }
 
+.custom-avatar{height: 50px; width: 120px; margin-top: -20px;}
+.custom-avatar img {
+    margin: 0;
+  object-fit:cover;
+  width: 100%;
+  height: 200%;
+}
+
 
 .upload-btn {
     margin-top: 10px;
 }
+
 
 .profile-form .ant-form-item {
     margin-bottom: 16px;
@@ -108,12 +111,10 @@
 }
 
 .about {
-    height: 150px;
-    margin: 0 0 10px 0;
+    height: 100px;
+    margin: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: end;
     align-items: center;
-    border: 1px solid #fff;
-    border-radius: 10px;
-    max-width: 400px;
+    flex-wrap:wrap ;    
 }

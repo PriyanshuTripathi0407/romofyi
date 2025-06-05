@@ -5,6 +5,7 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
+import { Link } from 'react-router-dom';
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
 
@@ -101,7 +102,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                     </div>
                 )}
             </div>
-            <div className='col-4'>
+            <div className='col-4 '>
                 <div className='paymentDetails'>
                     <h1><PaymentIcon /> Payment Details </h1>
                     <div className='priceInfo'>
@@ -123,7 +124,9 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                     <h1>Continue to Payment <ArrowCircleRightOutlinedIcon/></h1>
                 </div>
                 <div className='productPayment'>
+                    <Link to='/product'>
                     <h1><ArrowCircleLeftOutlinedIcon/> Back to Shopping </h1>
+                    </Link>
                 </div>
             </div>
         </div>

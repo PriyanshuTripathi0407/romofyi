@@ -52,8 +52,17 @@ const Settings = () => {
     }
 
     function handleModifiedData(formData) {
-        console.log(formData,"This is formData");
+        console.log(formData, "This is Modified Data");
     }
+
+    function handleComplaintData(formData) {
+        console.log(formData, "This is Complaint Data");
+    }
+
+    function handleSuggestionData(formData) {
+        console.log(formData, "This is Complaint Data");
+    }
+
 
 
 
@@ -133,50 +142,55 @@ const Settings = () => {
             }
 
             {showComplain &&
-                <div className='complain'>
-                    <h3 className='form-title'>Romofyi Complain Portal </h3>
-                    <div className='about'>
-                        <div className='d-flex justify-content-between align-items-start flex-column '>
-                            <h5>Name: Romofyi</h5>
-                            <h5>Email: romofyi@gmail.com</h5>
+                <Modal open={showComplain} onCancel={() => setShowComplain(false)} footer={null} width="60vw" centered >
+                    <div className='complain'>
+                        <h3 className='form-title'>Romofyi Complain Portal </h3>
+                        <div className='about'>
+                            <div className='image-upload-container'>
+                                <Avatar
+                                    size={100}
+                                    shape="square"
+                                    src={userData.image ? `${BASE_URL}${userData.image}` : userImage}
+                                    className='custom-avatar'
+                                />
+                            </div>
+                            <div className='d-flex justify-content-between align-items-start  '>
+                                <p><strong> Name:</strong> {userData.first_name} {userData.last_name} <br /> <strong>Email: </strong>{userData.email}</p>
+                            </div>
                         </div>
-                        <div className='image-upload-container'>
-                            <Avatar
-                                size={100}
-                                src={userImage}
-                            />
-                        </div>
-                    </div>
-                    <Form layout='vertical' className='profile-form'>
-                        <Form.Item label='Complain/Suggestion' name='message'>
-                            <Input.TextArea rows={9} />
-                        </Form.Item>
-                        <div>
-                            <Form.Item>
-                                <Button type='primary' htmlType='submit'>
-                                    Submit
-                                </Button>
+                        <Form layout='vertical' className='profile-form' onFinish={handleComplaintData}>
+                            <Form.Item label='Complain/Suggestion' name='message'>
+                                <Input.TextArea rows={9} />
                             </Form.Item>
-                        </div>
-                    </Form>
-                </div>
+                            <div>
+                                <Form.Item>
+                                    <Button type='primary' htmlType='submit'>
+                                        Submit
+                                    </Button>
+                                </Form.Item>
+                            </div>
+                        </Form>
+                    </div>
+                </Modal>
             }
             {showhelp &&
                 <div className='contact'>
                     <h3 className='form-title'>Romofyi Contact Portal </h3>
                     <div className='about'>
-                        <div className='d-flex justify-content-between align-items-start flex-column '>
-                            <h5>Name: Romofyi</h5>
-                            <h5>Email: romofyi@gmail.com</h5>
-                        </div>
                         <div className='image-upload-container'>
                             <Avatar
                                 size={100}
-                                src={userImage}
+                                shape="square"
+                                src={userData.image ? `${BASE_URL}${userData.image}` : userImage}
+                                className='custom-avatar'
                             />
                         </div>
+                        <div className='d-flex justify-content-between align-items-start  '>
+                            <p><strong> Name:</strong> {userData.first_name} {userData.last_name} <br /> <strong>Email: </strong>{userData.email}</p>
+                        </div>
                     </div>
-                    <Form layout='vertical' className='profile-form'>
+
+                    <Form layout='vertical' className='profile-form' onFinish={handleSuggestionData}>
                         <Form.Item label='Messages' name='message'>
                             <Input.TextArea rows={9} />
                         </Form.Item>

@@ -40,7 +40,7 @@ const Category = ({ fromArray, toArray }) => {
     const nav = useNavigate()
 
     function send(e) {
-        nav('/shirt', { state: e }, { replace: true })
+        nav('/product', { state: e }, { replace: true })
     }
     return (
         <div className='categoryContainer'>

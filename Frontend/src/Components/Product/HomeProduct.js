@@ -52,7 +52,7 @@ function HomeProduct() {
                   <p>{i}</p>
                 ))} */}
 
-              <p className='productPrice'> &#8377;{parseInt(i.product_price)}</p>
+              <p className='productPrice'> &#8377;{parseInt(i.product_price)}/-</p>
             </div>
           ))
         }

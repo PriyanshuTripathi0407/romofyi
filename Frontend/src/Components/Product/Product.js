@@ -8,6 +8,7 @@ import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCi
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import DiscountIcon from '@mui/icons-material/Discount';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { useLocation } from 'react-router-dom';
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
   const [showPricefilter, setshowPricefilter] = useState(false);
@@ -17,6 +18,9 @@ function Product({ setproductId }) {
   const [productPrice, setProductPrice] = useState('');
   const [filteredProduct, setfilteredProduct] = useState([]);
 
+  const locate = useLocation();
+  const categoryProduct = locate.state
+
   const message = () => toast(" Added to Cart Successfully")
   const [ProductData, setProductData] = useState([])
   function handleCart(id, pName) {
@@ -25,6 +29,11 @@ function Product({ setproductId }) {
   }
   useEffect(() => {
     handleGetData();
+    if (!categoryProduct) {
+      setProductCategory()
+    }else {
+      setProductCategory(categoryProduct)
+    }
   }, [])
 
   const handleGetData = async () => {
@@ -44,7 +53,7 @@ function Product({ setproductId }) {
   return (
     <>
       <ToastContainer />
-      <div className='row text-center'>
+      <div className='row text-center mx-0'>
         <h1>Products</h1>
         <div className='col-2'>
 
