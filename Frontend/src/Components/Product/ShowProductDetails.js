@@ -15,6 +15,7 @@ function ShowProductDetails({ setproductId }) {
   const navigate = useNavigate()
   const locate = useLocation()
   const [dbproduct, setProduct] = useState([])
+
   useEffect(() => {
     handleGetData();
   }, [])
@@ -46,16 +47,16 @@ function ShowProductDetails({ setproductId }) {
   return (
     <div>
       <div className='showproductHead'>
-        <h1><span className='txt-back'>{findProduct.product_name} </span> Product Details</h1>
+        <h1><span className='txt-back'>{findProduct?.product_name} </span> Product Details</h1>
       </div>
       <div className='showproductDetail'>
         <div className='showproductleft'>
           <div className='showproductImage'>
-            <img src={findProduct.product_image} alt='Product Image' className='w-100' />
+            <img src={findProduct?.product_image} alt='Product Image' className='w-100' />
           </div>
           <div className='showOffer'>
             <div>
-              <button onClick={() => handleCart(findProduct.product_id)}> <ShoppingCartOutlinedIcon style={{ color: 'aqua' }} /> ADD TO CART</button>
+              <button onClick={() => handleCart(findProduct?.product_id)}> <ShoppingCartOutlinedIcon style={{ color: 'aqua' }} /> ADD TO CART</button>
               <button><SellIcon style={{ color: 'orangered' }} /> Apply Coupons</button>
             </div>
           </div>
@@ -63,39 +64,39 @@ function ShowProductDetails({ setproductId }) {
         <div className='showproductInfo'>
           <div className='item'>
             <p><b>Product ID:</b></p>
-            <p>This product is uniquely identified by the ID <span className='txt-light'> <b>{findProduct.product_id}</b> </span>, which helps in tracking and managing inventory.</p>
+            <p>This product is uniquely identified by the ID <span className='txt-light'> <b>{findProduct?.product_id}</b> </span>, which helps in tracking and managing inventory.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Product Name:</b></p>
-            <p>You are viewing <span className='txt-light'><b>{findProduct.product_name}</b> </span>, a top-rated item in our collection known for its quality and performance.</p>
+            <p>You are viewing <span className='txt-light'><b>{findProduct?.product_name}</b> </span>, a top-rated item in our collection known for its quality and performance.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Price:<CreditCardIcon style={{ color: 'goldenrod' }} /> </b></p>
-            <p>This item is available for just <span className='txt-light'> <b>{findProduct.product_price}</b> </span>. It offers great value for the features it provides.</p>
+            <p>This item is available for just <span className='txt-light'> <b>{findProduct?.product_price}</b> </span>. It offers great value for the features it provides.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Description: <DescriptionIcon style={{ color: 'violet' }} /> </b></p>
-            <p>{findProduct.product_description} <br />This description gives an overview of what you can expect from the product in terms of usability, style, and build quality.</p>
+            <p>{findProduct?.product_description} <br />This description gives an overview of what you can expect from the product in terms of usability, style, and build quality.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Brand: <SellIcon style={{ color: 'green' }} /></b></p>
-            <p>Manufactured by <span className='txt-light'>  <b>{findProduct.product_brand || "a reputed brand"}</b> </span>, ensuring reliability and customer satisfaction.</p>
+            <p>Manufactured by <span className='txt-light'>  <b>{findProduct?.product_brand || "a reputed brand"}</b> </span>, ensuring reliability and customer satisfaction.</p>
           </div><hr />
           <div className='item'>
             <p><b>Category:</b></p>
-            <p>This product falls under the <b>{findProduct.product_category || "general merchandise"}</b> category, making it suitable for a variety of use cases.</p>
+            <p>This product falls under the <b>{findProduct.product_category.id || "general merchandise"}</b> category, making it suitable for a variety of use cases.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Availability:</b></p>
-            <p>{findProduct.in_stock ? "This product is currently in stock and ready to be shipped." : "Sorry, this product is currently out of stock. Please check back soon."}</p>
+            <p>{findProduct?.in_stock ? "This product is currently in stock and ready to be shipped." : "Sorry, this product is currently out of stock. Please check back soon."}</p>
           </div> <hr />
           <div className='item'>
-            <p><b>Customer Ratings: <Rating name="half-rating-read" defaultValue={findProduct.product_rating} precision={0.5} readOnly /></b></p>
-            <p>Rated <b>{findProduct.product_rating || "N/A"}</b> by our customers, reflecting the overall satisfaction and experience with this item.</p>
+            <p><b>Customer Ratings: <Rating name="half-rating-read" defaultValue={findProduct?.product_rating} precision={0.5} readOnly /></b></p>
+            <p>Rated <b>{findProduct?.product_rating || "N/A"}</b> by our customers, reflecting the overall satisfaction and experience with this item.</p>
           </div> <hr />
           <div className='item'>
             <p><b>Shipping Info:</b></p>
-            <p>{findProduct.shipping_info || "Standard shipping available. Expected delivery within 3-5 business days."}</p>
+            <p>{findProduct?.shipping_info || "Standard shipping available. Expected delivery within 3-5 business days."}</p>
           </div>
         </div>
       </div>

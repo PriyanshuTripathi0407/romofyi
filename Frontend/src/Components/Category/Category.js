@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { useNavigate } from 'react-router-dom'
-import Shoe from '../../Image/ishoes.png'
-import UnderWear from '../../Image/iunderwear.png'
-import Pent from '../../Image/ipent.png'
-import tshirt from '../../Image/it_shart.png'
-import card from '../../Image/ijakit.png'
-import top from '../../Image/ihelbet.png'
 import './Category.css'
 
 

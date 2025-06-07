@@ -171,9 +171,10 @@ import Settings from './Components/Settings/Settings.js';
 import Wishlist from './Components/Wishlist/Wishlist.js';
 
 import { getData } from './API/ProductAPI/ProductAPI.js';
+import SuccessAnimation from './Components/ShowMessages/SuccessMessage.js';
 
 function App() {
-  const [loginId, setloginId] = useState(false)
+  const [loginId, setloginId] = useState()
   const [productId, setProductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setDbData] = useState([]);
@@ -213,13 +214,13 @@ function App() {
     { path: '/stock', element: <Stock /> },
     { path: '/productoftheday', element: <ProductoftheDay /> },
   ];
-  
+
   // Routes only for logged-in users
   const privateRoutes = [
     { path: '/dashboard', element: <Dashboard /> },
     { path: '/home', element: <Home /> },
     {
-      path:'/userinfo' ,element: <UserInfo loginId={loginId} setloginId={setloginId} />
+      path: '/userinfo', element: <UserInfo loginId={loginId} setloginId={setloginId} />
     },
     { path: '/order', element: <Order /> },
     {
@@ -233,6 +234,7 @@ function App() {
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
       <BrowserRouter>
+        <SuccessAnimation />
         <Header cartProduct={cartProduct} />
         {loginId ? <UserMenuItems /> : <NavbarMenu />}
         <Routes>

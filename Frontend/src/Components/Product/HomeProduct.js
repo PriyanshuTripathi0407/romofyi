@@ -47,7 +47,7 @@ function HomeProduct() {
               <img src={i.product_image} alt='' />
               {/* <p>{i.product_tag}</p> */}
               <p> <Rating name="half-rating-read" defaultValue={i.product_rating} precision={0.5} readOnly /></p>
-              <p className='productName'> {i.product_name.toUpperCase()}</p>
+              <p className='productName'> {i.product_name.slice(0,21).toUpperCase()}</p>
               {/* {i.product_tag.map((i)=>(
                   <p>{i}</p>
                 ))} */}
