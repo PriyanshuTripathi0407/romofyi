@@ -9,6 +9,7 @@ import { useForm } from 'antd/es/form/Form';
 import { useAuth } from '../AuthContext';
 import { useSnackbar } from 'notistack';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
+import LoggedInMessage from '../Components/ShowMessages/LoggedInMessage'
 
 function Login({ loginId, setloginId }) {
     const { login } = useAuth();
@@ -16,37 +17,57 @@ function Login({ loginId, setloginId }) {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const InvalidCredentials = () => toast.error(" Invalid Credentials !!! ")
-    const successCredentials = () => toast.success(" Successfuly Logged In !! ")
 
+    const [showAnimation, setShowAnimation] = useState(false);
+    const [loginResult, setLoginResult] = useState(null); 
 
     const getRegistration = async (formData) => {
+        setShowAnimation(true);
+
         try {
             const response = await postData(formData);
             if (response.status === 200 && response.data.success) {
                 login(response.data);
-                enqueueSnackbar("Logged In Successfully", { variant: 'success' })
-                setloginId(true);
-                navigate('/dashboard');
+                setLoginResult('success');
+            } else {
+                setLoginResult('fail');
             }
         } catch (error) {
-            if (error.response?.status === 401) {
-                enqueueSnackbar("Invalid Credentials !! ", {
-                    variant: 'error', persist: false, action: (key) => (
-                        <p onClick={() => closeSnackbar(key)} style={{paddingTop:'12px', cursor:'pointer'}}><HighlightOffOutlinedIcon/></p>
-                    )
-                }) 
-            } else {
-                console.error('Unexpected error:', error);
-                message.error('Something went wrong. Please try again.');
-            }
+            setLoginResult('fail');
+            console.error(error);
         }
     };
 
 
+    useEffect(() => {
+        if (showAnimation) {
+            const timer = setTimeout(() => {
+                if (loginResult === 'success') {
+                    enqueueSnackbar("Logged In Successfully", { variant: 'success' });
+                    setloginId(true);
+                    navigate('/dashboard');
+                } else if (loginResult === 'fail') {
+                    enqueueSnackbar("Invalid Credentials !!", {
+                        variant: 'error',
+                        persist: false,
+                        action: (key) => (
+                            <p onClick={() => closeSnackbar(key)} style={{ paddingTop: '12px', cursor: 'pointer' }}>
+                                <HighlightOffOutlinedIcon />
+                            </p>
+                        )
+                    });
+                    setShowAnimation(false); // Hide animation and go back to form
+                    setLoginResult(null); // Reset
+                }
+            }, 2500); // 2.5 sec animation
 
-    console.log(getRegistration, " This is data in Login page ")
+            return () => clearTimeout(timer);
+        }
+    }, [showAnimation, loginResult]);
 
-
+    if (showAnimation) {
+        return <LoggedInMessage />;
+    }
 
     return (
         <div className='loginContainer' >

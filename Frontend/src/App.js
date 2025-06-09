@@ -169,9 +169,9 @@ import Cart from './Components/AddtoCart/Cart.js';
 import UserInfo from './Components/Header/UserInfo.js';
 import Settings from './Components/Settings/Settings.js';
 import Wishlist from './Components/Wishlist/Wishlist.js';
-
+import PaymentSuccessful from './Components/ShowMessages/PaymentSuccessful.js'
 import { getData } from './API/ProductAPI/ProductAPI.js';
-import SuccessAnimation from './Components/ShowMessages/SuccessMessage.js';
+
 
 function App() {
   const [loginId, setloginId] = useState()
@@ -213,6 +213,7 @@ function App() {
     { path: '/review', element: <Review /> },
     { path: '/stock', element: <Stock /> },
     { path: '/productoftheday', element: <ProductoftheDay /> },
+    { path: '/succesful-payment', element: <PaymentSuccessful /> },
   ];
 
   // Routes only for logged-in users
@@ -229,12 +230,14 @@ function App() {
     },
     { path: '/setting', element: <Settings /> },
     { path: '/wishlist', element: <Wishlist /> },
+    { path: '/succesful-payment', element: <PaymentSuccessful /> },
+
   ];
 
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
       <BrowserRouter>
-        <SuccessAnimation />
+     
         <Header cartProduct={cartProduct} />
         {loginId ? <UserMenuItems /> : <NavbarMenu />}
         <Routes>

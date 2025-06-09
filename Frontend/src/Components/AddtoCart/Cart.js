@@ -7,7 +7,7 @@ import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOu
 import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutlined';
 import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-
+import ReadytoPayment from '../ShowMessages/ReadytoPayment'
 
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
@@ -49,43 +49,50 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
 
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
-
+    const [showAnimation, setShowAnimation] = useState(false);
     const handleCheckout = async () => {
-        const totalAmount = cartProduct.reduce((total, item) => {
-            return total + (item.product_price * (item.count || 1));
-        }, 0);
+        setShowAnimation(true); // Show animation immediately
 
-        try {
-            const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    items: cartProduct.map(item => ({
-                        product_name: item.product_name,
-                        product_price: item.product_price,
-                        count: item.count || 1,
-                    }))
-                }),
+        setTimeout(async () => {
+            const totalAmount = cartProduct.reduce((total, item) => {
+                return total + (item.product_price * (item.count || 1));
+            }, 0);
 
-            });
+            try {
+                const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        items: cartProduct.map(item => ({
+                            product_name: item.product_name,
+                            product_price: item.product_price,
+                            count: item.count || 1,
+                        }))
+                    }),
 
-            const data = await res.json();
-            // Waits for the server to respond, and parses the returned JSON data
+                });
 
-            if (data.id) {
-                const stripe = await stripePromise;
-                await stripe.redirectToCheckout({ sessionId: data.id });
-            } else {
-                alert('Failed to create Stripe session');
+                const data = await res.json();
+                // Waits for the server to respond, and parses the returned JSON data
+
+                if (data.id) {
+                    const stripe = await stripePromise;
+                    await stripe.redirectToCheckout({ sessionId: data.id });
+                } else {
+                    alert('Failed to create Stripe session');
+                }
+            } catch (error) {
+                console.error('Error during Stripe checkout:', error);
+                alert('Error initiating payment');
             }
-        } catch (error) {
-            console.error('Error during Stripe checkout:', error);
-            alert('Error initiating payment');
-        }
+        }, 2000);
     };
 
+    if (showAnimation) {
+        return <ReadytoPayment />;
+    }
 
     return (
         <div className='cartContainer'>
