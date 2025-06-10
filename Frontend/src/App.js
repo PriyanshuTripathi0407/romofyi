@@ -22,7 +22,7 @@
 // import Stock from './Components/Product/Stock.js'
 // import ProductoftheDay from './Components/Product/ProductoftheDay.js'
 // import Login from './Admin/Login.js';
-// import Dashboard from './Admin/Dashboard/Dashboard.js';
+// import Dashboard from './Admin/user-dashboard/user-dashboard.js';
 // // import AddToCart from './Components/AddtoCart/AddToCart.js';
 
 // import Cart from './Components/AddtoCart/Cart.js'
@@ -75,7 +75,7 @@
 //           <UserMenuItems />
 //           <Routes>
 //             <Route path='/home' element={<Home />}></Route>
-//             <Route path='/dashboard' element={<Dashboard />}></Route>
+//             <Route path='/user-dashboard' element={<Dashboard />}></Route>
 //             <Route path='/custom' element={<CustomerRegister />}></Route>
 //             <Route path='/userinfo' element={<UserInfo loginId={loginId} setloginId={setloginId} />}></Route>
 //             <Route path='/about' element={<About />}></Route>
@@ -159,8 +159,8 @@ import ShowProductDetails from './Components/Product/ShowProductDetails.js';
 import Register from './Admin/Register.js';
 import CustomerRegister from './Admin/Registration/Register.js';
 import Login from './Admin/Login.js';
-import Dashboard from './Admin/Dashboard/Dashboard.js';
-import Sidebar from './Components/Sidebar/Sidebar.js';
+import UserDashboard from './Admin/Dashboard/UserDashboard.js';
+// import Sidebar from './Components/Sidebar/Sidebar.js';
 import Order from './Components/Order/Order.js';
 import Review from './Components/Review/Review.js';
 import Stock from './Components/Product/Stock.js';
@@ -170,8 +170,9 @@ import UserInfo from './Components/Header/UserInfo.js';
 import Settings from './Components/Settings/Settings.js';
 import Wishlist from './Components/Wishlist/Wishlist.js';
 import PaymentSuccessful from './Components/ShowMessages/PaymentSuccessful.js'
+import PageNotFound from './Components/ShowMessages/PageNotFound.js'
 import { getData } from './API/ProductAPI/ProductAPI.js';
-
+import VendorDashboard from './Admin/Dashboard/VendorDashboard.js';
 
 function App() {
   const [loginId, setloginId] = useState()
@@ -200,6 +201,7 @@ function App() {
   const commonRoutes = [
     { path: '/', element: <Home /> },
     { path: '/about', element: <About /> },
+    { path: '*', element: <PageNotFound /> },
     { path: '/product', element: <Product setproductId={setProductId} /> },
     { path: '/newarrivals', element: <NewArrivals /> },
     { path: '/fashion', element: <Fashion /> },
@@ -218,8 +220,9 @@ function App() {
 
   // Routes only for logged-in users
   const privateRoutes = [
-    { path: '/dashboard', element: <Dashboard /> },
+    { path: '/user-dashboard', element: <UserDashboard /> },
     { path: '/home', element: <Home /> },
+    { path: '*', element: <PageNotFound /> },
     {
       path: '/userinfo', element: <UserInfo loginId={loginId} setloginId={setloginId} />
     },
@@ -237,14 +240,15 @@ function App() {
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
       <BrowserRouter>
-     
+      <VendorDashboard/>
         <Header cartProduct={cartProduct} />
         {loginId ? <UserMenuItems /> : <NavbarMenu />}
         <Routes>
-          {commonRoutes.map((route, i) => (
-            <Route key={i} path={route.path} element={route.element} />
-          ))}
-          {loginId &&
+          {(!loginId) ?
+            commonRoutes.map((route, i) => (
+              <Route key={i} path={route.path} element={route.element} />
+            ))
+            :
             privateRoutes.map((route, i) => (
               <Route key={`private-${i}`} path={route.path} element={route.element} />
             ))}

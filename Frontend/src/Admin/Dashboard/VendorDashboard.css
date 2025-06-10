@@ -1,0 +1,8 @@
+ .logo{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative;}
+
+ .vendor-header{ height: auto; border: 1px solid black; display: flex; align-items: center; justify-content: space-between; list-style: none; }
+.vendor-header li{list-style-type: none; color: #183661; font-weight: 400;}
+.vendor-header li:hover{ cursor: pointer; font-weight: 600; color: darkblue;}
+.right-container{height: 100vh; overflow-y: scroll; width: auto;}
+.right{height: 100vh; width: 100%; border: 1px solid black; margin: 0px;}
+

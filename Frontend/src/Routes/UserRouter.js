@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Dashboard from '../Admin/Dashboard/Dashboard';
+import UserDashboard from '../Admin/user-dashboard/UserDashboard';
 import Home from '../Components/Home/Home';
 import UserInfo from '../Components/Header/UserInfo';
 import Order from '../Components/Order/Order';
@@ -11,7 +11,7 @@ import PaymentSuccessful from '../Components/ShowMessages/PaymentSuccessful';
 
 const UserRouter = () => {
     const privateRoutes = [
-        { path: '/dashboard', element: <Dashboard /> },
+        { path: '/user-dashboard', element: <UserDashboard /> },
         { path: '/home', element: <Home /> },
         {
             path: '/userinfo', element: <UserInfo loginId={loginId} setloginId={setloginId} />

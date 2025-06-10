@@ -45,7 +45,7 @@ function Login({ loginId, setloginId }) {
                 if (loginResult === 'success') {
                     enqueueSnackbar("Logged In Successfully", { variant: 'success' });
                     setloginId(true);
-                    navigate('/dashboard');
+                    navigate('/user-dashboard');
                 } else if (loginResult === 'fail') {
                     enqueueSnackbar("Invalid Credentials !!", {
                         variant: 'error',

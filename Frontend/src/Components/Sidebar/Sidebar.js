@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import shirt4 from '../../Image/cshirt4.png'
-import Dashboard from '../../Admin/Dashboard/Dashboard';
+import UserDashboard from '../../Admin/user-dashboard/UserDashboard';
 
 // import { FiAlignJustify } from "react-icons/fi";
 
@@ -49,7 +49,7 @@ function Sidebar() {
                 </div>
                 </div>
             </div> */}
-            <Dashboard/>
+            <UserDashboard/>
         </>
     );
 };

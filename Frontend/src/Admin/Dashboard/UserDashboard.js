@@ -1,6 +1,6 @@
-import UserInfo from '../../Components/Header/UserInfo';
+import UserInfo from '../../Components/Header/UserInfo.js';
 import romo from '../../Image/BannerGirl.png'
-import './Dashboard.css';
+import './UserDashboard.css';
 import Slider from "react-slick";
 import Order from '../../Components/Order/Order.js';
 
@@ -14,9 +14,9 @@ import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlin
 import { getData } from '../../API/ProductAPI/ProductAPI.js'
 
 import { useEffect, useState } from 'react';
-import Settings from '../../Components/Settings/Settings';
+import Settings from '../../Components/Settings/Settings.js';
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const [index, setIndex] = useState(0);
   const [ProductData, setProductData] = useState([])
   const icons = [
@@ -177,7 +177,7 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default UserDashboard
 
 
 
