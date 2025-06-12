@@ -13,6 +13,26 @@ body{font-family: 'Roboto',sans-serif;}
   to   { transform: rotate(360deg); }
 }
 
+.show-between{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+.show-flex{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+}
+
+
+
+
 
 .snackbar-success {
   background-color: #183661 !important; 

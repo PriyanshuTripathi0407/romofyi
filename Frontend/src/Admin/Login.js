@@ -19,7 +19,7 @@ function Login({ loginId, setloginId }) {
     const InvalidCredentials = () => toast.error(" Invalid Credentials !!! ")
 
     const [showAnimation, setShowAnimation] = useState(false);
-    const [loginResult, setLoginResult] = useState(null); 
+    const [loginResult, setLoginResult] = useState(null);
 
     const getRegistration = async (formData) => {
         setShowAnimation(true);

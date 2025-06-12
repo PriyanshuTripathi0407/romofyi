@@ -31,7 +31,7 @@ function Product({ setproductId }) {
     handleGetData();
     if (!categoryProduct) {
       setProductCategory()
-    }else {
+    } else {
       setProductCategory(categoryProduct)
     }
   }, [])
@@ -139,29 +139,7 @@ function Product({ setproductId }) {
                         <u>{(parseInt(i.product_rating) * 10)} Reviews</u>
                       </strong></p>
                     </div>
-                    {/* <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <p style={{ display: 'flex', alignItems: 'center', width: 'max-content' }}>
-                        <strong>Ratings:</strong>
-                        <Rating
-                          name={`read-only-rating-${i.product_id}`}
-                          value={parseFloat(i.product_rating) || 0}
-                          precision={0.5}
-                          readOnly
-                        />
-                      </p>
-                      <p> <strong><DiscountIcon /></strong> <strong>{(parseInt(i.product_price) / 100)}</strong>%</p>
-                    </div> <hr />
-                    <h4 className='title_name'> {i.product_name}</h4>
-                    {i.product_tag && i.product_tag.length > 0 ?
-                      (i.product_tag.map((tag, index) => (
-                        <div className='tagname' key={tag.id} >{tag.name}</div>
-                      ))
-                      ) :
-                      (<div > </div>)}*/}
-
-
                     <button onClick={() => handleCart(i.product_id)} > ADD TO CART</button>
-
                   </div>
                 ))}
 
