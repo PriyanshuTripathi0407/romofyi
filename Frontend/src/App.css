@@ -29,9 +29,24 @@ body{font-family: 'Roboto',sans-serif;}
   align-items: center;
   gap: 30px;
 }
-
-
-
+.show-inline{
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+}
+.show-col-wrap{
+  padding: 0 0 0 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  gap: 0px;
+}
 
 
 .snackbar-success {
