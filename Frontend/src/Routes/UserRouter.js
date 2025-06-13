@@ -14,7 +14,7 @@ const UserRouter = () => {
         { path: '/user-dashboard', element: <UserDashboard /> },
         { path: '/home', element: <Home /> },
         {
-            path: '/userinfo', element: <UserInfo loginId={loginId} setloginId={setloginId} />
+            path: '/userinfo', element: <UserInfo loginId={loginId} setLoginId={setLoginId} />
         },
         { path: '/order', element: <Order /> },
         {

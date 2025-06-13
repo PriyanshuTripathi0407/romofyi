@@ -175,7 +175,7 @@ import { getData } from './API/ProductAPI/ProductAPI.js';
 import VendorDashboard from './Admin/Dashboard/VendorDashboard.js';
 
 function App() {
-  const [loginId, setloginId] = useState()
+  const [loginId, setLoginId] = useState(false);
   const [productId, setProductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setDbData] = useState([]);
@@ -211,7 +211,7 @@ function App() {
     { path: '/productDetails', element: <ShowProductDetails /> },
     { path: '/register', element: <Register /> },
     { path: '/custom', element: <CustomerRegister /> },
-    { path: '/login', element: <Login loginId={loginId} setloginId={setloginId} /> },
+    { path: '/login', element: <Login loginId={loginId} setLoginId={setLoginId} /> },
     { path: '/review', element: <Review /> },
     { path: '/stock', element: <Stock /> },
     { path: '/productoftheday', element: <ProductoftheDay /> },
@@ -220,11 +220,12 @@ function App() {
 
   // Routes only for logged-in users
   const privateRoutes = [
-    { path: '/user-dashboard', element: <UserDashboard /> },
+    { path: '/user-dashboard', element: <UserDashboard loginId={loginId} setLoginId={setLoginId} /> },
+    { path: '/vendor-dashboard', element: <VendorDashboard/> },
     { path: '/home', element: <Home /> },
     { path: '*', element: <PageNotFound /> },
     {
-      path: '/userinfo', element: <UserInfo loginId={loginId} setloginId={setloginId} />
+      path: '/userinfo', element: <UserInfo loginId={loginId} setLoginId={setLoginId} />
     },
     { path: '/order', element: <Order /> },
     {
@@ -239,16 +240,15 @@ function App() {
 
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-      <BrowserRouter>
-      <VendorDashboard/>
+      <BrowserRouter>  
         <Header cartProduct={cartProduct} />
         {loginId ? <UserMenuItems /> : <NavbarMenu />}
         <Routes>
-          {(!loginId) ?
-            commonRoutes.map((route, i) => (
+          {commonRoutes.map((route, i) => (
               <Route key={i} path={route.path} element={route.element} />
             ))
-            :
+          }
+          {loginId && 
             privateRoutes.map((route, i) => (
               <Route key={`private-${i}`} path={route.path} element={route.element} />
             ))}

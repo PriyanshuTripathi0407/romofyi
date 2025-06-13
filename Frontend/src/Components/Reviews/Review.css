@@ -1,0 +1,5 @@
+.comment{display: flex; flex-wrap: wrap; justify-content: start; align-items: center; gap: 20px; padding: 15px 5px;}
+.ReviewContainer{border: 5px solid #183661; width: 250px; height: auto; padding: 10px; border-radius: 20px; position: relative;}
+.ReviewContainer .ImageInfo img{ height: 50px; width: 50px; border-radius: 50%; border: 1px solid gold;}
+.ReviewContainer .ImageInfo span{margin: 0 10px; font-weight: 600; font-family: 'Roboto'; font-size: 18px;}
+.ReviewContainer .rating{position: absolute; right: 10px; top:40px;}

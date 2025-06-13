@@ -1,3 +1,8 @@
-.FormContainer{ padding:0 20px; display: flex; justify-content: center; align-items: center; gap: 20px; height: auto; row-gap: 0; margin: 0;}
-.FormContainer .left{ border: 1px solid orange;}
-.FormContainer .right{ border: 1px solid orange;}
+.productUploadContainer{background-color: gold; text-align: center; transition: all 0.3s ease-in-out; height: 96vh; padding: 10px 0;}
+.FormContainer{ padding:0 20px; display: flex; justify-content: start; align-items: center; gap: 20px; height: 100%; row-gap: 0; margin: 0; background-color: gold; flex-wrap: wrap; }
+.FormContainer .show-col-wrap .ant-form-item-label >label{   
+  font-weight: 600;       
+  font-family: 'Roboto'; 
+  color: #444;              
+  font-size: 14px;         
+}

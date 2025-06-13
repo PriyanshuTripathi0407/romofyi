@@ -29,14 +29,19 @@ const COLORS = ['#0088FE', '#3d35ab', '#e3b810', '#FF8042'];
 const VendorCharts = () => {
 
   return (
-    <div className=" p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className=" p-8 grid grid-cols-1 md:grid-cols-2 gap-8 chart-box">
+        <h3>Analysis Report of Sales</h3>
       <div className="chartContainer shadow-xl rounded-2xl border p-2">
         <h6 className="text-xl font-bold mb-4">Monthly Sales</h6>
         <ResponsiveContainer width="100%" height={150}>
-          <LineChart data={salesData}>
-            <Line type="monotone" dataKey="sales" stroke="#183661" strokeWidth={7} />
-            <Tooltip />
-          </LineChart>
+          <BarChart data={salesData}>
+            <CartesianGrid strokeDasharray="2 1" />
+              <XAxis dataKey="name" stroke='#fcdb' />
+              <Bar type="step" dataKey="sales" fill="#fcdb03" strokeWidth={2} />
+              <YAxis stroke='#badb03'/>
+              <Bar type="step" dataKey="name" fill="#183661" strokeWidth={2} />
+              <Tooltip />
+          </BarChart>
         </ResponsiveContainer>
       </div>
 

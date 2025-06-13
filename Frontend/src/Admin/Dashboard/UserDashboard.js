@@ -16,7 +16,7 @@ import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { useEffect, useState } from 'react';
 import Settings from '../../Components/Settings/Settings.js';
 
-const UserDashboard = () => {
+const UserDashboard = ({loginId, setLoginId}) => {
   const [index, setIndex] = useState(0);
   const [ProductData, setProductData] = useState([])
   const icons = [
@@ -78,7 +78,7 @@ const UserDashboard = () => {
   return (
     <div className='container-fluid' >
       <div className='row'>
-        <UserInfo />
+        <UserInfo loginId={loginId} setLoginId={setLoginId} />
 
         {/* Your Activities components */}
         <div className='row border py-2 '>

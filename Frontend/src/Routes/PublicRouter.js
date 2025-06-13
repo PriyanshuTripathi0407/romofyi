@@ -29,7 +29,7 @@ const PublicRouter = () => {
     { path: '/productDetails', element: <ShowProductDetails /> },
     { path: '/register', element: <Register /> },
     { path: '/custom', element: <CustomerRegister /> },
-    { path: '/login', element: <Login loginId={loginId} setloginId={setloginId} /> },
+    { path: '/login', element: <Login loginId={loginId} setLoginId={setLoginId} /> },
     { path: '/review', element: <Review /> },
     { path: '/stock', element: <Stock /> },
     { path: '/productoftheday', element: <ProductoftheDay /> },

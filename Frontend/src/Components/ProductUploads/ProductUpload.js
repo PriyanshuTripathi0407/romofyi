@@ -15,25 +15,23 @@ const ProductUpload = () => {
   }
 
   return (
-    <div>
-      <Form form={form}  layout="horizontal" onFinish={onFinish} className='FormContainer'>
-        <div className='left col-md-4'>
-          <Form.Item
-            name="product_image"
-            label="Product Image"
-            valuePropName="fileList"
-            // getValueFromEvent={normFile}
-            rules={[{ required: true }]}
-          >
-            <Upload beforeUpload={() => false} maxCount={1}>
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
-          </Form.Item>
-        </div>
-        <div className='right col-md-8'>
+    <div className='productUploadContainer'>
+      <h4>Upload Your Products </h4>
+      <Form form={form} layout="vertical" onFinish={onFinish} className='FormContainer'>   
           <div className='show-col-wrap'>
             <Form.Item name="product_name" label="Product Name" rules={[{ required: true }]}>
               <Input />
+            </Form.Item>
+            <Form.Item
+              name="product_image"
+              label="Product Image"
+              valuePropName="fileList"
+              // getValueFromEvent={normFile}
+              rules={[{ required: true }]}
+            >
+              <Upload beforeUpload={() => false} maxCount={1}>
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
             </Form.Item>
             <Form.Item name="product_color" label="Color">
               <Input />
@@ -58,7 +56,10 @@ const ProductUpload = () => {
             </Form.Item>
 
 
-            <Form.Item name="product_price" label="Price (&#8377;)" rules={[{ required: true }]}>
+            <Form.Item name="product_price" label="New Price (&#8377;)" rules={[{ required: true }]}>
+              <InputNumber style={{ width: "100%" }} step={0.01} />
+            </Form.Item>
+            <Form.Item name="product_oldprice" label="Old Price (&#8377;)" rules={[{ required: true }]}>
               <InputNumber style={{ width: "100%" }} step={0.01} />
             </Form.Item>
 
@@ -69,18 +70,16 @@ const ProductUpload = () => {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item name="product_description" label="Description" rules={[{ required: true }]}>
-              <TextArea rows={4} cols={50} placeholder="Enter product description"  />
-            </Form.Item>
           </div>
+            <Form.Item name="product_description" label="Description" rules={[{ required: true }]}>
+              <TextArea rows={4} cols={80} placeholder="Enter product description" />
+            </Form.Item>
 
           <div className='show-inline'>
             <Form.Item>
               <Button type="primary" htmlType="submit">Upload Product</Button>
             </Form.Item>
           </div>
-        </div>
-
       </Form>
     </div >
   )

@@ -11,17 +11,19 @@ import { useSnackbar } from 'notistack';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
 import LoggedInMessage from '../Components/ShowMessages/LoggedInMessage'
 
-function Login({ loginId, setloginId }) {
+function Login({ loginId, setLoginId }) {
     const { login } = useAuth();
     const navigate = useNavigate();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const [role, setRole] = useState('');
 
     const InvalidCredentials = () => toast.error(" Invalid Credentials !!! ")
 
     const [showAnimation, setShowAnimation] = useState(false);
     const [loginResult, setLoginResult] = useState(null);
 
-    const getRegistration = async (formData) => {
+    const getLoggedIn = async (formData) => {
+        console.log(formData, "This is my form Data in Login Page ")
         setShowAnimation(true);
 
         try {
@@ -29,6 +31,15 @@ function Login({ loginId, setloginId }) {
             if (response.status === 200 && response.data.success) {
                 login(response.data);
                 setLoginResult('success');
+                if (formData.role === 'Admin') {
+                    setRole('Admin')
+                }
+                else if (formData.role === 'Customer') {
+                    setRole('Customer')
+                }
+                else {
+                    setRole('Vendor')
+                }
             } else {
                 setLoginResult('fail');
             }
@@ -44,8 +55,14 @@ function Login({ loginId, setloginId }) {
             const timer = setTimeout(() => {
                 if (loginResult === 'success') {
                     enqueueSnackbar("Logged In Successfully", { variant: 'success' });
-                    setloginId(true);
-                    navigate('/user-dashboard');
+                    setLoginId(true);
+                    if (role === 'Customer') {
+                        navigate('/user-dashboard');
+                    }
+                    else if (role === 'Vendor') {
+                        navigate('/vendor-dashboard');
+                    }
+
                 } else if (loginResult === 'fail') {
                     enqueueSnackbar("Invalid Credentials !!", {
                         variant: 'error',
@@ -72,7 +89,7 @@ function Login({ loginId, setloginId }) {
     return (
         <div className='loginContainer' >
             <ToastContainer />
-            <Form className='formContainer' onFinish={getRegistration}>
+            <Form className='formContainer' onFinish={getLoggedIn}>
                 <h1>LOGIN FORM</h1><br />
                 <div className='item'>
                     <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Please input your email!' }]}>

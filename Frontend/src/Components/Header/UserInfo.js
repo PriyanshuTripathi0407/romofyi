@@ -10,11 +10,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
-const UserInfo = ({ loginId, setloginId }) => {
+const UserInfo = ({ loginId, setLoginId }) => {
 
     const { logout } = useAuth();
     const [showSetting, setShowSetting] = useState(false)
     const navigate = useNavigate();
+    const nav = useNavigate();
     const BASE_URL = 'http://localhost:8000';
 
     // const [userData, setUserData] = useState({})
@@ -38,6 +39,7 @@ const UserInfo = ({ loginId, setloginId }) => {
 
     useEffect(() => {
         console.log(userData, "this user Data in UserInfo.js");
+        console.log('Props in UserInfo:', { loginId, setLoginId });
     }, [userData]);
 
     function handleSettings() {
@@ -45,8 +47,9 @@ const UserInfo = ({ loginId, setloginId }) => {
     }
 
     function handleLogOut() {
-        const login = () => setloginId(false);
+        setLoginId(false);
         logout();
+        nav('/')
     }
     const userName = "Romofyi";
     return (
