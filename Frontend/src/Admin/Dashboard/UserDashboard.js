@@ -180,30 +180,3 @@ const UserDashboard = ({loginId, setLoginId}) => {
 export default UserDashboard
 
 
-
-
-// db.createCollection("university",{
-// 	validator:{
-// 	$jsonSchema: {
-// 		required: ["name", "department","designation","age"],
-// 		title:"University Object Validation",
-// 		properties:{
-// 			name:{
-// 				bsonType:"string",
-// 				description:"Name should be only in string",
-// 			      },
-// 			department:{
-// 				bsonType:"string" ,
-// 				enum:["CSIT", "Physics", "Chemistry"],
-// 				description:"Department should be only either of CSIT, Physics, Chemistry ",
-// 			      },
-// 			designation:{
-// 				bsonType:"string",
-// 				enum:["HOD", "Professor", "Guard"],
-// 				description:"Designation should be only either of HOD, Professor, Guard ",
-// 			      },
-// 			age:{
-// 				bsonType:"int",
-// 				description:"Age should be only in Integer",
-// 			      },
-// }}}});

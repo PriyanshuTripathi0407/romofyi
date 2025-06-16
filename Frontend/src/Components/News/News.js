@@ -1,22 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import News1 from '../../Image/news_img1.jpg'
 import News2 from '../../Image/news_img2.jpg'
 import News3 from '../../Image/news_img3.jpg'
 import './News.css'
+import { getData } from '../../API/NewsAPI/NewsAPI'
 
 function News() {
+  const BASE_URL = 'http://localhost:8000';
+  const [news, setNews] = useState()
+  const [isExpanded, setIsExpanded] = useState(false)
+  const getNewsData = async () => {
+    const res = await getData();
+    setNews(res.data)
+    console.log(res.data, "This is news Data in Newsjs")
+    // console.log(res, "This is news in Newsjs")
+    return res;
+  }
 
-  const news = [
-    { image: News1, title: 'It has survived not only five', date: '7 July 2045', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' },
-    { image: News2, title: 'It has survived not only five', date: '7 July 2045', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' },
-    { image: News3, title: 'It has survived not only five', date: '7 July 2045', description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.' }
+  useEffect(() => {
+    getNewsData()
+  }, [])
 
-  ]
   var settings = {
     dots: false,
     infinite: true,
-    speed: 10000,
+    speed: 5000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -25,26 +34,52 @@ function News() {
   return (
     <div className='newsContainer'>
       <h1>Latest Updates</h1><hr />
-      <marquee behavior="scroll" direction="left" className='headlines'>
-        This is a scrolling message which will give you updates of the sale on our shopping page Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. . . .  
-      </marquee>
+      {news && news.length > 0 && (
+        <marquee
+          behavior="scroll"
+          direction="left"
+          scrollamount="15"
+          className='headlines'          
+        >
+          {news.map((item, index) => (
+            <span key={item.id || index} style={{ marginRight: "40px" }}>
+              📰 {item.headline}
+            </span>
+          ))}
+        </marquee>
+      )}
+
       <Slider {...settings} >
-        {news.map(i => (
-          <div className='d-flex gap-5 info' key={i.image}>
-            <div className='ImageWrapper'>
-              <img src={i.image} alt=''></img>
+        {news ? news.map(i => (
+          <div className='d-flex gap-2 info' key={i.image}>
+            <div className='Image_Wrapper'>
+              <img src={`${BASE_URL}${i.image}`} alt=''></img>
             </div>
             <div className='news'>
-              <h1>{i.title}</h1>
+              <h1>{i.headline}</h1>
               <div className='d-flex justify-content-between px-4'>
-                <h2>{i.date}</h2>
-                <button> View </button>
+                <p>{i.created_at}</p>
+                <h2> {i.tags} </h2>
               </div>
-              <p>{i.description}</p>
+              <div className='description'>
+                <p>
+                  {isExpanded ? i.description : i.description.slice(0, 150) + (i.description.length > 150 ? "..." : "")}
+                  {i.description.length > 150 && (
+                    <button onClick={() => setIsExpanded(!isExpanded)} style={{ color: "blue", background: "none", border: "none", cursor: "pointer" }}>
+                      {isExpanded ? "Show Less" : "Read More"}
+                    </button>
+                  )}
+                </p>
+              </div>
             </div>
 
           </div>
-        ))}
+        ))
+          :
+          <div>
+            <p>No news found</p>
+          </div>
+        }
       </Slider>
 
 

@@ -24,7 +24,7 @@ body{font-family: 'Roboto',sans-serif;}
 .show-flex{
   width: 100%;
   height: auto;
-  display: flex;
+  display: flex !important;
   justify-content: start;
   align-items: center;
   gap: 30px;

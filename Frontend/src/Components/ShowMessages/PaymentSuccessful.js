@@ -8,7 +8,7 @@ const PaymentSuccessful = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/cart'); 
+      navigate('/cart',{ replace: true }); 
     }, 3000);
 
     return () => clearTimeout(timer); 

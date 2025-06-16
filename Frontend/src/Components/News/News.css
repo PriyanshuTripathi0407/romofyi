@@ -1,4 +1,4 @@
-.newsContainer{text-align: left; padding: 5px 10px; color: #183661; background-color: gold; border: 1px solid #183661;}
+.newsContainer{text-align: left; padding: 5px 10px; color: #183661; background-color: white;}
 
 .newsContainer .headlines{background-color: #183661; color: gold; text-shadow:
     0 0 5px #39ff14,
@@ -6,18 +6,32 @@
     0 0 20px #39ff14,
     0 0 40px #0fa,
     0 0 80px #0fa;}
-.newsContainer .info{justify-content: space-between; padding: 5px 10px; margin: 5px 0px; border: 1px solid #183661;}
+.newsContainer .info{justify-content: space-between; padding: 5px 10px; margin: 5px 0px; }
 
-.newsContainer .info .ImageWrapper{height: 200px; width: 600px;}
+.newsContainer .info .ImageWrapper{height: 600px; width: 600px; }
 
-.newsContainer .info .ImageWrapper img{height: 100%; width: 100%; object-fit: cover; padding: 2px; border-radius: 10px;}
+.newsContainer .info .Image_Wrapper img{height: 100%; width: 100%; object-fit: cover; padding: 2px; border-radius: 10px; border: 5px solid gold !important;}
 
 .newsContainer .info .news {text-align: center;}
+.newsContainer .info .news h1{text-align: center; border-radius: 10px; background-color: #183661; color: gold;}
 
-.newsContainer .info .news h2,.news h3 {margin:10px 0px; font-size: 19px;}
+.newsContainer .info .news h2,.news h3 {margin:0px; padding: 5px; font-size: 19px; background-color: #183661; color: gold;}
+.newsContainer .info .news .description{ max-height: 400px; overflow-y: scroll;padding: 5px 10px;}
 
-.newsContainer .info .news p {margin:4px;text-align: left;font-size: 20px; color: rgba(0, 0, 0, 0.818); font-family:cursive; }
+.newsContainer .info .news p {margin:4px;text-align: left;font-size: 16px; color: rgba(0, 0, 0, 0.818); font-family:cursive; }
 
 .newsContainer .info .news button{padding: 5px 15px; border-radius: 20px; background-color: #183661; color: gold;}
 .newsContainer .info .news button:hover{background-color: gold; color: #183661; cursor: pointer; font-weight: bold;}
+
+
+.newsContainer .slick-arrow{position: absolute;top: 50%; width: 20px !important; height: 20px !important; border-radius: 50%;background-color: lightgray; z-index: 100; transition: all 0.2s ease-in-out;box-shadow: 0 3px 6px rgba(197, 80, 80, 0.16), 0 3px 6px rgba(0,0,0,0.23);}
+.newsContainer .slick-next{right: 0px !important;}
+.newsContainer .slick-prev{left: 0px !important;}
+.newsContainer .slick-prev:before{content: "\f104" !important; font-family: FontAwesome; font-size: 15px;}
+.newsContainer .slick-next:before{content: "\f105" !important; font-family: FontAwesome; font-size: 15px;}
+.newsContainer .slick-arrow:hover{background-color: gold;}
+.newsContainer .slick-dots{position: absolute; top: 300px; font-size: 5px;}
+.newsContainer .slick-dots button{width: 50px !important; height: 10px !important; font-size: 10px !important;}
+.newsContainer .slick-dots button::before{width: 50px !important; height: 15px !important; font-size: 10px !important;}
+.newsContainer .slick-active button::before{color: #183661 !important;}
 

@@ -46,7 +46,7 @@ const VendorCharts = () => {
       </div>
 
       <div className="bg-white shadow-xl rounded-2xl border p-2 show-between">
-        <div>
+        <div className=''>
           <h6 className="text-xl font-bold mb-4">Product Categories</h6>
           <ResponsiveContainer width={300} height={250} >
             <PieChart>

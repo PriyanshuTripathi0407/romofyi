@@ -75,7 +75,7 @@ class Product(models.Model):
     product_newprice = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     product_vendor= models.ForeignKey(AppUser, on_delete=models.CASCADE, limit_choices_to={'role': 'vendor'},null=True, blank=True)
     product_rating = models.DecimalField(max_digits=3, decimal_places=1, choices=RATING_CHOICES, default=0.0, null=True)
-    
+    product_isStock= models.BooleanField(default=True,null=True, blank=True)
     product_discount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     def generate_product_id(self):

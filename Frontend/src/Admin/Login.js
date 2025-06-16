@@ -57,10 +57,10 @@ function Login({ loginId, setLoginId }) {
                     enqueueSnackbar("Logged In Successfully", { variant: 'success' });
                     setLoginId(true);
                     if (role === 'Customer') {
-                        navigate('/user-dashboard');
+                        navigate('/user-dashboard',{ replace: true });
                     }
                     else if (role === 'Vendor') {
-                        navigate('/vendor-dashboard');
+                        navigate('/vendor-dashboard',{ replace: true });
                     }
 
                 } else if (loginResult === 'fail') {

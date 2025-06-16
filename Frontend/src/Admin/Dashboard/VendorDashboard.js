@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './VendorDashboard.css'
 import vendorImage from '../../Image/BannerGirl.png'
 import VendorCharts from '../../Components/Charts/VendorCharts'
@@ -9,12 +9,17 @@ import RequestedProduct from '../../Components/Product/RequestedProduct'
 import { Form, Input, Modal, Select, Upload, Button, Avatar } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { useAuth } from '../../AuthContext';
+import { useNavigate } from 'react-router-dom'
+import ProductTable from '../../Components/Tables/ProductTable'
+import CustomerTable from '../../Components/Tables/CustomerTable'
 
-const VendorDashboard = () => {
+const VendorDashboard = ({ loginId, setLoginId }) => {
     const [showProfile, setShowProfile] = useState(false)
     const BASE_URL = 'http://localhost:8000';
     const [form] = useForm();
-    const [userData, setUserData] = useState()
+    const { logout } = useAuth();
+    const nav = useNavigate();
     const [uploadProduct, setUploadProduct] = useState(false)
     const [soldProduct, setSoldProduct] = useState(false)
     const [showProductList, setShowProductList] = useState(false)
@@ -23,6 +28,16 @@ const VendorDashboard = () => {
     const [requestedProduct, setRequestedProduct] = useState(false)
     const [reviews, setReviews] = useState(false)
 
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            const parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user)
+        }
+    }, []);
+
+
     function handleModifiedData() {
 
     }
@@ -30,7 +45,7 @@ const VendorDashboard = () => {
         setUploadProduct(false);
         setSoldProduct(false);
         setShowDashboard(true);
-        setRequestedProduct(false);       
+        setRequestedProduct(false);
         setReviews(false);
         setShowProfile(false);
         setShowProductList(false);
@@ -79,7 +94,7 @@ const VendorDashboard = () => {
     function ShowProductList() {
         setUploadProduct(false);
         setSoldProduct(false);
-        setShowDashboard(false);       
+        setShowDashboard(false);
         setRequestedProduct(false);
         setReviews(false);
         setShowProfile(false);
@@ -89,7 +104,7 @@ const VendorDashboard = () => {
     function ShowCustomerList() {
         setUploadProduct(false);
         setSoldProduct(false);
-        setShowDashboard(false);       
+        setShowDashboard(false);
         setRequestedProduct(false);
         setReviews(false);
         setShowProfile(false);
@@ -99,14 +114,23 @@ const VendorDashboard = () => {
     function ShowProfile() {
         setUploadProduct(false);
         setSoldProduct(false);
-        setShowDashboard(false);       
+        setShowDashboard(true);
         setRequestedProduct(false);
         setReviews(false);
         setShowProfile(true);
         setShowProductList(false);
         setShowCustomerList(false);
+        form.setFieldsValue(userData)
     }
 
+
+    function handleLogOut() {
+        setLoginId(false);
+        logout();
+        nav('/', { replace: true })
+    }
+
+    console.log("This is vendor data in vendor Dashboard", userData)
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -115,12 +139,12 @@ const VendorDashboard = () => {
                     <div className='sidebar'>
                         <div className='show-flex bio' onClick={ShowProfile}>
                             <div className='imageWrapper' >
-                                <img src={vendorImage} alt='Vendor Image' />
+                                <img src={userData.image ? `${BASE_URL}${userData.image}` : vendorImage} alt='Vendor Image' />
                             </div>
-                            <div className='info'>
-                                <h6>SHO85AJ </h6>
-                                <h6>Ajay Sinha </h6>
-                                <h6>Ajay Fruits Shop</h6>
+                            <div className='vendor-info'>
+                                <h6>{userData.email || "SHOJ123"} </h6>
+                                <h6>{userData.first_name || "Ajay Sinha"} {userData.last_name} </h6>
+                                <h6>{userData.first_name || "Ajay "} Fruits Shop</h6>
                             </div>
                         </div>
                         <div className="position-sticky">
@@ -130,6 +154,7 @@ const VendorDashboard = () => {
                                 <li className="nav-item" onClick={ShowRequestedProduct}>Orders </li>
                                 <li className="nav-item" onClick={ShowCustomerList}>Customers Table</li>
                                 <li className="nav-item" onClick={ShowProfile}>Settings Need User</li>
+                                <li className="nav-item" onClick={handleLogOut}>Logout</li>
                             </ul>
                         </div>
 
@@ -165,11 +190,11 @@ const VendorDashboard = () => {
                             }
 
                             {showProductList &&
-                                <CustomerProductReviews />
+                                <ProductTable />
                             }
 
                             {showCustomerList &&
-                                <CustomerProductReviews />
+                                <CustomerTable />
                             }
                         </div>
                         <div>

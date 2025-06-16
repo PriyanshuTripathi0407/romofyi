@@ -32,7 +32,7 @@ function ShowProductDetails({ setproductId }) {
   }
 
   function handleNext() {
-    navigate('/product');
+    navigate('/product',{ replace: true });
   }
 
   const findProduct = locate.state

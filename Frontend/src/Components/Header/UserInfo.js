@@ -14,7 +14,6 @@ const UserInfo = ({ loginId, setLoginId }) => {
 
     const { logout } = useAuth();
     const [showSetting, setShowSetting] = useState(false)
-    const navigate = useNavigate();
     const nav = useNavigate();
     const BASE_URL = 'http://localhost:8000';
 
@@ -49,7 +48,7 @@ const UserInfo = ({ loginId, setLoginId }) => {
     function handleLogOut() {
         setLoginId(false);
         logout();
-        nav('/')
+        nav('/',{ replace: true })
     }
     const userName = "Romofyi";
     return (

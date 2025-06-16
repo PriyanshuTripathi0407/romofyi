@@ -1,3 +1,4 @@
+import { Button, Form, Input,TextArea } from 'antd';
 import Banner from '../../Image/BannerGirl.png'
 import './Contact.css'
 
@@ -7,32 +8,40 @@ function Contact() {
   }
   return (
     <div className='contactContainer'>
-      <div class="formContainer">
-        <form >
+      <div class="form_Container">
+        <Form layout='vertical'>
           <h2 class="title"> Contact form </h2>
-          <label >Firstname:  </label> <br />
-          <input type="text" placeholder="Firstname" required /> <br /> <br />
+          <Form.Item label="Firstname" name="first_name">        
+            <Input type="text" placeholder="Firstname" required />  <br />
+          </Form.Item>
 
-          <label >Lastname:  </label> <br />
-          <input type="text" placeholder="Lastname" required /> <br /> <br />
+          <Form.Item label="Lastname" name="last_name">           
+            <Input type="text" placeholder="Lastname" required />  <br />
+          </Form.Item>
 
-          <label >Email: </label> <br />
-          <input type="email" placeholder="Email" required /> <br /> <br />
+          <Form.Item label="Email" name="email">      
+            <Input type="email" placeholder="Email" required /> <br />
+          </Form.Item>
 
-          <label >Contact Number: </label> <br />
-          <input type="text" placeholder="+91" required /> <br /> <br />
+          <Form.Item label="Contact Number" name="contact">        
+            <Input type="text" placeholder="+91" required /> <br />
+          </Form.Item>
 
-          <label >Message: </label> <br />
-          <input type='textfield' placeholder="Write your message here" required /> <br /> <br />
+          <Form.Item label="Message" name="message">         
+            <Input type='textfield' placeholder="Write your message here" required /> <br />
+          </Form.Item>
 
-          <button class="submit" onClick={() => Submit()}>Submit</button>
+          <Form.Item>
+            <Button class="submit" onClick={() => Submit()}>Submit</Button>
+          </Form.Item>
 
-        </form>
+        </Form>
       </div>
       <div className='advertise'>
-        <div className='info'>
+        <div className='company-details'>
           <h1>Romofyi</h1>
-          <p> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Reiciendis dolore similique officia corporis veniam modi rerum iste. Dolorum ut provident est rem qui quibusdam, neque unde, id iure laboriosam quo tempore asperiores ad libero sed voluptatum, nesciunt quae modi impedit. Est, aut iusto error amet assumenda inventore! Nam possimus pariatur quaerat sit, ea doloremque placeat magnam at adipisci sint aliquid, facilis sapiente dolorum? Neque placeat consequuntur harum quam adipisci debitis. Inventore reprehenderit error maxime. </p>
+          <p><b> Romofyi</b> is a feature-rich, scalable, and <strong>user-friendly</strong> e-commerce web application designed as a bazaar-style online shopping platform, offering a wide variety of products across multiple categories — from <strong>electronics and fashion to groceries, home decor, beauty, accessories,</strong>and more.
+            It aims to replicate the diverse experience of a physical marketplace in the digital world, catering to sellers and buyers with robust,<strong>interactive features</strong>  and a seamless user experience. It enables vendors to manage products, inventory, and orders efficiently. </p>
         </div>
         <div className='banner'>
           <img src={Banner} alt=''></img>

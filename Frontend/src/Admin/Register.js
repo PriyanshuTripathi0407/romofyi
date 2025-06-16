@@ -21,16 +21,16 @@ function Register() {
     const response = await PostData(formData);
     if (formData) {
       alert("Registered Successfully!! ")
-      navigate('/login');
+      navigate('/login',{ replace: true });
     }
     getRegistration();
   }
 
   const ShowModal = (record) => {
     setModalOpen(!isModalOpen);
-    console.log(record, "Record Data in Modal")
-    console.log(record.id, "Record id Data in Modal")
-    console.log(RegRecord, "useState mein hai Record id in Modal")
+    // console.log(record, "Record Data in Modal")
+    // console.log(record.id, "Record id Data in Modal")
+    // console.log(RegRecord, "useState mein hai Record id in Modal")
     form.setFieldsValue(record)
   }
 
@@ -53,7 +53,7 @@ function Register() {
   const getRegistration = async () => {
     const response = await getData()
     setRegData(response.data)
-    console.log(Regdata, "Registered Data")
+    // console.log(Regdata, "Registered Data")
     setShowDetails(!showDetails)
   }
 
@@ -73,7 +73,7 @@ function Register() {
   }
   // const test= Regdata.map(i=>(i.first_name))
   const searchedRegisterData = Regdata.filter(i => (i.first_name.toLowerCase().includes(searchedData.toLowerCase())))
-  console.log(searchedRegisterData, " Mil gya searched Data")
+  // console.log(searchedRegisterData, " Mil gya searched Data")
 
 
 
@@ -81,7 +81,7 @@ function Register() {
     <>
       <div className='registerContainer'>
         <Form className='formContainer' onFinish={postData}>
-          <h1>Register Form</h1>
+          <h1>REGISTRATION FORM </h1>
           <div >
             <Form.Item label='First Name' name='first_name'>
               <Input />
@@ -113,7 +113,9 @@ function Register() {
               <Input type='text' size='large' />
             </Form.Item>
           </div>
+          <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
           <Button htmlType='submit' >Register</Button>
+          </div>
         </Form>
         {/* <Table dataSource={Regdata} columns={col} />; */}
         {isModalOpen
