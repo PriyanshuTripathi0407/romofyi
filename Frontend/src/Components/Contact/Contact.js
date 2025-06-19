@@ -1,40 +1,75 @@
-import { Button, Form, Input,TextArea } from 'antd';
+import { Button, Form, Input, TextArea } from 'antd';
 import Banner from '../../Image/BannerGirl.png'
 import './Contact.css'
+import { postData } from '../../API/ContactAPI/ContactAPI';
 
 function Contact() {
-  function Submit() {
-    alert("Your Message sent Successfully");
+  function Submit(formData) {
+    console.log("This is form data in contact js", formData);
+    PostData(formData); 
+  }
+
+  const PostData = async (formData) => {
+    const res= await postData(formData)
+    if (res){
+      alert("Message sent Successfully ")
+    }
+    else{
+      alert("Something went wrong ")
+    }
   }
   return (
     <div className='contactContainer'>
       <div class="form_Container">
-        <Form layout='vertical'>
-          <h2 class="title"> Contact form </h2>
-          <Form.Item label="Firstname" name="first_name">        
-            <Input type="text" placeholder="Firstname" required />  <br />
+        <Form layout="vertical" onFinish={Submit}>
+          <h2 className="title">Contact Form</h2>
+
+          <Form.Item
+            label="Firstname"
+            name="first_name"
+            rules={[{ required: true, message: 'Please enter your first name' }]}
+          >
+            <Input placeholder="Firstname" />
           </Form.Item>
 
-          <Form.Item label="Lastname" name="last_name">           
-            <Input type="text" placeholder="Lastname" required />  <br />
+          <Form.Item
+            label="Lastname"
+            name="last_name"
+            rules={[{ required: true, message: 'Please enter your last name' }]}
+          >
+            <Input placeholder="Lastname" />
           </Form.Item>
 
-          <Form.Item label="Email" name="email">      
-            <Input type="email" placeholder="Email" required /> <br />
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: 'Please enter your email' },
+              { type: 'email', message: 'Please enter a valid email address' }
+            ]}
+          >
+            <Input placeholder="Email" />
           </Form.Item>
 
-          <Form.Item label="Contact Number" name="contact">        
-            <Input type="text" placeholder="+91" required /> <br />
+          <Form.Item
+            label="Contact Number"
+            name="contact"
+            rules={[{ required: true, message: 'Please enter your contact number' }]}
+          >
+            <Input placeholder="+91" />
           </Form.Item>
 
-          <Form.Item label="Message" name="message">         
-            <Input type='textfield' placeholder="Write your message here" required /> <br />
+          <Form.Item
+            label="Message"
+            name="message"
+            rules={[{ required: true, message: 'Please enter your message' }]}
+          >
+            <Input placeholder="Write your message here" />
           </Form.Item>
 
           <Form.Item>
-            <Button class="submit" onClick={() => Submit()}>Submit</Button>
+            <Button htmlType="submit" className="submit">Submit</Button>
           </Form.Item>
-
         </Form>
       </div>
       <div className='advertise'>

@@ -1,6 +1,6 @@
-.registerContainer{display:flex;justify-content:center; align-items:center; margin: 10px; height: 95vh; }
-.registerContainer .formContainer{text-align:left; background-color:#183661; font-weight:700;color:darkblue; width: max-content;padding: 20px; }
-.registerContainer .formContainer h1{text-align:center; margin:0px 5px 20px 5px;padding:10px;color: gold; border-bottom: 2px solid gold;}
+.registerContainer{display:flex;justify-content:center; align-items:center; margin: 10px; height: auto; }
+.registerContainer .formContainer{text-align:left; background-color:#183661; font-weight:700;color:darkblue; width: 80%; padding: 20px; height: 100%;}
+.registerContainer .formContainer h1{text-align:center; margin:0px 5px 20px 5px; padding:10px;color: gold; border-bottom: 2px solid gold;}
 .registerContainer .formContainer button{text-align:center; margin:5px;padding:10px;}
 .registerContainer .formContainer .Nameinfo{ padding: 0 20px;}
 .registerContainer .formContainer .ant-form-item label{color: gold;}

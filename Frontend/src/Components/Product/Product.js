@@ -100,9 +100,7 @@ function Product({ setproductId }) {
         </div>
         <div className='col-10'>
           <div className='product_container'>
-
             <div className='card'>
-
               {ProductData
                 .filter((i) =>
                   !productCategory || (i.product_category && i.product_category.name === productCategory)

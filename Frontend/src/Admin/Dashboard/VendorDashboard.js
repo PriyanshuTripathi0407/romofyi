@@ -16,17 +16,12 @@ import CustomerTable from '../../Components/Tables/CustomerTable'
 
 const VendorDashboard = ({ loginId, setLoginId }) => {
     const [showProfile, setShowProfile] = useState(false)
+    const [previewImage, setPreviewImage] = useState(null);
     const BASE_URL = 'http://localhost:8000';
     const [form] = useForm();
     const { logout } = useAuth();
     const nav = useNavigate();
-    const [uploadProduct, setUploadProduct] = useState(false)
-    const [soldProduct, setSoldProduct] = useState(false)
-    const [showProductList, setShowProductList] = useState(false)
-    const [showCustomerList, setShowCustomerList] = useState(false)
-    const [showDashboard, setShowDashboard] = useState(true)
-    const [requestedProduct, setRequestedProduct] = useState(false)
-    const [reviews, setReviews] = useState(false)
+
 
     const [userData, setUserData] = useState({})
     useEffect(() => {
@@ -38,89 +33,22 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
     }, []);
 
 
-    function handleModifiedData() {
+    const [activeSection, setActiveSection] = useState("dashboard");
 
+    function switchSection(section) {
+        setActiveSection(section);
+        if (section === "showProfile") {
+            setShowProfile(true);
+        }
     }
-    function ShowDashboard() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(true);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(false);
-    }
-    function ShowRequestedProduct() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(false);
-        setRequestedProduct(true);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(false);
-    }
-    function ShowSoldProduct() {
-        setUploadProduct(false);
-        setSoldProduct(true);
-        setShowDashboard(false);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(false);
-    }
-    function ShowUploadProduct() {
-        setUploadProduct(true);
-        setSoldProduct(false);
-        setShowDashboard(false);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(false);
-    }
-    function ShowReviews() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(false);
-        setRequestedProduct(false);
-        setReviews(true);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(false);
-    }
-    function ShowProductList() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(false);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(true);
-        setShowCustomerList(false);
-    }
-    function ShowCustomerList() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(false);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(false);
-        setShowProductList(false);
-        setShowCustomerList(true);
-    }
+
     function ShowProfile() {
-        setUploadProduct(false);
-        setSoldProduct(false);
-        setShowDashboard(true);
-        setRequestedProduct(false);
-        setReviews(false);
-        setShowProfile(true);
-        setShowProductList(false);
-        setShowCustomerList(false);
-        form.setFieldsValue(userData)
+        setShowProfile(true)
+        form.setFieldsValue(userData);
+        setActiveSection("dashboard");
+    }
+
+    function handleModifiedData() {
     }
 
 
@@ -137,7 +65,7 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                 <div className='col-md-3 logo py-1'>
                     <h5>Vendor Details</h5>
                     <div className='sidebar'>
-                        <div className='show-flex bio' onClick={ShowProfile}>
+                        <div className='show-flex bio' onClick={() => ShowProfile()}>
                             <div className='imageWrapper' >
                                 <img src={userData.image ? `${BASE_URL}${userData.image}` : vendorImage} alt='Vendor Image' />
                             </div>
@@ -149,11 +77,11 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                         </div>
                         <div className="position-sticky">
                             <ul className="nav flex-column">
-                                <li className="nav-item" onClick={ShowDashboard}>Dashboard</li>
-                                <li className="nav-item" onClick={ShowProductList}>Products List </li>
-                                <li className="nav-item" onClick={ShowRequestedProduct}>Orders </li>
-                                <li className="nav-item" onClick={ShowCustomerList}>Customers Table</li>
-                                <li className="nav-item" onClick={ShowProfile}>Settings Need User</li>
+                                <li className="nav-item" onClick={() => switchSection("dashboard")}>Dashboard</li>
+                                <li className="nav-item" onClick={() => switchSection("productList")}>Products List </li>
+                                <li className="nav-item" onClick={() => switchSection("requestedProduct")}>Orders </li>
+                                <li className="nav-item" onClick={() => switchSection("customerTable")}>Customers Table</li>
+                                <li className="nav-item" onClick={() => ShowProfile()}>Settings</li>
                                 <li className="nav-item" onClick={handleLogOut}>Logout</li>
                             </ul>
                         </div>
@@ -162,40 +90,22 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                 </div>
                 <div className='col-md-9'>
                     <ul className='vendor-header'>
-                        <li onClick={ShowUploadProduct}> Add New Products </li>
-                        <li onClick={ShowSoldProduct}> Sold Products  </li>
-                        <li onClick={ShowRequestedProduct}> Ordered Products  </li>
-                        <li onClick={ShowReviews}> Customer Reviews  </li>
+                        <li onClick={() => switchSection("uploadProduct")}> Add New Products </li>
+                        <li onClick={() => switchSection("soldProduct")}> Sold Products  </li>
+                        <li onClick={() => switchSection("requestedProduct")}> Ordered Products  </li>
+                        <li onClick={() => switchSection("customerReviews")}> Customer Reviews  </li>
                     </ul>
                     <div className='right-container'>
                         <div className='right'>
-                            {showDashboard &&
-                                <VendorCharts />
-                            }
+                            {activeSection === "dashboard" && <VendorCharts />}
+                            {activeSection === "productList" && <ProductTable />}
+                            {activeSection === "uploadProduct" && <ProductUpload />}
+                            {activeSection === "soldProduct" && <SoldProducts />}
+                            {activeSection === "requestedProduct" && <RequestedProduct />}
+                            {activeSection === "customerReviews" && <CustomerProductReviews />}
+                            {activeSection === "customerTable" && <CustomerTable />}
 
-                            {uploadProduct &&
-                                <ProductUpload />
-                            }
 
-                            {soldProduct &&
-                                <SoldProducts />
-                            }
-
-                            {requestedProduct &&
-                                <RequestedProduct />
-                            }
-
-                            {reviews &&
-                                <CustomerProductReviews />
-                            }
-
-                            {showProductList &&
-                                <ProductTable />
-                            }
-
-                            {showCustomerList &&
-                                <CustomerTable />
-                            }
                         </div>
                         <div>
                             {showProfile &&
@@ -213,15 +123,21 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                                                 <div className='image-upload-container'>
                                                     <Avatar
                                                         size={100}
-                                                        src={userData.image ? `${BASE_URL}${userData.image}` : vendorImage}
+                                                        src={previewImage || (userData.image ? `${BASE_URL}${userData.image}` : vendorImage)}
                                                     />
                                                     <Form.Item
                                                         name="image"
                                                         valuePropName="file" // required to pass file object instead of event
                                                         getValueFromEvent={(e) => {
-                                                            // SAFETY: Handle both drag & click upload events
-                                                            if (Array.isArray(e)) return e;
-                                                            return e?.file?.originFileObj;
+                                                            const file = e?.file?.originFileObj;
+                                                            if (file) {
+                                                                const reader = new FileReader();
+                                                                reader.onload = () => {
+                                                                    setPreviewImage(reader.result);
+                                                                };
+                                                                reader.readAsDataURL(file);
+                                                            }
+                                                            return file; // This is the value sent in formData
                                                         }}
                                                     >
                                                         <Upload
@@ -268,8 +184,8 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                 </div>
 
 
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

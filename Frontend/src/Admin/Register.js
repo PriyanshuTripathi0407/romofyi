@@ -15,13 +15,15 @@ function Register() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [RegRecord, setRegRecord] = useState('');
   const [form] = useForm();
-  const navigate= useNavigate();
+  const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
 
   const postData = async (formData) => {
     const response = await PostData(formData);
     if (formData) {
       alert("Registered Successfully!! ")
-      navigate('/login',{ replace: true });
+      navigate('/login', { replace: true });
     }
     getRegistration();
   }
@@ -75,14 +77,42 @@ function Register() {
   const searchedRegisterData = Regdata.filter(i => (i.first_name.toLowerCase().includes(searchedData.toLowerCase())))
   // console.log(searchedRegisterData, " Mil gya searched Data")
 
-
+ const handleImageChange = (info) => {
+    const file = info.file.originFileObj;
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <>
       <div className='registerContainer'>
-        <Form className='formContainer' onFinish={postData}>
+        <Form className='formContainer' onFinish={postData} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }}  >
           <h1>REGISTRATION FORM </h1>
           <div >
+            <div >
+              <Form.Item label="Profile Image" name="image"
+                valuePropName="file"
+                getValueFromEvent={e => {
+                  if (Array.isArray(e)) return e;
+                  return e?.file?.originFileObj;
+                }}
+              >
+                <Upload
+                  showUploadList={false} 
+                  onChange={handleImageChange}
+                  accept="image/*"
+                >
+                  <div style={{ display: 'flex', alignItems: 'center',flexDirection:'column', gap: '10px' }}>
+                    <Avatar
+                      src={previewImage || "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI="}
+                      size={100}
+                    />
+                    <Button icon={<UploadOutlined />}>Upload Image</Button>
+                  </div>
+                </Upload>
+              </Form.Item>
+            </div>
             <Form.Item label='First Name' name='first_name'>
               <Input />
             </Form.Item>
@@ -108,13 +138,13 @@ function Register() {
                 { value: 'Admin', label: 'Admin', },
                 { value: 'Vendor', label: 'Vendor', },]} />
             </Form.Item>
-            
+
             <Form.Item label='Address' name='address' >
               <Input type='text' size='large' />
             </Form.Item>
           </div>
-          <div style={{display:'flex',justifyContent:'center',alignItems:'center'}}>
-          <Button htmlType='submit' >Register</Button>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Button htmlType='submit' >Register</Button>
           </div>
         </Form>
         {/* <Table dataSource={Regdata} columns={col} />; */}
@@ -173,6 +203,15 @@ function Register() {
                     <th>Password</th>
                     <th>Confirm Password</th>
                   </tr>
+
+                  <div>
+                  <label htmlFor="photo-upload" >
+                  <img src={photo || "www.google.com"} alt="Image "/>
+                  <button> Upload Image </button>
+                  </label>
+                  <input type="file" accept="image/*" onChange={handleImageUpload}/>
+                  </div>
+
 
                   {(isActive) ?
                     <>

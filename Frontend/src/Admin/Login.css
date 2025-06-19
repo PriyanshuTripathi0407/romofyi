@@ -1,8 +1,8 @@
 .loginContainer{display:flex; justify-content:center;align-items: center; text-align: center; margin: 0px; background-color: none; padding: 10px; height: 75vh;}
-.formContainer{text-align:center;background-color: #183661;font-weight: 700; color:gold; width:max-content; text-align: center; border: 2px ridge gold;  border-bottom-left-radius: 25px; border-top-right-radius: 35px;}
+.formContainer{text-align:center;background-color: #183661;font-weight: 700; color:gold; width:55%; height: 85%; text-align: center; border: 2px ridge gold;  border-radius: 20px;}
 .formContainer .ant-form-item label{color: gold;}
-.formContainer h1{ margin: 0px; padding:10px; font-size: 20px !important; font-weight: 700; color: gold;}
-.formContainer .item{display: flex; justify-content:left; align-items: center; padding: 0 20px; margin: 0px;}
+.formContainer h1{  margin:15px 20px; padding:10px; font-size: 24px !important; font-weight: 700; color: gold; border-bottom: 2px solid gold;}
+/* .formContainer .item{display: flex; justify-content:left; align-items: center; padding: 0 20px; margin: 0px;} */
 .submitbtn{margin-bottom: 30px; font-weight: 600;}
 .info{display: flex; justify-content: center; align-items: center;}
 .info .reglink{color:chartreuse; }

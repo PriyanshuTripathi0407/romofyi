@@ -57,10 +57,10 @@ function Login({ loginId, setLoginId }) {
                     enqueueSnackbar("Logged In Successfully", { variant: 'success' });
                     setLoginId(true);
                     if (role === 'Customer') {
-                        navigate('/user-dashboard',{ replace: true });
+                        navigate('/user-dashboard', { replace: true });
                     }
                     else if (role === 'Vendor') {
-                        navigate('/vendor-dashboard',{ replace: true });
+                        navigate('/vendor-dashboard', { replace: true });
                     }
 
                 } else if (loginResult === 'fail') {
@@ -89,7 +89,8 @@ function Login({ loginId, setLoginId }) {
     return (
         <div className='loginContainer' >
             <ToastContainer />
-            <Form className='formContainer' onFinish={getLoggedIn}>
+            <Form className='formContainer' layout="horizontal" labelCol={{ span: 10 }}        // fixed label width
+                wrapperCol={{ span: 8 }} onFinish={getLoggedIn}>
                 <h1>LOGIN FORM</h1><br />
                 <div className='item'>
                     <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Please input your email!' }]}>
