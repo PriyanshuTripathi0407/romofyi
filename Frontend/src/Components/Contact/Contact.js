@@ -1,38 +1,46 @@
-import { Button, Form, Input,TextArea } from 'antd';
+import { Button, Form, Input } from 'antd';
 import Banner from '../../Image/BannerGirl.png'
 import './Contact.css'
+import { PostData } from '../../API/ContactAPI/ContactAPI';
 
 function Contact() {
   function Submit() {
     alert("Your Message sent Successfully");
   }
+
+  const handleSubmitMessage = async (values) => {
+    // const res = await PostData(data);
+    console.log(values, "This is response from contact page ")
+    // console.log(res, "This is response from contact page ")
+  }
+
   return (
     <div className='contactContainer'>
       <div class="form_Container">
-        <Form layout='vertical'>
+        <Form layout='vertical' onFinish={handleSubmitMessage}>
           <h2 class="title"> Contact form </h2>
-          <Form.Item label="Firstname" name="first_name">        
-            <Input type="text" placeholder="Firstname" required />  <br />
+          <Form.Item label="Firstname" name="first_name">
+            <Input placeholder="Firstname" />  <br />
           </Form.Item>
 
-          <Form.Item label="Lastname" name="last_name">           
-            <Input type="text" placeholder="Lastname" required />  <br />
+          <Form.Item label="Lastname" name="last_name">
+            <Input placeholder="Lastname" />  <br />
           </Form.Item>
 
-          <Form.Item label="Email" name="email">      
-            <Input type="email" placeholder="Email" required /> <br />
+          <Form.Item label="Email" name="email">
+            <Input placeholder="Email" /> <br />
           </Form.Item>
 
-          <Form.Item label="Contact Number" name="contact">        
-            <Input type="text" placeholder="+91" required /> <br />
+          <Form.Item label="Contact Number" name="contact">
+            <Input placeholder="+91" /> <br />
           </Form.Item>
 
-          <Form.Item label="Message" name="message">         
-            <Input type='textfield' placeholder="Write your message here" required /> <br />
+          <Form.Item label="Message" name="message">
+            <Input.TextArea showCount maxLength={1000}  placeholder="Write your message here" /> <br />
           </Form.Item>
 
           <Form.Item>
-            <Button class="submit" onClick={() => Submit()}>Submit</Button>
+            <Button class="submit" >Submit</Button>
           </Form.Item>
 
         </Form>

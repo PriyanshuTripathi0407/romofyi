@@ -47,7 +47,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
         }
     };
 
-
+    // Payment Gateway code
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
     const [showAnimation, setShowAnimation] = useState(false);
     const handleCheckout = async () => {
@@ -74,6 +74,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
                 });
 
+                console.log("This is my Checkout session called in cart",res)
                 const data = await res.json();
                 // Waits for the server to respond, and parses the returned JSON data
 

@@ -63,8 +63,8 @@ function News() {
               </div>
               <div className='description'>
                 <p>
-                  {isExpanded ? i.description : i.description.slice(0, 150) + (i.description.length > 150 ? "..." : "")}
-                  {i.description.length > 150 && (
+                  {isExpanded ? i.description : i.description.slice(0, 200) + (i.description.length > 200 ? "..." : "")}
+                  {i.description.length > 200 && (
                     <button onClick={() => setIsExpanded(!isExpanded)} style={{ color: "blue", background: "none", border: "none", cursor: "pointer" }}>
                       {isExpanded ? "Show Less" : "Read More"}
                     </button>
