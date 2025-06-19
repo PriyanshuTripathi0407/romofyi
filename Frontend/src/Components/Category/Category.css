@@ -24,3 +24,19 @@
 .categoryContainer .advertise .ImageWrapper img{ background-color: gold; width: 100%; height: 100%; object-fit: contain; border-radius: 10px;}
 
 .categoryContainer .advertise h2{margin: 10px 0px; color:gold; font-size:14px; font-weight: 600; }
+
+
+
+.categoryContainer .slick-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.categoryContainer .slick-slider {
+  width: 100%;
+}
+
+.categoryContainer .slick-track {
+  display: flex;
+  align-items: center;
+}

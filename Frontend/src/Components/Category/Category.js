@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { useNavigate } from 'react-router-dom'
+import Slider from "react-slick";
 import './Category.css'
 
 
@@ -36,17 +37,38 @@ const Category = ({ fromArray, toArray }) => {
     function send(e) {
         nav('/product', { state: e }, { replace: true })
     }
+
+    const settings = {
+        infinite: true,
+        speed: 3000, // slow, smooth transition
+        autoplay: true,
+        autoplaySpeed: 0, // no delay between transitions
+        cssEase: "linear", // smooth, non-easing animation
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        arrows: false,
+        pauseOnHover: false,
+    };
+
+
     return (
-        <div className='categoryContainer'>
-            {productData.slice(fromArray, toArray).map((i,index) => (
-                <div className='advertise' key={index} onClick={() => send(i.product_category.name)} >
-                    <div className='ImageWrapper'>
-                        <img src={i.product_image} alt='Product Image' />
-                    </div>
-                    <h2>{i.product_category.name.toUpperCase()}</h2>
-                </div>
-            ))}
-        </div>
+        <div className="categoryContainer">
+      <Slider {...settings}>
+        {productData.slice(fromArray, toArray).map((i, index) => (
+          <div key={index}>
+            <div
+              className="advertise"
+              onClick={() => send(i.product_category.name)}
+            >
+              <div className="ImageWrapper">
+                <img src={i.product_image} alt="Product" />
+              </div>
+              <h2>{i.product_category.name.toUpperCase()}</h2>
+            </div>
+          </div>
+        ))}
+      </Slider>
+    </div>
 
     )
 }
