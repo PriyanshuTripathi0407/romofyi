@@ -12,9 +12,9 @@ function Home() {
   return (
     <div>     
       <HomeSlider/>
-      <Category fromArray={0} toArray={6} />
+      <Category fromArray={0} toArray={11} />
       <HomeProduct />
-      <Category fromArray={5} toArray={11}/>
+      <Category fromArray={0} toArray={11}/>
       <Fashion />
       {/* <News />    */}
       <Help />

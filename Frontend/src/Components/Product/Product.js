@@ -17,6 +17,7 @@ function Product({ setproductId }) {
   const [productRating, setProductRating] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [filteredProduct, setfilteredProduct] = useState([]);
+  const [searchedProduct, setSearchedProduct] = useState();
 
   const locate = useLocation();
   const categoryProduct = locate.state
@@ -49,12 +50,19 @@ function Product({ setproductId }) {
       : text;
   }
 
+  function handleSearch(e) {
+    setSearchedProduct(e.target.value);
+    console.log("this is searched Product : ", searchedProduct)
+  }
 
   return (
     <>
       <ToastContainer />
       <div className='row text-center mx-0'>
-        <h1>Products</h1>
+        <div className='d-flex justify-content-center gap-4'>
+          <h1>Products</h1>
+          <input onChange={(e) => handleSearch(e)} />
+        </div>
         <div className='col-2'>
 
           <div className='filtercontainer'>

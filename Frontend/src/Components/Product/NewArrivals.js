@@ -12,7 +12,7 @@ function Product({ setproductId }) {
     const message = () => toast(" Added to Cart Successfully")
     const [ProductData, setProductData] = useState([])
     function handleCart(id, pName) {
-        setproductId(id);
+       setproductId(id);
         message();
     }
     useEffect(() => {
@@ -37,9 +37,9 @@ function Product({ setproductId }) {
     return (
         <>
             <ToastContainer />
-            <div className='row text-center'>
+            <div className=' text-center'>
                 <h1>New Arrivals Products</h1>
-                <div className='col'>
+                <div className='col mx-2'>
                     <div className='product_container'>
 
                         <div className='card'>

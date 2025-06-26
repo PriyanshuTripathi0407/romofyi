@@ -16,7 +16,7 @@ import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { useEffect, useState } from 'react';
 import Settings from '../../Components/Settings/Settings.js';
 
-const UserDashboard = ({loginId, setLoginId}) => {
+const UserDashboard = ({ loginId, setLoginId }) => {
   const [index, setIndex] = useState(0);
   const [ProductData, setProductData] = useState([])
   const icons = [
@@ -44,18 +44,18 @@ const UserDashboard = ({loginId, setLoginId}) => {
 
 
   const [dbproduct, setProduct] = useState([]);
-  
-    useEffect(() => {
-      handleGetData();
-    }, [])
-  
-    const handleGetData = async () => {
-      const response = await getData()
-      setProduct(response.data);
-    }
-  
-    
-  
+
+  useEffect(() => {
+    handleGetData();
+  }, [])
+
+  const handleGetData = async () => {
+    const response = await getData()
+    setProduct(response.data);
+  }
+
+
+
 
   var settings = {
     dots: false,
@@ -65,7 +65,7 @@ const UserDashboard = ({loginId, setLoginId}) => {
     slidesToScroll: 1,
     autoplay: true,
   };
-  
+
   var settings2 = {
     dots: false,
     infinite: true,
@@ -150,22 +150,21 @@ const UserDashboard = ({loginId, setLoginId}) => {
         </div>
 
         {/* Your Orders Components */}
-        <Order/>
+        <Order />
 
         {/* Your Top Products Components */}
         <div className='row border py-2'>
           <h4>Top Products</h4>
           <Slider {...settings2} className='topProductsWrapper' >
-              {dbproduct.map(
-                (product,index) => (                 
-                  <div className='topProducts p-2' key={index}>
-                    <img src={product.product_image} alt='Image ' />
-                    <Rating name='read-only-rating' value={parseFloat(product.product_rating) || 0} readOnly />
-                    <h6>{product.product_name}</h6>
-                  </div>
-         
-                )
-              )}
+            {dbproduct.map(
+              (product, index) => (
+                <div className='topProducts p-2' key={index}>
+                  <img src={product.product_image} alt='Image ' />
+                  <Rating name='read-only-rating' value={parseFloat(product.product_rating) || 0} readOnly />
+                  <h6>{product.product_name}</h6>
+                </div>
+              )
+            )}
           </Slider>
 
         </div>

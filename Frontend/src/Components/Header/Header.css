@@ -1,22 +1,144 @@
+.head2 {
+   text-align: center;
+   background-color: whitesmoke;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   font-size: 14px;
+   padding: 0px 10px;
+   position: -webkit-sticky;
+   position: sticky;
+   top: 0;
+   left: 0;
+   height: 50px;
+   width: 100%;
+   z-index: 1000;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-.head2 { text-align: center; background-color: whitesmoke;  display: flex;  align-items: center;  justify-content: space-around;  font-size: 14px; padding:0px 10px; position: -webkit-sticky;  position: sticky; top: 0; left: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+.head2 ul {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   column-gap: 40px;
+   list-style: none;
+   cursor: pointer;
+   margin: 0px;
+}
 
-.head2 ul { display: flex;  justify-content: space-between;  align-items: center;  column-gap: 40px;  list-style: none;  cursor: pointer; margin: 0px; }
+.head2 ul li svg {
+   color: #183661;
+}
 
-.head2 ul li svg{ color: #183661;}
-.head2 ul li svg:hover{transform: scale(1.2); color: gold; background-color: #183661; border-radius:10px;}
+.head2 ul li svg:hover {
+   transform: scale(1.2);
+   color: gold;
+   background-color: #183661;
+   border-radius: 10px;
+}
 
-.head3{ padding:0px; position: -webkit-sticky;  position: sticky; width: 100%; z-index: 1000; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); top: 7%;}
-.head3 a { text-decoration: none;}
-.head3 .navbar-menu {background-color: #183661; display: flex; justify-content: space-between; align-items: center; list-style: none; font-size: 18px; padding: 5px 20px; margin: 0px; }
+.head3 {
+   padding: 0px;
+   position: -webkit-sticky;
+   position: sticky;
+   width: 100%;
+   z-index: 1000;
+   top: 50px;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   background-color: #183661;
 
-.head3 .navbar-menu li {color: gold; display: flex; align-items: center; gap: 4px; cursor: pointer;font-weight: 500;}
+}
 
-.head3 .navbar-menu li:hover{color:white; transition: all 0.2s;}
-.head3 .navbar-menu .logo{font-family: cursive; font-size: 20px;}
-.head3 .navbar-menu .logo img{height: 30px; width: 30px; animation: spin 3s linear infinite; border-radius: 50%; border: 1px solid gold; object-fit: contain;}
-.info{cursor: pointer;}
-.info ul li:hover{color: #183661; font-weight: 600; }
-.info ul li:hover svg{color: #183661; }
-.user{display: flex; align-items: center; gap: 10px;}
-.user img{height: 30px; width: 30px; border-radius: 50%; border: 1px solid gold; object-fit: contain;}
+.navbar-menu {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   list-style: none;
+   font-size: 18px;
+   padding: 5px 20px;
+   margin: 0px;
+   overflow-x: auto;
+   /* <-- enables horizontal scroll */
+   scrollbar-width: none;
+   /* Firefox - hide scrollbar */
+   -ms-overflow-style: none;
+   /* IE/Edge - hide scrollbar */
+}
+
+/* Hide scrollbar (Chrome/Safari)
+.navbar-menu::-webkit-scrollbar {
+   display: none;
+} */
+
+.navbar-menu li {
+   display: flex;
+   align-items: center;
+   gap: 4px;
+   font-weight: 500;
+   color: gold;
+   cursor: pointer;
+}
+
+.navbar-menu li:hover {
+   color: white;
+   transition: all 0.2s;
+}
+
+.head3 a {
+   text-decoration: none;
+}
+
+
+
+.info {
+   cursor: pointer;
+}
+
+.info ul li:hover {
+   color: #183661;
+   font-weight: 600;
+}
+
+.info ul li:hover svg {
+   color: #183661;
+}
+
+.user {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.user img {
+   height: 30px;
+   width: 30px;
+   border-radius: 50%;
+   border: 1px solid gold;
+   object-fit: contain;
+}
+
+
+/* Responsive Designs */
+@media (max-width: 944px) {
+   .head3 {
+      overflow-x: auto;
+      /* <-- add this */
+   }
+
+   .navbar-menu {
+      flex-wrap: nowrap;   /* <-- prevents wrapping */
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding: 5px 10px;
+      margin: 0 15px 0 0px;
+      overflow-x: auto;      /* <-- enables horizontal scroll */
+      scrollbar-width: none;      /* Firefox - hide scrollbar */
+      -ms-overflow-style: none;      /* IE/Edge - hide scrollbar */
+   }
+
+   .navbar-menu li {
+      white-space: nowrap;      /* prevents breaking text */
+      padding: 0 10px;      /* add spacing between items */
+      flex-shrink: 0;      /* prevent shrinking on small screens */      
+   }
+}

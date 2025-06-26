@@ -43,11 +43,37 @@ const Category = ({ fromArray, toArray }) => {
         speed: 3000, // slow, smooth transition
         autoplay: true,
         autoplaySpeed: 0, // no delay between transitions
-        cssEase: "linear", // smooth, non-easing animation
+        cssEase: "circular", // smooth, non-easing animation
         slidesToShow: 6,
         slidesToScroll: 1,
         arrows: false,
         pauseOnHover: false,
+        responsive: [
+            {
+                breakpoint: 1240, // < 1240px
+                settings: {
+                    slidesToShow: 5,
+                }
+            },
+            {
+                breakpoint: 1000, // < 868px
+                settings: {
+                    slidesToShow: 4,
+                }
+            },
+            {
+                breakpoint: 800, // < 868px
+                settings: {
+                    slidesToShow: 3,
+                }
+            },
+            {
+                breakpoint: 600, // < 868px
+                settings: {
+                    slidesToShow: 2,
+                }
+            }
+        ]
     };
 
 
