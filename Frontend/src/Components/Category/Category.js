@@ -6,7 +6,7 @@ import './Category.css'
 
 
 
-const Category = ({ fromArray, toArray }) => {
+const Category = () => {
     const [dbproduct, setProduct] = useState([])
     useEffect(() => {
         handleGetData();
@@ -80,7 +80,7 @@ const Category = ({ fromArray, toArray }) => {
     return (
         <div className="categoryContainer">
       <Slider {...settings}>
-        {productData.slice(fromArray, toArray).map((i, index) => (
+        {productData.map((i, index) => (
           <div key={index}>
             <div
               className="advertise"
