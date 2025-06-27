@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import 'animate.css';
-import { getData, PostData, PutData, DeleteData } from '../../API/ProductAPI/ProductAPI.js'
+import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import './Product.css'
 import Rating from '@mui/material/Rating';
 import { ToastContainer, toast } from 'react-toastify';
 import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCircleOutlined';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
-import DiscountIcon from '@mui/icons-material/Discount';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
   const [showPricefilter, setshowPricefilter] = useState(false);
@@ -16,9 +15,9 @@ function Product({ setproductId }) {
   const [productCategory, setProductCategory] = useState('');
   const [productRating, setProductRating] = useState('');
   const [productPrice, setProductPrice] = useState('');
-  const [filteredProduct, setfilteredProduct] = useState([]);
-  const [searchedProduct, setSearchedProduct] = useState();
+  const [searchedProduct, setSearchedProduct] = useState('');
 
+  const nav = useNavigate();
   const locate = useLocation();
   const categoryProduct = locate.state
 
@@ -52,17 +51,22 @@ function Product({ setproductId }) {
 
   function handleSearch(e) {
     setSearchedProduct(e.target.value);
-    console.log("this is searched Product : ", searchedProduct)
+  }
+
+  const handleView = async (e) => {
+    
+    nav('/productDetails', { state: e }, { replace: true })
   }
 
   return (
     <>
       <ToastContainer />
       <div className='row text-center mx-0'>
-        <div className='d-flex justify-content-center gap-4'>
-          <h1>Products</h1>
-          <input onChange={(e) => handleSearch(e)} />
+        <div className='d-flex justify-content-between align-items-center px-4 my-3'>
+          <h1 className="mb-0">Products</h1>
+          <input type="text" placeholder="Search products..." className="form-control w-50" onChange={handleSearch} />
         </div>
+
         <div className='col-2'>
 
           <div className='filtercontainer'>
@@ -111,7 +115,8 @@ function Product({ setproductId }) {
             <div className='card'>
               {ProductData
                 .filter((i) =>
-                  !productCategory || (i.product_category && i.product_category.name === productCategory)
+                  (!productCategory || (i.product_category && i.product_category.name === productCategory)) &&
+                  (!searchedProduct || i.product_name.toLowerCase().includes(searchedProduct.toLowerCase()))
                 )
                 .map((i, index) => (
                   <div key={index} className='card_container' >
@@ -131,7 +136,7 @@ function Product({ setproductId }) {
                         <p> <strong> {i.product_name}<br /> @<span className='txt-price'> &#8377;{i.product_price}</span> </strong></p>
                         <p className='description'>{truncateText(i.product_description, 10)}</p>
 
-                        <button><a href='#'>View Details</a> </button>
+                        <button onClick={() => handleView(i)}>View Details </button>
                       </div>
                     </div>
                     <div className='review'>
