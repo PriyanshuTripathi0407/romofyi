@@ -16,7 +16,7 @@ function Home() {
       <HomeProduct />
       <Category fromArray={0} toArray={11}/>
       <Fashion />
-      {/* <News />    */}
+      <News />   
       <Help />
     </div>
   )
