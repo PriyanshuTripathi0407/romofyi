@@ -19,14 +19,30 @@ function Register() {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
 
-  const postData = async (formData) => {
-    const response = await PostData(formData);
-    if (formData) {
-      alert("Registered Successfully!! ")
-      navigate('/login', { replace: true });
-    }
-    getRegistration();
+ const postData = async (formValues) => {
+  const formData = new FormData();
+
+  // Append all form fields
+  for (let key in formValues) {
+    formData.append(key, formValues[key]);
   }
+
+  // Append image file
+  if (selectedImageFile) {
+    formData.append('image', selectedImageFile);
+  }
+
+  try {
+    const response = await PostData(formData);
+    message.success("Registered Successfully!!");
+    navigate('/login', { replace: true });
+    getRegistration();
+  } catch (error) {
+    console.error(error);
+    message.error("Registration Failed");
+  }
+};
+
 
   const ShowModal = (record) => {
     setModalOpen(!isModalOpen);
@@ -77,12 +93,15 @@ function Register() {
   const searchedRegisterData = Regdata.filter(i => (i.first_name.toLowerCase().includes(searchedData.toLowerCase())))
   // console.log(searchedRegisterData, " Mil gya searched Data")
 
- const handleImageChange = (info) => {
-    const file = info.file.originFileObj;
-    if (file) {
-      setPreviewImage(URL.createObjectURL(file));
-    }
-  };
+
+  const handleImageChange = (info) => {
+  const file = info.file.originFileObj;
+  if (file) {
+    setSelectedImageFile(file); // <- set the selected image file
+    setPreviewImage(URL.createObjectURL(file)); // show preview
+  }
+};
+
 
   return (
     <>
@@ -181,80 +200,7 @@ function Register() {
           <> </>
         }
 
-        {/* <div>
-          {showDetails
-            ?
-            <div>
-              <button onClick={getRegistration}>Hide all Registered Customer</button>
-              <div style={{ height: '35px' }}>
-                <input type='text' placeholder='Search here...' style={{ height: '27px' }} onChange={searchData}
-                  onFocus={() => setIsActive(true)}
-                  onBlur={() => setIsActive(false)} />
-              </div>
-              <div>
-                <table border='10px solid black' style={{ textAlign: 'center' }}>
-                  <tr>
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Contact</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                    <th>Password</th>
-                    <th>Confirm Password</th>
-                  </tr>
-
-                  <div>
-                  <label htmlFor="photo-upload" >
-                  <img src={photo || "www.google.com"} alt="Image "/>
-                  <button> Upload Image </button>
-                  </label>
-                  <input type="file" accept="image/*" onChange={handleImageUpload}/>
-                  </div>
-
-
-                  {(isActive) ?
-                    <>
-                      {searchedRegisterData.map((i) => (
-                        <tr>
-                          <td>{i.id}</td>
-                          <td>{i.first_name}</td>
-                          <td>{i.last_name}</td>
-                          <td>{i.contact}</td>
-                          <td>{i.email}</td>
-                          <td>{i.address}</td>
-                          <td>{i.password}</td>
-                          <td>{i.confirm_password}</td>
-                        </tr>
-                      ))}
-                    </>
-                    :
-                    <>
-                      {Regdata.map((i) => (
-                        <tr>
-                          <td>{i.id}</td>
-                          <td>{i.first_name}</td>
-                          <td>{i.last_name}</td>
-                          <td>{i.contact}</td>
-                          <td>{i.email}</td>
-                          <td>{i.address}</td>
-                          <td>{i.password}</td>
-                          <td>{i.confirm_password}</td>
-                        </tr>
-                      ))}
-                    </>
-                  }
-                </table>
-              </div>
-            </div>
-            :
-            <div>
-              <button onClick={getRegistration}>Show all Registered Customer</button>
-            </div>
-          }
-        </div> */}
-
-      </div>
+        </div>
     </>
   )
 }
