@@ -12,13 +12,17 @@ import HourglassFullOutlinedIcon from '@mui/icons-material/HourglassFullOutlined
 import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlined';
 
 import { getData } from '../../API/ProductAPI/ProductAPI.js'
+import { getViewData } from '../../API/ViewProductAPI/ViewProductAPI.js';
 
 import { useEffect, useState } from 'react';
-import Settings from '../../Components/Settings/Settings.js';
+
 
 const UserDashboard = ({ loginId, setLoginId }) => {
   const [index, setIndex] = useState(0);
-  const [ProductData, setProductData] = useState([])
+  const [dbproduct, setProduct] = useState([]); // to get data from backend
+  const [viewedProduct, setViewedProduct] = useState([]); // to get Viewed data from backend
+
+
   const icons = [
     <HourglassTopOutlinedIcon key="top" fontSize="large" />,
     <HourglassFullOutlinedIcon key="full" fontSize="large" />,
@@ -39,21 +43,27 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     if (savedUser) {
       const parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
+      handleGetViewedData(parsedData.user)
     }
   }, []);
 
 
-  const [dbproduct, setProduct] = useState([]);
 
+  
   useEffect(() => {
     handleGetData();
   }, [])
-
+  
   const handleGetData = async () => {
     const response = await getData()
     setProduct(response.data);
   }
 
+  const handleGetViewedData = async (user) => {
+    const res = await getViewData();
+    console.log("This is viewed product from backend :", res.data.viewed_products.product)
+    setViewedProduct(res.data.viewed_products.product)    
+  }
 
 
 
@@ -75,6 +85,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     autoplay: true,
   };
 
+
   return (
     <div className='container-fluid' >
       <div className='row'>
@@ -90,12 +101,14 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <img src={romo} />
                 <h5>Viewed Products</h5>
               </div>
-              <p>This is your last viewed products </p>
-
+              {viewedProduct ?
               <div className='d-flex justify-content-center gap-4'>
                 <p>Product Name </p>
                 <p>Product Image </p>
               </div>
+                :                
+                <p>You've not viewed any products yet. </p>
+                }
               <div className='d-flex justify-content-between'>
                 <Rating name='read-only-rating' defaultValue={4.5} readOnly />
                 <EastTwoToneIcon />

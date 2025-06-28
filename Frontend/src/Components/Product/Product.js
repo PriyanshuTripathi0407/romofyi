@@ -8,6 +8,9 @@ import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCi
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {PostData} from '../../API/ViewProductAPI/ViewProductAPI.js'
+
+
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
   const [showPricefilter, setshowPricefilter] = useState(false);
@@ -36,6 +39,17 @@ function Product({ setproductId }) {
     }
   }, [])
 
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const parsedData = JSON.parse(savedUser);
+      setUserData(parsedData.user)
+    }
+  }, []);
+
+
+
   const handleGetData = async () => {
     const response = await getData()
     setProductData(response.data);
@@ -53,10 +67,20 @@ function Product({ setproductId }) {
     setSearchedProduct(e.target.value);
   }
 
-  const handleView = async (e) => {
-    
-    nav('/productDetails', { state: e }, { replace: true })
+  const handleView = async (product) => {
+    if(userData){
+      const viewedProductData = {
+        customer: userData.email,
+        product: product.product_id,
+      };
+      const res= await PostData(viewedProductData) 
+      console.log("This is response from backend to : ",res)
+
+    }
+
+    nav('/productDetails', { state: product }, { replace: true })
   }
+  
 
   return (
     <>
