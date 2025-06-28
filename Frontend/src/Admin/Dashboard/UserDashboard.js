@@ -13,7 +13,7 @@ import HourglassEmptyOutlinedIcon from '@mui/icons-material/HourglassEmptyOutlin
 
 import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { getViewData } from '../../API/ViewProductAPI/ViewProductAPI.js';
-
+import { getCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { useEffect, useState } from 'react';
 
 
@@ -21,6 +21,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const [index, setIndex] = useState(0);
   const [dbproduct, setProduct] = useState([]); // to get data from backend
   const [viewedProduct, setViewedProduct] = useState([]); // to get Viewed data from backend
+  const [cartProduct, setCartProduct] = useState([]); // to get cart data from backend
 
 
   const icons = [
@@ -44,6 +45,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
       const parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
       handleGetViewedData(parsedData.user)
+      handleCartData(parsedData.user)
     }
   }, []);
 
@@ -61,8 +63,13 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleGetViewedData = async (user) => {
     const res = await getViewData();
-    console.log("This is viewed product from backend :", res.data.viewed_products.product)
     setViewedProduct(res.data.viewed_products.product)    
+  }
+  
+  const handleCartData = async (user) => {
+    const res = await getCartData();
+    console.log("This is cart product from backend :", res.data.cart_products.product)
+    setCartProduct(res.data.cart_products.product)    
   }
 
 
@@ -102,16 +109,16 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Viewed Products</h5>
               </div>
               {viewedProduct ?
-              <div className='d-flex justify-content-center gap-4'>
-                <p>Product Name </p>
-                <p>Product Image </p>
+              <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
+                <h4>{viewedProduct.product_name} </h4>
+                <img src={viewedProduct.product_image} alt='Product_Image'/>
               </div>
                 :                
-                <p>You've not viewed any products yet. </p>
+                <p>You've not viewed any products yet </p>
                 }
               <div className='d-flex justify-content-between'>
-                <Rating name='read-only-rating' defaultValue={4.5} readOnly />
-                <EastTwoToneIcon />
+                <Rating name='read-only-rating' defaultValue={viewedProduct.product_rating} precision={0.5} readOnly />
+                <p><EastTwoToneIcon /></p>
               </div>
             </div>
             <div className='container-fluid logo mx-1 p-3'>
@@ -133,12 +140,15 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               <div className='d-flex justify-content-center gap-4'>
                 <img src={romo} />
                 <h5>Add to Cart Products</h5>
+              </div>              
+              {cartProduct ?
+              <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
+                <h4>{cartProduct.product_name} </h4>
+                <img src={cartProduct.product_image} alt='Product_Image'/>
               </div>
-              <p>This is your last viewed products </p>
-              <div className='d-flex justify-content-center gap-4'>
-                <p>Product Name </p>
-                <p>Product Image </p>
-              </div>
+                :                
+                <p>Your Cart is empty yet </p>
+                }
               <div className='d-flex justify-content-between'>
                 <Rating name='read-only-rating' defaultValue={4.5} readOnly />
                 <EastTwoToneIcon />

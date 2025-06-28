@@ -2,6 +2,7 @@
  .logo img{height: 30px; width: 30px; border-radius: 50%; border: 1px solid gold; object-fit: contain; }
 .logo p{font-size: 14px;}
 .time svg{ font-size: 20px; position: absolute; top:0; right: 0; margin: 5px; animation: spin 2s linear infinite;}
+.viewProduct img{height: 80px; width: 80px; border: 3px solid white; border-radius: 20px;}
 
 .topProductsWrapper{padding: 0px; margin: 0px ;}
 .topProducts{background-color: #183661; color: gold; margin: 2px 0px;box-shadow: 0 2px 4px #183661; border-radius: 10px; height: 200px; width: 300px !important; padding:0px; display: flex !important; align-items: center; justify-content: center; flex-direction: column; text-align: center;}

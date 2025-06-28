@@ -9,7 +9,7 @@ import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {PostData} from '../../API/ViewProductAPI/ViewProductAPI.js'
-
+import { PostCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
@@ -26,7 +26,15 @@ function Product({ setproductId }) {
 
   const message = () => toast(" Added to Cart Successfully")
   const [ProductData, setProductData] = useState([])
-  function handleCart(id, pName) {
+  const handleCart = async(id)=> {
+    if(userData){
+      const viewedProductData = {
+        customer: userData.email,
+        product: id,
+      };
+      const res= await PostCartData(viewedProductData)
+      console.log("This is Cart Added",res)
+    }
     setproductId(id);
     message();
   }
@@ -74,10 +82,7 @@ function Product({ setproductId }) {
         product: product.product_id,
       };
       const res= await PostData(viewedProductData) 
-      console.log("This is response from backend to : ",res)
-
     }
-
     nav('/productDetails', { state: product }, { replace: true })
   }
   
