@@ -10,14 +10,15 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import { useLocation, useNavigate } from 'react-router-dom';
 import {PostData} from '../../API/ViewProductAPI/ViewProductAPI.js'
 import { PostCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
+import { PostSearchedData, getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
 
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
-  const [showPricefilter, setshowPricefilter] = useState(false);
-  const [showRatingfilter, setshowRatingfilter] = useState(false);
   const [productCategory, setProductCategory] = useState('');
-  const [productRating, setProductRating] = useState('');
-  const [productPrice, setProductPrice] = useState('');
+  // const [showPricefilter, setshowPricefilter] = useState(false);
+  // const [showRatingfilter, setshowRatingfilter] = useState(false);
+  // const [productRating, setProductRating] = useState('');
+  // const [productPrice, setProductPrice] = useState('');
   const [searchedProduct, setSearchedProduct] = useState('');
 
   const nav = useNavigate();
@@ -33,7 +34,7 @@ function Product({ setproductId }) {
         product: id,
       };
       const res= await PostCartData(viewedProductData)
-      console.log("This is Cart Added",res)
+      // console.log("This is Cart Added",res)
     }
     setproductId(id);
     message();
@@ -55,8 +56,14 @@ function Product({ setproductId }) {
       setUserData(parsedData.user)
     }
   }, []);
-
-
+  
+  
+  useEffect(()=>{
+    if(searchedProduct){
+      handlePostSearchedProduct(searchedProduct);
+      
+    }
+  },[searchedProduct])
 
   const handleGetData = async () => {
     const response = await getData()
@@ -85,6 +92,24 @@ function Product({ setproductId }) {
     }
     nav('/productDetails', { state: product }, { replace: true })
   }
+  
+  const handlePostSearchedProduct = async (product) => {
+    if(userData && searchedProduct){
+      const viewedProductData = {
+        customer: userData.email,
+        product: product,
+      };
+      // console.log("Searched in Product.js : ", viewedProductData)
+      const res= await PostSearchedData(viewedProductData) 
+      // console.log("Post Response in Product.js : ", res.data)
+    }
+  }
+  
+ 
+
+
+
+  
   
 
   return (
@@ -117,7 +142,7 @@ function Product({ setproductId }) {
                 </ul>
                 : ''}
             </div>
-            <div className='filterby' onClick={() => setshowPricefilter(!showPricefilter)}>
+            {/* <div className='filterby' onClick={() => setshowPricefilter(!showPricefilter)}>
               <p> Price {showPricefilter ? <ArrowCircleUpOutlinedIcon /> : <ArrowDropDownCircleOutlinedIcon />} </p>
               {showPricefilter ?
                 <ul>
@@ -136,7 +161,7 @@ function Product({ setproductId }) {
                   ))}
                 </ul>
                 : ''}
-            </div>
+            </div> */}
           </div>
         </div>
         <div className='col-10'>

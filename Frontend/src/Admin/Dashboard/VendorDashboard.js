@@ -62,8 +62,8 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
     return (
         <div className='container-fluid'>
             <div className='row'>
-                <div className='col-md-3 logo py-1'>
-                    <h5>Vendor Details</h5>
+                <div className='col-md-3 sidebarContainer py-1'>
+                    <h5>Vendor Info </h5>
                     <div className='sidebar'>
                         <div className='show-flex bio' onClick={() => ShowProfile()}>
                             <div className='imageWrapper' >

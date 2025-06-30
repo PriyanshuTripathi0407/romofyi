@@ -1,7 +1,7 @@
  .logo{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative;}
  .logo img{height: 30px; width: 30px; border-radius: 50%; border: 1px solid gold; object-fit: contain; }
 .logo p{font-size: 14px;}
-.time svg{ font-size: 20px; position: absolute; top:0; right: 0; margin: 5px; animation: spin 2s linear infinite;}
+.time svg{ font-size: 20px; position: absolute; bottom:0; right: 0; color: palevioletred; margin: 5px; animation: spin 2s linear infinite;}
 .viewProduct img{height: 80px; width: 80px; border: 3px solid white; border-radius: 20px;}
 
 .topProductsWrapper{padding: 0px; margin: 0px ;}

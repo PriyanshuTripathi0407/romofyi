@@ -52,20 +52,20 @@ function Register() {
     form.setFieldsValue(record)
   }
 
-  const col = [
-    { title: 'ID', dataIndex: 'id' },
-    { title: 'First Name', dataIndex: 'first_name' },
-    { title: 'Last Name', dataIndex: 'last_name' },
-    { title: 'Contact', dataIndex: 'contact' },
-    { title: 'Email', dataIndex: 'email' },
-    { title: 'Address', dataIndex: 'address' },
-    { title: 'Password', dataIndex: 'password' },
-    {
-      title: 'Action', render: (_, record) => (
-        <Button onClick={() => { ShowModal(record); setRegRecord(record.id); }}>Edit</Button>
-      )
-    }
-  ]
+  // const col = [
+  //   { title: 'ID', dataIndex: 'id' },
+  //   { title: 'First Name', dataIndex: 'first_name' },
+  //   { title: 'Last Name', dataIndex: 'last_name' },
+  //   { title: 'Contact', dataIndex: 'contact' },
+  //   { title: 'Email', dataIndex: 'email' },
+  //   { title: 'Address', dataIndex: 'address' },
+  //   { title: 'Password', dataIndex: 'password' },
+  //   {
+  //     title: 'Action', render: (_, record) => (
+  //       <Button onClick={() => { ShowModal(record); setRegRecord(record.id); }}>Edit</Button>
+  //     )
+  //   }
+  // ]
 
 
   const getRegistration = async () => {

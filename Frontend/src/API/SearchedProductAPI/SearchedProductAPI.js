@@ -5,12 +5,12 @@ const savedUser = localStorage.getItem('user');
 const parsedData = JSON.parse(savedUser);
 const email= parsedData.user.email
 
-export const getViewData = () => {
-  return axios.get(`${API_BASE_URL}/viewed-products/`,
+export const getSearchedData = () => {
+  return axios.get(`${API_BASE_URL}/searched-products/`,
     {params: { customer_email: email }}
   );
 }
 
-export const PostData = (data) => {
-  return axios.post(`${API_BASE_URL}/viewed-products/`, data);
+export const PostSearchedData = (data) => {
+  return axios.post(`${API_BASE_URL}/searched-products/`, data);
 };
