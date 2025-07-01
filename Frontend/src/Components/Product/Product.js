@@ -8,7 +8,7 @@ import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCi
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import {PostData} from '../../API/ViewProductAPI/ViewProductAPI.js'
+import { PostData } from '../../API/ViewProductAPI/ViewProductAPI.js'
 import { PostCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { PostSearchedData, getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
 
@@ -22,23 +22,37 @@ function Product({ setproductId }) {
   const [searchedProduct, setSearchedProduct] = useState('');
 
   const nav = useNavigate();
+  const navigate = useNavigate();
   const locate = useLocation();
   const categoryProduct = locate.state
 
   const message = () => toast(" Added to Cart Successfully")
   const [ProductData, setProductData] = useState([])
-  const handleCart = async(id)=> {
-    if(userData){
+  const handleCart = async (id) => {
+    if (userData) {
       const viewedProductData = {
         customer: userData.email,
         product: id,
       };
-      const res= await PostCartData(viewedProductData)
+      const res = await PostCartData(viewedProductData)
       // console.log("This is Cart Added",res)
     }
     setproductId(id);
     message();
   }
+  const handleOrderNow = async (id) => {
+    if (userData) {
+      const viewedProductData = {
+        customer: userData.email,
+        product: id,
+      };
+      // const res = await PostCartData(viewedProductData)
+      // console.log("This is Cart Added",res)
+      setproductId(id);
+      navigate('/cart', { replace: true })
+    }
+  }
+
   useEffect(() => {
     handleGetData();
     if (!categoryProduct) {
@@ -56,14 +70,14 @@ function Product({ setproductId }) {
       setUserData(parsedData.user)
     }
   }, []);
-  
-  
-  useEffect(()=>{
-    if(searchedProduct){
+
+
+  useEffect(() => {
+    if (searchedProduct) {
       handlePostSearchedProduct(searchedProduct);
-      
+
     }
-  },[searchedProduct])
+  }, [searchedProduct])
 
   const handleGetData = async () => {
     const response = await getData()
@@ -83,34 +97,34 @@ function Product({ setproductId }) {
   }
 
   const handleView = async (product) => {
-    if(userData){
+    if (userData) {
       const viewedProductData = {
         customer: userData.email,
         product: product.product_id,
       };
-      const res= await PostData(viewedProductData) 
+      const res = await PostData(viewedProductData)
     }
     nav('/productDetails', { state: product }, { replace: true })
   }
-  
+
   const handlePostSearchedProduct = async (product) => {
-    if(userData && searchedProduct){
+    if (userData && searchedProduct) {
       const viewedProductData = {
         customer: userData.email,
         product: product,
       };
       // console.log("Searched in Product.js : ", viewedProductData)
-      const res= await PostSearchedData(viewedProductData) 
+      const res = await PostSearchedData(viewedProductData)
       // console.log("Post Response in Product.js : ", res.data)
     }
   }
-  
- 
 
 
 
-  
-  
+
+
+
+
 
   return (
     <>
@@ -204,7 +218,10 @@ function Product({ setproductId }) {
                         <u>{(parseInt(i.product_rating) * 10)} Reviews</u>
                       </strong></p>
                     </div>
-                    <button onClick={() => handleCart(i.product_id)} > ADD TO CART</button>
+                    <div className='d-flex justify-content-between gap-4'>
+                      <button onClick={() => handleCart(i.product_id)} > ADD TO CART</button>
+                      <button onClick={() => handleOrderNow(i.product_id)} > Order Now</button>
+                    </div>
                   </div>
                 ))}
 

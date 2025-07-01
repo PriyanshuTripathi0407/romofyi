@@ -8,11 +8,12 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import ReadytoPayment from '../ShowMessages/ReadytoPayment'
+import { PostUserOrdertData } from '../../API/OrderedProductAPI/OrderedProductAPI'
 
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
 
-    console.log(cartProduct, "This is cartproduct of Cart.js")
+    // console.log(cartProduct, "This is cartproduct of Cart.js")
     const handleIncrease = (id) => {
         setCartProduct((prevCart) =>
             prevCart.map((item) =>
@@ -47,47 +48,55 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
         }
     };
 
-
+    
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
     const [showAnimation, setShowAnimation] = useState(false);
     const handleCheckout = async () => {
-        setShowAnimation(true); // Show animation immediately
+        if (cartProduct.length < 0) {
+            alert("Please add products in Cart")
+        }
+        else {
+            setShowAnimation(true); // Show animation immediately
+            setTimeout(async () => {
+                const totalAmount = cartProduct.reduce((total, item) => {
+                    return total + (item.product_price * (item.count || 1));
+                }, 0);
 
-        setTimeout(async () => {
-            const totalAmount = cartProduct.reduce((total, item) => {
-                return total + (item.product_price * (item.count || 1));
-            }, 0);
+                try {
+                    const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            items: cartProduct.map(item => ({
+                                product_name: item.product_name,
+                                product_price: item.product_price,
+                                count: item.count || 1,
+                            }))
+                        }),
 
-            try {
-                const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        items: cartProduct.map(item => ({
-                            product_name: item.product_name,
-                            product_price: item.product_price,
-                            count: item.count || 1,
-                        }))
-                    }),
+                    });
 
-                });
+                    const data = await res.json();
+                    // Waits for the server to respond, and parses the returned JSON data
 
-                const data = await res.json();
-                // Waits for the server to respond, and parses the returned JSON data
+                    if (data.id) {
+                        const stripe = await stripePromise;
+                        await stripe.redirectToCheckout({ sessionId: data.id });
 
-                if (data.id) {
-                    const stripe = await stripePromise;
-                    await stripe.redirectToCheckout({ sessionId: data.id });
-                } else {
-                    alert('Failed to create Stripe session');
+                        // Call API Here for placing Order
+                        const res = await PostUserOrdertData();
+                        console.log("This is Order Data Added", res.data)
+                    } else {
+                        alert('Failed to create Stripe session');
+                    }
+                } catch (error) {
+                    console.error('Error during Stripe checkout:', error);
+                    alert('Error initiating payment');
                 }
-            } catch (error) {
-                console.error('Error during Stripe checkout:', error);
-                alert('Error initiating payment');
-            }
-        }, 2000);
+            }, 2000);
+        }
     };
 
     if (showAnimation) {
