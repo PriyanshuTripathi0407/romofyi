@@ -194,8 +194,8 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                         ))}
                         <div>
                             <hr />
-                            <h6>Delivery Charge : </h6>
-                            <h6>Discount : </h6>
+                            <h6>Delivery Charge : 0/- Now </h6>
+                            {/* <h6>Discount : </h6> */}
                             <h6>Total Fare : ₹
                                 {cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0)}
                             </h6>
@@ -203,9 +203,9 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                     </div>
                 </div>
                 <div className='productPayment'>
-                    <button onClick={handleUserOrder} className="payNowBtn">
+                    <h1 onClick={handleUserOrder} className="payNowBtn">
                         Continue to Payment <ArrowCircleRightOutlinedIcon />
-                    </button>
+                    </h1>
                 </div>
                 <div className='productPayment'>
                     <Link to='/product'>

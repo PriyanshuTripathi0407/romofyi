@@ -18,7 +18,7 @@
 .action{background-color: #183661; height: 30px; font-size:2px; width: 30px; border-radius: 50%; color: gold;}
 .action:hover{background-color: gold; color: #183661;}
 .addCart table tr td .cartOperation button:hover{background-color: gold; color: #183661;}
-.productPayment{height: max-content; border: 5px solid gold; margin: 20px 0px;background-color: #183661;}
+.productPayment{height: max-content; border: 5px solid gold; margin: 20px 0px;background-color: #183661; cursor: pointer;}
 .productPayment h1{font-size: 20px; padding: 10px; color: gold;}
 .productPayment a{text-decoration: none; color: gold;}
 

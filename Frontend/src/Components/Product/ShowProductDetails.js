@@ -9,12 +9,18 @@ import CreditCardIcon from '@mui/icons-material/CreditCard';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function ShowProductDetails({ setproductId }) {
+
+  const SuccessMessage = () => toast(" Added to Cart Successfully")
+  const AlertMessage = () => toast(" Please Login first ")
   const navigate = useNavigate()
+  const nav = useNavigate()
   const locate = useLocation()
   const [dbproduct, setProduct] = useState([])
+
 
   useEffect(() => {
     handleGetData();
@@ -23,31 +29,54 @@ function ShowProductDetails({ setproductId }) {
   const handleGetData = async () => {
     const response = await getData()
     setProduct(response.data);
-    console.log(response.data, " This is response from db in Show Product Detail.js")
+    // console.log(response.data, " This is response from db in Show Product Detail.js")
   }
 
-  function handleCart(id) {
-    alert("Your product is added to cart successfully !! ")
-    setproductId(id);
-  }
+  
 
-  function handleNext() {
-    navigate('/product',{ replace: true });
+  function handleContinueShopping() {
+    navigate('/product', { replace: true });
   }
-
+  
+  const [userData, setUserData] = useState({})
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const parsedData = JSON.parse(savedUser);
+      setUserData(parsedData.user)
+    }
+  }, []);
+  
   const findProduct = locate.state
-  console.log(findProduct, " This is findProduct in Show Product Detail.js")
-  // const filterProduct = dbproduct.filter(i => (i.type.toLowerCase().includes(locate.state.type.toLowerCase())))
+  // console.log(findProduct, " This is findProduct in Show Product Detail.js")
+  
+  function handleCart(id) {
+    console.log("This is userData", userData)
+    if (userData.valueOf.length != 0) {
+      const cartData= ()=>setproductId(id);
+      SuccessMessage();
+    }
+    else {
+      AlertMessage();
+    }
+  }
+  
+  function handleBuyNow(id) {
+   if (userData.valueOf.length != 0) {
+      const cartData= ()=>setproductId(id);
+      nav('/cart', { replace: true });      
+    }
+    else {
+      AlertMessage();
+    }
+  }
 
-  // function send(e) {
-  //   navigate('/productDetails', {state: e}, { replace: true })
-  //   // console.log(e)
-  // }
 
   return (
     <div>
+      <ToastContainer />
       <div className='showproductHead'>
-        <h1><span className='txt-back'>{findProduct?.product_name} </span> Product Details</h1>
+        <h1><span className='txt-back'>{findProduct?.product_name}</span>Details</h1>
       </div>
       <div className='showproductDetail'>
         <div className='showproductleft'>
@@ -57,7 +86,7 @@ function ShowProductDetails({ setproductId }) {
           <div className='showOffer'>
             <div>
               <button onClick={() => handleCart(findProduct?.product_id)}> <ShoppingCartOutlinedIcon style={{ color: 'aqua' }} /> ADD TO CART</button>
-              <button><SellIcon style={{ color: 'orangered' }} /> Apply Coupons</button>
+              {/* <button><SellIcon style={{ color: 'orangered' }} /> Apply Coupons</button> */}
             </div>
           </div>
         </div>
@@ -105,8 +134,8 @@ function ShowProductDetails({ setproductId }) {
 
       <div className='showOffer'>
         <div>
-          <button><ShoppingBagOutlinedIcon style={{ color: 'orange' }} /> BUY NOW</button>
-          <button onClick={() => handleNext()}>CONTINUE SHOPPING <EastOutlinedIcon style={{ color: 'yellowgreen' }} /></button>
+          <button onClick={()=> handleBuyNow(findProduct?.product_id)}><ShoppingBagOutlinedIcon style={{ color: 'orange' }} /> BUY NOW</button>
+          <button onClick={() => handleContinueShopping()}>CONTINUE SHOPPING <EastOutlinedIcon style={{ color: 'yellowgreen' }} /></button>
         </div>
       </div>
       {/* <div className='product'>
