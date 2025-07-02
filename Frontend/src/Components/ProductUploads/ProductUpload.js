@@ -50,7 +50,7 @@ const ProductUpload = () => {
 
   return (
     <div className='productUploadContainer'>
-      <h4>Upload Your Products </h4>
+      <h4>Upload Your New Products </h4>
       <Form form={form} layout="vertical" onFinish={postData} className='FormContainer'>
         <div className='show-col-wrap'>
           <Form.Item name="product_name" label="Product Name" rules={[{ required: true }]}>

@@ -75,7 +75,6 @@ function Product({ setproductId }) {
   useEffect(() => {
     if (searchedProduct) {
       handlePostSearchedProduct(searchedProduct);
-
     }
   }, [searchedProduct])
 

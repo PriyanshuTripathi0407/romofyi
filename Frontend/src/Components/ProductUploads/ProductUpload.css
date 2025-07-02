@@ -1,8 +1,10 @@
-.productUploadContainer{background-color: gold; text-align: center; transition: all 0.3s ease-in-out; height: 96vh; padding: 10px 0;}
-.FormContainer{ padding:0 20px; display: flex; justify-content: start; align-items: center; gap: 20px; height: 100%; row-gap: 0; margin: 0; background-color: gold; flex-wrap: wrap; }
-.FormContainer .show-col-wrap .ant-form-item-label >label{   
-  font-weight: 600;       
-  font-family: 'Roboto'; 
-  color: #444;              
-  font-size: 14px;         
+.productUploadContainer{background-color: #183661; text-align: center; transition: all 0.3s ease-in-out; height: 100vh; padding: 10px 0; overflow: scroll; /* <-- enables horizontal scroll */
+   scrollbar-width: none;
+   /* Firefox - hide scrollbar */
+   -ms-overflow-style: none;
+   /* IE/Edge - hide scrollbar */
 }
+.productUploadContainer h4{color: gold;}
+.FormContainer{ padding:0 20px; display: flex; justify-content: start; align-items: center; gap: 20px; height: 130%; row-gap: 0; margin: 0; background-color: #183661; flex-wrap: wrap; }
+.FormContainer  .ant-form-item-label >label{ font-weight: 600; font-family: 'Roboto'; color: gold; font-size: 14px; }
+

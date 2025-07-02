@@ -13,6 +13,15 @@ import { PostUserOrdertData } from '../../API/OrderedProductAPI/OrderedProductAP
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
 
+    const [userData, setUserData] = useState({})
+      useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+          const parsedData = JSON.parse(savedUser);
+          setUserData(parsedData.user)
+        }
+      }, []);
+
     // console.log(cartProduct, "This is cartproduct of Cart.js")
     const handleIncrease = (id) => {
         setCartProduct((prevCart) =>
@@ -48,9 +57,20 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
         }
     };
 
-    
+
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
     const [showAnimation, setShowAnimation] = useState(false);
+     const handleUserOrder = async () => {
+        const items = cartProduct.map(item => ({
+            product_id: item.product_id,
+            count: item.count || 1,
+        }))
+        
+        const resp = await PostUserOrdertData(items);
+        console.log("This is Order Data Added", resp.data)
+    }
+
+    
     const handleCheckout = async () => {
         if (cartProduct.length < 0) {
             alert("Please add products in Cart")
@@ -80,14 +100,9 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
                     const data = await res.json();
                     // Waits for the server to respond, and parses the returned JSON data
-
                     if (data.id) {
                         const stripe = await stripePromise;
-                        await stripe.redirectToCheckout({ sessionId: data.id });
-
-                        // Call API Here for placing Order
-                        const res = await PostUserOrdertData();
-                        console.log("This is Order Data Added", res.data)
+                        await stripe.redirectToCheckout({ sessionId: data.id });                        
                     } else {
                         alert('Failed to create Stripe session');
                     }
@@ -98,6 +113,12 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
             }, 2000);
         }
     };
+
+   
+    const handlePayment = ()=>{
+        handleCheckout();
+        handleUserOrder();
+    }
 
     if (showAnimation) {
         return <ReadytoPayment />;
@@ -165,8 +186,8 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                 <div className='paymentDetails'>
                     <h1><PaymentIcon /> Payment Details </h1>
                     <div className='priceInfo'>
-                        {cartProduct.map((item) => (
-                            <div className='item'>
+                        {cartProduct.map((item,index) => (
+                            <div className='item' key={index}>
                                 <p>{item.product_name}</p>
                                 <p>&#8377;{item.product_price}</p>
                             </div>
@@ -182,7 +203,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                     </div>
                 </div>
                 <div className='productPayment'>
-                    <button onClick={handleCheckout} className="payNowBtn">
+                    <button onClick={handleUserOrder} className="payNowBtn">
                         Continue to Payment <ArrowCircleRightOutlinedIcon />
                     </button>
                 </div>

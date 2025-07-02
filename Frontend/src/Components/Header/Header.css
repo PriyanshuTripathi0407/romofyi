@@ -60,6 +60,7 @@
    overflow-x: auto;
    /* <-- enables horizontal scroll */
    scrollbar-width: none;
+
    /* Firefox - hide scrollbar */
    -ms-overflow-style: none;
    /* IE/Edge - hide scrollbar */

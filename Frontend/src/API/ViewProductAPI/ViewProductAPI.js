@@ -9,6 +9,7 @@ if (savedUser) {
   // Check if parsedData and parsedData.user exist
   if (parsedData && parsedData.user) {
     email = parsedData.user.email;
+    console.log("This is Email in API", email)
   }
 }
 
