@@ -40,6 +40,7 @@ function App() {
   const [productId, setProductId] = useState('');
   const [cartProduct, setCartProduct] = useState([]);
   const [dbData, setDbData] = useState([]);
+  const [paymentSessionID, setPaymentSessionID] = useState('')
 
   useEffect(() => {
     const fetchAndFilter = async () => {
@@ -91,11 +92,11 @@ function App() {
     { path: '/order', element: <Order /> },
     {
       path: '/cart',
-      element: <Cart cartProduct={cartProduct} setCartProduct={setCartProduct} />
+      element: <Cart cartProduct={cartProduct} setPaymentSessionID= {setPaymentSessionID} setCartProduct={setCartProduct} />
     },
     { path: '/setting', element: <Settings /> },
     { path: '/wishlist', element: <Wishlist /> },
-    { path: '/succesful-payment', element: <PaymentSuccessful /> },
+    { path: '/succesful-payment', element: <PaymentSuccessful paymentSessionID={paymentSessionID} /> },
 
   ];
 
