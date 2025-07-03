@@ -24,8 +24,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const [dbproduct, setProduct] = useState([]); // to get data from backend
   const [viewedProduct, setViewedProduct] = useState([]); // to get Viewed data from backend
   const [cartProduct, setCartProduct] = useState([]); // to get cart data from backend
-  const [searchedProduct, setSearchedProduct] = useState([]); // to get cart data from backend
-  const [orderedItem, setOrderedItem] = useState([]); // to get cart data from backend
+  const [searchedProduct, setSearchedProduct] = useState([]); // to get searched from backend
+  const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
 
 
   const icons = [
@@ -86,8 +86,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleGetUserOrderedItem = async () => {
     const res = await GetUserOrderedItem()
-    console.log("Get Order Items Response in UserDashboard.js : ", res.data.order_items[0].product)
-    setOrderedItem(res.data.order_items[0].product)
+    // console.log("Get Order Items Response in UserDashboard.js : ", res.data.order_items[0])
+    setOrderedItem(res.data.order_items[0])
   }
 
 
@@ -183,9 +183,9 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Ordered Product</h5>
               </div>
               {orderedItem ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
-                  <h6>{orderedItem.product_name} </h6>
-                  <img src={orderedItem.product_image} alt='Product_Image' />
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>                  
+                  <p>Order Status: {orderedItem?.order?.status}</p>
+                  <img src={orderedItem?.product?.product_image} alt='Product_Image' />
                 </div>
                 :
                 <p>Your Cart is empty yet </p>

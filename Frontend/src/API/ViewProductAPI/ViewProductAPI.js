@@ -19,6 +19,16 @@ export const getViewData = () => {
   );
 }
 
-export const PostData = (data) => {
+export const PostViewData = (data) => {
   return axios.post(`${API_BASE_URL}/viewed-products/`, data);
+};
+
+export const getWishlistedData = () => {
+  return axios.get(`${API_BASE_URL}/wishlist/`,
+    {params: { customer_email: email }}
+  );
+}
+
+export const PostWishedlistedData = (data) => {
+  return axios.post(`${API_BASE_URL}/wishlist/`, data);
 };

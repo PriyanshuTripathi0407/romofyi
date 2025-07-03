@@ -1,12 +1,27 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import fastDelivery from '../../Image/fast.png'
 import orderPlaced from '../../Image/order-delivery.png'
-import packaged from '../../Image/box.png'
-import delivered from '../../Image/delivery-man.png'
+import { getWishlistedData } from '../../API/ViewProductAPI/ViewProductAPI';
 import './Wishlist.css'
 
 function Wishlist() {
+
+   const [wishlistData, setWishlistedData] = useState({})
+   const [userData, setUserData] = useState({})
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      const parsedData = JSON.parse(savedUser);
+      setUserData(parsedData.user)
+      handleGetWishlistedData();
+    }
+  }, []);
+
+    const handleGetWishlistedData = async () => {
+      const res = await getWishlistedData();
+      console.log("Wishlist Data ",res.data)
+    //   setWishlistedData(res.data.wishlisted_products)
+    }
     return (
         <div className='container-fluid my-3'>
             <div className='row wishlistContainer'>
