@@ -2,22 +2,26 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
-const savedUser = localStorage.getItem('user');
+let savedUser = localStorage.getItem('user');
+let vendorId= '';
+if (savedUser) {
+  const parsedData = JSON.parse(savedUser);  
+  if (parsedData && parsedData.user) {
+    vendorId = parsedData.user.id;
+    console.log("This is vendor in API", vendorId)
+  }
+}
+
 
 export const GetVendorProductData = () => {
-  const [vendorId, setVendorId] = useState();
-
-  if (savedUser) {
-    const parsedData = JSON.parse(savedUser);
-    // Check if parsedData and parsedData.user exist
-    if (parsedData && parsedData.user) {
-      const vendor = parsedData.user.id;
-      setVendorId(vendor)
-    }
-  }
-
-
     return axios.get(`${API_BASE_URL}/vendor-product/`,
+      { params: { vendor: vendorId } }
+    );
+
+}
+
+export const GetVendorOrderedProductData = () => {
+     return axios.get(`${API_BASE_URL}/order-item/`,
       { params: { vendor: vendorId } }
     );
 

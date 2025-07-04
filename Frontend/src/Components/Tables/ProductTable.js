@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from "antd";
-import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI'
+import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI';
 
 const ProductTable = () => {
     const [Productdata, setProductData] = useState([]);

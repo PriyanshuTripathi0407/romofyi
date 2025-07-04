@@ -1,65 +1,87 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './RequestProduct.css'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import NoDataFound from '../ShowMessages/NoDataFound';
+import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
 
 const RequestedProduct = () => {
-    const [orderedProducts, setOrderedProducts]= useState()
-  return (
-   <div className='OrderProductContainer'>
+    const [orderedProducts, setOrderedProducts] = useState();
+    useEffect(() => {
+        getVendorOrderedProductData();
+    }, [])
+
+    const getVendorOrderedProductData = async () => {
+        try {
+            const resp = await GetVendorOrderedProductData();
+            console.log('This is Ordered Product', resp.data);
+            setOrderedProducts(resp.data.order_items);
+        } catch (error) {
+            console.error('Error fetching vendor product data:', error);
+        }
+    };
+    return (
+        <div className='OrderProductContainer'>
+            <h2> Ordered Products Data </h2>
             <div className='col'>
-                {orderedProducts ? 
-                (
-                    <div>
-                        <h1>Request Order Product List </h1>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>ID</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Customer</th>
-                                    <th>Customer Adress</th>
-                                    <th>Total</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            {/* <tbody>
-                                {soldProducts.map((i, index) => (
-                                    <tr key={i.product_id}>
-                                        <td>{index + 1}</td>
-                                        <td>{i.product_id}</td>
-                                        <td>
-                                            <div className='productShow'>
-                                                <img src={i.product_image} alt='Product' />
-                                                <div className='productName'>{i.product_name}</div>
-                                            </div>
-                                        </td>
-                                        <td>{i.count}</td>
-                                        <td>{i.customer_name}</td>                                        
-                                        <td>{i.customer_address}</td>                                        
-                                        <td>&#8377;{(i.count || 1) * i.product_price}</td>
-                                        <td >
-                                            <button className='action' onClick={() => handleViewDetails(i.product_id)}><ClearOutlinedIcon style={{ fontSize: '15px' }} /></button>
-                                        </td>
+                {orderedProducts ?
+                    (
+                        <div>
+                            <table className="table table-striped table-bordered table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>ID</th>
+                                        <th>Product</th>
+                                        <th>Quantity</th>
+                                        <th>Customer</th>
+                                        <th>Customer Address</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
-                                ))}
-                            </tbody> */}
-                        </table>
-                    </div>
-                ) 
-                : 
-                (
-                    <div>
-                        <h2> Ordered Products Data </h2>
-                    <NoDataFound/>
-                    </div>
-                )
+                                </thead>
+                                <tbody>
+                                    {orderedProducts.map((i, index) => (
+                                        <tr key={i.id}>
+                                            <td>{index + 1}</td>
+                                            <td>{i.product.product_id}</td>
+                                            <td>
+                                                <div className="d-flex align-items-center">
+                                                    <img
+                                                        src={i.product.product_image}
+                                                        alt="Product"
+                                                        className="img-fluid rounded-circle"
+                                                        style={{ width: '40px', height: '40px', objectFit: 'cover', marginRight: '10px' }}
+                                                    />
+                                                    <div className="productName">{i.product.product_name}</div>
+                                                </div>
+                                            </td>
+                                            <td>{i.quantity}</td>
+                                            <td>{i.order.customer.first_name} {i.order.customer.last_name}</td>
+                                            <td>{i.order.customer.address}</td>
+                                            <td>&#8377;{(i.quantity || 1) * i.product.product_price}</td>
+                                            <td>{i.order.status}</td>
+                                            <td>
+                                                <button className="action">
+                                                    <ClearOutlinedIcon style={{ fontSize: '15px' }} />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )
+                    :
+                    (
+                        <div>
+                            <NoDataFound />
+                        </div>
+                    )
                 }
             </div >
         </div >
-  )
+    )
 }
 
 export default RequestedProduct
