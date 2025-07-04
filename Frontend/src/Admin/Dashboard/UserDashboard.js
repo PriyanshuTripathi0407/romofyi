@@ -17,6 +17,7 @@ import { getCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
 import { GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI.js';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const UserDashboard = ({ loginId, setLoginId }) => {
@@ -26,7 +27,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const [cartProduct, setCartProduct] = useState([]); // to get cart data from backend
   const [searchedProduct, setSearchedProduct] = useState([]); // to get searched from backend
   const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
-
+  const nav = useNavigate()
 
   const icons = [
     <HourglassTopOutlinedIcon key="top" fontSize="large" />,
@@ -70,6 +71,16 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const handleGetViewedData = async (user) => {
     const res = await getViewData();
     setViewedProduct(res.data.viewed_products.product)
+  }
+
+  const handleNavigationOrderPage = ()=> {
+     nav('/order', { replace: true })
+  }
+  const handleNavigationCartPage = ()=> {
+     nav('/cart', { replace: true })
+  }
+  const handleNavigationProductPage = ()=> {
+     nav('/product', { replace: true })
   }
 
   const handleCartData = async (user) => {
@@ -127,7 +138,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Last Viewed Products</h5>
               </div>
               {viewedProduct ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
                   <h6>{viewedProduct.product_name} </h6>
                   <img src={viewedProduct.product_image} alt='Product_Image' />
                 </div>
@@ -146,7 +157,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Searched Products</h5>
               </div>
               {searchedProduct ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
                   <h6>{searchedProduct.product_name} </h6>
                   <img src={searchedProduct.product_image} alt='Product_Image' />
                 </div>
@@ -165,7 +176,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Add to Cart Products</h5>
               </div>
               {cartProduct ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationCartPage}>
                   <h6>{cartProduct.product_name} </h6>
                   <img src={cartProduct.product_image} alt='Product_Image' />
                 </div>
@@ -183,7 +194,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Ordered Product</h5>
               </div>
               {orderedItem ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4'>                  
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationOrderPage}>                  
                   <p>Order Status: {orderedItem?.order?.status}</p>
                   <img src={orderedItem?.product?.product_image} alt='Product_Image' />
                 </div>

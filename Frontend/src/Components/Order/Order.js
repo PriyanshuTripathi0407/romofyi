@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import './Order.css'
 import fastDelivery from '../../Image/fast.png'
 import orderPlaced from '../../Image/order-delivery.png'
@@ -8,9 +8,9 @@ import { GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAP
 
 
 function Order() {
-  const [userData, setUserData] = useState({})
   const [orderedItem, setOrderedItem] = useState(); // to get ordered item from backend
-
+  
+  const [userData, setUserData] = useState({})
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
@@ -32,7 +32,7 @@ function Order() {
         {orderedItem ?
           orderedItem.map((product) => (
             <>
-              <div className='col-5 order d-flex flex-column'>
+              <div className='col-4  d-flex flex-column'>
                 <div className='ImageWrapper'>
                   <img src={product.product.product_image} alt='' />
                   <p>{product.product.product_name}</p>
@@ -47,8 +47,10 @@ function Order() {
                   </div>
                 </div>
               </div>
-           
-              <div className='col-7 order '>
+              <div className='col-1 '>
+              </div>
+
+              <div className='col-7 order mb-2'>
                 <h5> Ordered Product Details </h5>
                 <ul>
                   <li><span className='item'>Product Id: {product.product.product_id} </span></li>

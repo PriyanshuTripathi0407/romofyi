@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from "antd";
-import { getData, PostData, PutData } from '../../API/ProductAPI/ProductAPI'
+import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI'
 
 const ProductTable = () => {
     const [Productdata, setProductData] = useState([]);
@@ -24,19 +24,26 @@ const ProductTable = () => {
                 />)
         },
     ]
-    const getRegistration = async () => {
-        const response = await getData()
-        setProductData(response.data)
-        console.log(Productdata, "Productdata Data in Table")
-    }
-
+    
     useEffect(() => {
-        getRegistration();
+        getRegisteredVendorProductData();
     }, [])
-
+    
+     const getRegisteredVendorProductData = async () => {
+        try {
+            const resp = await GetVendorProductData();
+            setProductData(resp.data.product);
+            console.log('This is vendor Product', resp.data);
+        } catch (error) {
+            console.error('Error fetching vendor product data:', error);
+        }
+    };
+    
+    
+    
     return (
         <div>
-            <Table dataSource={Productdata} columns={col} />;
+            <Table dataSource={Productdata} columns={col} />
         </div>
     )
 }
