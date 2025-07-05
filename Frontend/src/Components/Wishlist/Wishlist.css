@@ -1,6 +1,7 @@
  .wishlistContainer{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative;}
 
  .wishlist{background-color: #183661;box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; padding: 10px 5px; display: flex; flex-direction: row; height: 320px;}
+ .wishlist h4{ text-align: center;}
  .wishlist .item{font-weight: 500; font-size: 16px; font-family: cursive;}
  .wishlist ul {display: grid; grid-template-columns: repeat(2,1fr);}
  .wishlist ul li{ list-style:disc; margin: 0px 0px 10px 0px;}

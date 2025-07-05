@@ -10,7 +10,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import ReadytoPayment from '../ShowMessages/ReadytoPayment'
 import { PostUserOrderData } from '../../API/OrderedProductAPI/OrderedProductAPI'
 
-const AddtoCart = ({ cartProduct, setCartProduct }) => {
+const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
 
 
     const [userData, setUserData] = useState({})
@@ -22,7 +22,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
         }
       }, []);
 
-    // console.log(cartProduct, "This is cartproduct of Cart.js")
+    // console.log(paymentSessionID, "This is paymentSessionID of Cart 1 ")
     const handleIncrease = (id) => {
         setCartProduct((prevCart) =>
             prevCart.map((item) =>
@@ -63,16 +63,16 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
      
     const handleUserOrder = async () => {
         const items = cartProduct.map(item => ({
-            product_id: item.product_id,
+            product_id: item.id,
             count: item.count || 1,
         }))
 
-        const products= {
-            customer_email: userData.email,
+        const orderProduct= {
+            customer: userData.id,
             items: items
         }
         
-        const resp = await PostUserOrderData(products);
+        const resp = await PostUserOrdertData(orderProduct);
         console.log("This is Order Data Added", resp.data)
     }
 
@@ -109,6 +109,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                     if (data.id) {
                         const stripe = await stripePromise;
                         await stripe.redirectToCheckout({ sessionId: data.id });                        
+                        setPaymentSessionID(data.id)
                     } else {
                         alert('Failed to create Stripe session');
                     }
@@ -119,16 +120,13 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
             }, 2000);
         }
     };
-
    
-    const handlePayment = ()=>{
-        handleCheckout();
-        handleUserOrder();
-    }
 
     if (showAnimation) {
         return <ReadytoPayment />;
     }
+
+    //  console.log(paymentSessionID, "This is paymentSessionID of Cart 2 ")
 
     return (
         <div className='cartContainer'>
@@ -210,7 +208,7 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
                 </div>
                 <div className='productPayment'>
                     <h1 onClick={handleUserOrder} className="payNowBtn">
-                        Continue to Payment <ArrowCircleRightOutlinedIcon />
+                        Continue to Order <ArrowCircleRightOutlinedIcon />
                     </h1>
                 </div>
                 <div className='productPayment'>

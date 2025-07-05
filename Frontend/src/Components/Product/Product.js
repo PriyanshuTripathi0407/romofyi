@@ -8,7 +8,7 @@ import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCi
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { PostData } from '../../API/ViewProductAPI/ViewProductAPI.js'
+import { PostViewData, PostWishedlistedData } from '../../API/ViewProductAPI/ViewProductAPI.js'
 import { PostCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { PostSearchedData, getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
 
@@ -101,9 +101,20 @@ function Product({ setproductId }) {
         customer: userData.email,
         product: product.product_id,
       };
-      const res = await PostData(viewedProductData)
+      const res = await PostViewData(viewedProductData)
     }
     nav('/productDetails', { state: product }, { replace: true })
+  }
+
+  const handleWishlist = async (product) => {
+    if (userData) {
+      const viewedProductData = {
+        customer: userData.email,
+        product: product.product_id,
+      };
+      const res = await PostWishedlistedData(viewedProductData)
+      console.log("This is Wishlist Post ",res.data)
+    }
   }
 
   const handlePostSearchedProduct = async (product) => {
@@ -195,7 +206,7 @@ function Product({ setproductId }) {
                           ))
                           ) :
                           (<div > </div>)}
-                        <FavoriteBorderOutlinedIcon />
+                        <FavoriteBorderOutlinedIcon onClick={()=>handleWishlist(i)} />
                         <img src={i.product_image} alt='Image' className='animate__animated animate__flip' />
                       </div>
                       <div className='info'>
