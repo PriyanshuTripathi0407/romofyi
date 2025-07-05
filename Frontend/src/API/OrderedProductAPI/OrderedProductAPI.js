@@ -28,7 +28,7 @@ export const getUserOrderedData= () =>{
   );
 }
 
-export const PostUserOrdertData = (data) => {
+export const PostUserOrderData = (data) => {
   return axios.post(`${API_BASE_URL}/orders/`, data,{params: { customer_email: email }}
   );
 };

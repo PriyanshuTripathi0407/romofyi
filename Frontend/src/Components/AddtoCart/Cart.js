@@ -8,7 +8,7 @@ import ArrowCircleLeftOutlinedIcon from '@mui/icons-material/ArrowCircleLeftOutl
 import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import ReadytoPayment from '../ShowMessages/ReadytoPayment'
-import { PostUserOrdertData } from '../../API/OrderedProductAPI/OrderedProductAPI'
+import { PostUserOrderData } from '../../API/OrderedProductAPI/OrderedProductAPI'
 
 const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
@@ -60,13 +60,19 @@ const AddtoCart = ({ cartProduct, setCartProduct }) => {
 
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
     const [showAnimation, setShowAnimation] = useState(false);
-     const handleUserOrder = async () => {
+     
+    const handleUserOrder = async () => {
         const items = cartProduct.map(item => ({
             product_id: item.product_id,
             count: item.count || 1,
         }))
+
+        const products= {
+            customer_email: userData.email,
+            items: items
+        }
         
-        const resp = await PostUserOrdertData(items);
+        const resp = await PostUserOrderData(products);
         console.log("This is Order Data Added", resp.data)
     }
 
