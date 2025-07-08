@@ -28,16 +28,23 @@ export const getUserOrderedData= () =>{
   );
 }
 
-export const PostUserOrdertData = (data) => {
+export const GetUserOrderedItem= () =>{
+  return axios.get(`${API_BASE_URL}/orders/`,
+    {params: { customer_email: email }}
+  );
+}
+
+export const PostUserOrderData = (data) => {
   return axios.post(`${API_BASE_URL}/orders/`, data );
 };
 
 
-export const GetUserOrderedItem= () =>{
+export const GetUserOrderatVendorDashboard= () =>{
   return axios.get(`${API_BASE_URL}/order-items/`,
     {params: { customer_email: email }}
   );
 }
+
 
 
 

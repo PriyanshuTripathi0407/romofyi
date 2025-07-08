@@ -36,10 +36,10 @@ const UserInfo = ({ loginId, setLoginId }) => {
         }
     }, []);
 
-    useEffect(() => {
-        console.log(userData, "this user Data in UserInfo.js");
-        console.log('Props in UserInfo:', { loginId, setLoginId });
-    }, [userData]);
+    // useEffect(() => {
+    //     console.log(userData, "this user Data in UserInfo.js");
+    //     console.log('Props in UserInfo:', { loginId, setLoginId });
+    // }, [userData]);
 
     function handleSettings() {
         setShowSetting(!showSetting)
@@ -56,7 +56,7 @@ const UserInfo = ({ loginId, setLoginId }) => {
             <div className='row d-flex align-items-center'>
                 <div className='col-md-5 user'>
                     <img src={`${BASE_URL}${userData.image}`} alt='User_Image' />
-                    <h3>Hi {userData?.first_name || "ROMOFYI"}</h3>
+                    <h3>Hi {userData?.first_name || "ROMOFYI"} Welcome to Dashboard </h3>
                 </div>
                 <div className='col-md-5 info'>
                     <ul className='d-flex align-items-center mt-2 list-unstyled gap-4' >

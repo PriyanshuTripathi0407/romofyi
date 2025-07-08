@@ -70,6 +70,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleGetViewedData = async (user) => {
     const res = await getViewData();
+    console.log("Get Viewed product from backend :", res.data)
     setViewedProduct(res.data.viewed_products.product)
   }
 
@@ -85,20 +86,20 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleCartData = async (user) => {
     const res = await getCartData();
-    // console.log("This is cart product from backend :", res.data.cart_products.product)
+    console.log("Get cart product from backend :", res.data.cart_products.product)
     setCartProduct(res.data.cart_products.product)
   }
 
   const handleGetSearchedData = async () => {
     const res = await getSearchedData()
-    // console.log("Get Response in UserDashboard.js : ", res.data.searched_products.product)
+    console.log("Get Searched product data in UserDashboard.js : ", res.data.searched_products.product)
     setSearchedProduct(res.data.searched_products.product)
   }
 
   const handleGetUserOrderedItem = async () => {
     const res = await GetUserOrderedItem()
-    // console.log("Get Order Items Response in UserDashboard.js : ", res.data.order_items[0])
-    setOrderedItem(res.data.order_items[0])
+    console.log("Get Order Items Response in UserDashboard.js : ", res.data.order_items)
+    setOrderedItem(res.data.order_items)
   }
 
 

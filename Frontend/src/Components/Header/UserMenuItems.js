@@ -27,7 +27,7 @@ export default function UserMenuItems() {
         <ul className="navbar-menu">
           <Link to={userData?.role === 'Vendor' ? '/vendor-dashboard' :
             userData?.role === 'Admin' ? '/admin-dashboard' :
-              userData?.role === 'Customer' ? '/user-dashboard' : '' }><li className='logo'><img src={userData.image ? `${BASE_URL}${userData.image}` : romo} /> Romofyi </li> </Link>
+              userData?.role === 'Customer' ? '/user-dashboard' : '' }><li className='logo'><img src={userData.image ? `${BASE_URL}${userData.image}` : romo} /> Dashboard </li> </Link>
           <Link to='/home'><li><HomeIcon fontSize="small" /> Home</li> </Link>
           <Link to='/product'><li><StorefrontIcon fontSize="small" /> Shopping Port</li> </Link>
           <Link to='/cart'><li><ShoppingCartOutlinedIcon /> Cart</li></Link>

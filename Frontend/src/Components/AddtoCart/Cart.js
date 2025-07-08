@@ -72,7 +72,7 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
             items: items
         }
         
-        const resp = await PostUserOrdertData(orderProduct);
+        const resp = await PostUserOrderData(orderProduct);
         console.log("This is Order Data Added", resp.data)
     }
 

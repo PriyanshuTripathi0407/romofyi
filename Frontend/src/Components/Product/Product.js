@@ -80,6 +80,7 @@ function Product({ setproductId }) {
 
   const handleGetData = async () => {
     const response = await getData()
+    // console.log("This is product in Product **", response)
     setProductData(response.data);
   }
 
@@ -112,8 +113,7 @@ function Product({ setproductId }) {
         customer: userData.email,
         product: product.product_id,
       };
-      const res = await PostWishedlistedData(viewedProductData)
-      console.log("This is Wishlist Post ",res.data)
+      const res = await PostWishedlistedData(viewedProductData)      
     }
   }
 
@@ -224,8 +224,8 @@ function Product({ setproductId }) {
                         precision={0.5}
                         readOnly
                       />
-                      <p> <strong>
-                        <u>{(parseInt(i.product_rating) * 10)} Reviews</u>
+                      <p> Vendor : <strong>
+                       {i.vendor.first_name}  {i.vendor.last_name} 
                       </strong></p>
                     </div>
                     <div className='d-flex justify-content-between gap-4'>

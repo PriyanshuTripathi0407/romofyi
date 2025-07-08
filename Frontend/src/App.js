@@ -76,8 +76,8 @@ function App() {
     { path: '/login', element: <Login loginId={loginId} setLoginId={setLoginId} /> },
     { path: '/review', element: <Review /> },
     { path: '/stock', element: <Stock /> },
-    { path: '/productoftheday', element: <ProductoftheDay /> },
     { path: '/succesful-payment', element: <PaymentSuccessful /> },
+    { path: '/sale', element: <ProductoftheDay /> },
   ];
 
   // Routes only for logged-in users

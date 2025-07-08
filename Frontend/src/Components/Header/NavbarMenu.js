@@ -18,7 +18,7 @@ export default function NavbarMenu() {
                 <Link to='/' ><li><HomeIcon fontSize="small" /> Home</li> </Link>
                 <Link to='/newarrivals' ><li><NewReleasesIcon fontSize="small" /> New Arrivals</li> </Link>
                 <Link to='/product' ><li><WidgetsIcon /> Products</li> </Link>
-                <Link to='/' ><li><LocalOfferIcon fontSize="small" /> Sale</li> </Link>
+                <Link to='/sale' ><li><LocalOfferIcon fontSize="small" /> Sale</li> </Link>
                 <Link to='/contact' ><li><ContactMailIcon fontSize="small" /> Contact</li> </Link>
                 <Link to='/news' > <li> <NewspaperIcon /> News</li>  </Link>
                 <Link to='/login' > <li><AccountCircleIcon /> Login</li>  </Link>

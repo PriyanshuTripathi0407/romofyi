@@ -3,13 +3,14 @@ import './RequestProduct.css'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import NoDataFound from '../ShowMessages/NoDataFound';
 import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
-
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 const RequestedProduct = () => {
     const [orderedProducts, setOrderedProducts] = useState();
     useEffect(() => {
         getVendorOrderedProductData();
     }, [])
-
+let savedUser = localStorage.getItem('user');
     const getVendorOrderedProductData = async () => {
         try {
             const resp = await GetVendorOrderedProductData();
@@ -19,6 +20,7 @@ const RequestedProduct = () => {
             console.error('Error fetching vendor product data:', error);
         }
     };
+    console.log('This is user in Ordered Product', savedUser);
     return (
         <div className='OrderProductContainer'>
             <h2> Ordered Products Data </h2>
@@ -61,10 +63,13 @@ const RequestedProduct = () => {
                                             <td>{i.order.customer.address}</td>
                                             <td>&#8377;{(i.quantity || 1) * i.product.product_price}</td>
                                             <td>{i.order.status}</td>
-                                            <td>
+                                            <td>                                                
                                                 <button className="action">
-                                                    <ClearOutlinedIcon style={{ fontSize: '15px' }} />
-                                                </button>
+                                                    <CheckRoundedIcon  />
+                                                </button>                                                
+                                                <button className="action">
+                                                    <ClearOutlinedIcon  />
+                                                </button>                                                
                                             </td>
                                         </tr>
                                     ))}

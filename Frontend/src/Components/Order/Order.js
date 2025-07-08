@@ -4,7 +4,7 @@ import fastDelivery from '../../Image/fast.png'
 import orderPlaced from '../../Image/order-delivery.png'
 import packaged from '../../Image/box.png'
 import delivered from '../../Image/delivery-man.png'
-import { GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI'
+import { GetUserOrderatVendorDashboard,getUserOrderedData } from '../../API/OrderedProductAPI/OrderedProductAPI'
 
 
 function Order() {
@@ -21,9 +21,17 @@ function Order() {
   }, []);
 
   const handleGetUserOrderedItem = async () => {
-    const res = await GetUserOrderedItem()
-    console.log("Get Order Items Response in Order.js : ", res.data.order_items)
-    setOrderedItem(res.data.order_items)
+    if(userData.role== "Vendor"){
+      const res = await GetUserOrderatVendorDashboard()
+      console.log("Get Order Items Response for Vendor : ", res.data.order_items)
+      setOrderedItem(res.data.order_items)
+    }
+    else if(userData.role== "Customer"){
+      const res = await getUserOrderedData()
+      console.log("Get Order Items Response for User : ", res.data.order_items)
+      setOrderedItem(res.data.order_items)
+    }
+
   }
   return (
     <div className='container-fluid my-3'>
