@@ -8,6 +8,7 @@ import ArrowDropDownCircleOutlinedIcon from '@mui/icons-material/ArrowDropDownCi
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import DiscountIcon from '@mui/icons-material/Discount';
 import { useNavigate } from 'react-router-dom';
+import ShowLoginErrorMessage from '../ShowMessages/ShowLoginErrorMessage.js';
 
 function ProductoftheDay({ setproductId }) {
     const nav= useNavigate();
@@ -25,14 +26,21 @@ function ProductoftheDay({ setproductId }) {
     }, []);
 
     function handleCart(id) {
-      if (userData){
-        const res =()=>setproductId(id);
-        message();
-      }
-      else{
-        nav('/login')
-      }
+      if (userData && userData.email) {
+      const viewedProductData = {
+        customer: userData.email,
+        product: id,
+      };
+      setproductId(id);
+      message();
     }
+      else {
+      ShowLoginErrorMessage();
+      return;
+    }
+    }
+
+     
     useEffect(() => {
         handleGetData();
     }, [])
@@ -67,7 +75,7 @@ function ProductoftheDay({ setproductId }) {
 
     return (
         <>
-            <ToastContainer />
+             <ToastContainer position='top-right' style={{top:'90px' }}/>
             <div className='text-center'>
                 <h1 style={{ backgroundColor: 'gold', color: '#183661', fontWeight:'600'}}> Products of the Day </h1>
                 <div className='col mx-2'>
@@ -122,7 +130,7 @@ function ProductoftheDay({ setproductId }) {
                                         </div>
                                         <hr />
                                         <div className='d-flex justify-content-between gap-4'>
-                                            <button onClick={()=> handleView(i)}><a >View Details</a> </button> <hr />
+                                            <button onClick={()=> handleView(i)}>View Details</button> <hr />
                                             <button onClick={() => handleCart(i.product_id)} > ADD TO CART</button>
                                         </div>
 

@@ -50,7 +50,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
       const parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
       handleGetViewedData(parsedData.user)
-      handleCartData(parsedData.user)
+      handleGetCartData(parsedData.user)
       handleGetSearchedData();
       handleGetUserOrderedItem();
     }
@@ -70,23 +70,13 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleGetViewedData = async (user) => {
     const res = await getViewData();
-    console.log("Get Viewed product from backend :", res.data)
+    console.log("Get Viewed product in UserDashboard.js:", res.data.viewed_products)
     setViewedProduct(res.data.viewed_products.product)
   }
 
-  const handleNavigationOrderPage = ()=> {
-     nav('/order', { replace: true })
-  }
-  const handleNavigationCartPage = ()=> {
-     nav('/cart', { replace: true })
-  }
-  const handleNavigationProductPage = ()=> {
-     nav('/product', { replace: true })
-  }
-
-  const handleCartData = async (user) => {
+  const handleGetCartData = async (user) => {
     const res = await getCartData();
-    console.log("Get cart product from backend :", res.data.cart_products.product)
+    console.log("Get Cart product in UserDashboard.js:", res.data.cart_products.product)
     setCartProduct(res.data.cart_products.product)
   }
 
@@ -98,10 +88,20 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   const handleGetUserOrderedItem = async () => {
     const res = await GetUserOrderedItem()
-    console.log("Get Order Items Response in UserDashboard.js : ", res.data.order_items)
+    console.log("Get Order Items Response in UserDashboard.js : ", res.data)
     setOrderedItem(res.data.order_items)
   }
 
+
+  const handleNavigationOrderPage = () => {
+    nav('/order', { replace: true })
+  }
+  const handleNavigationCartPage = () => {
+    nav('/cart', { replace: true })
+  }
+  const handleNavigationProductPage = () => {
+    nav('/product', { replace: true })
+  }
 
 
   var settings = {
@@ -195,12 +195,12 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Ordered Product</h5>
               </div>
               {orderedItem ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationOrderPage}>                  
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationOrderPage}>
                   <p>Order Status: {orderedItem?.order?.status}</p>
                   <img src={orderedItem?.product?.product_image} alt='Product_Image' />
                 </div>
                 :
-                <p>Your Cart is empty yet </p>
+                <p>You've not ordered yet </p>
               }
               <div className='d-flex justify-content-between'>
                 <Rating name='read-only-rating' defaultValue={4.5} readOnly />

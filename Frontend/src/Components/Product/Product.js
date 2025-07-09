@@ -11,6 +11,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { PostViewData, PostWishedlistedData } from '../../API/ViewProductAPI/ViewProductAPI.js'
 import { PostCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { PostSearchedData, getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
+import ShowLoginErrorMessage from '../ShowMessages/ShowLoginErrorMessage.js';
 
 function Product({ setproductId }) {
   const [showCatfilter, setshowCatfilter] = useState(false);
@@ -22,34 +23,41 @@ function Product({ setproductId }) {
   const [searchedProduct, setSearchedProduct] = useState('');
 
   const nav = useNavigate();
-  const navigate = useNavigate();
   const locate = useLocation();
   const categoryProduct = locate.state
 
   const message = () => toast(" Added to Cart Successfully")
   const [ProductData, setProductData] = useState([])
   const handleCart = async (id) => {
-    if (userData) {
+    if (userData && userData.email) {
       const viewedProductData = {
         customer: userData.email,
         product: id,
       };
       const res = await PostCartData(viewedProductData)
       // console.log("This is Cart Added",res)
+      setproductId(id);
+      message();
     }
-    setproductId(id);
-    message();
+     else {
+      ShowLoginErrorMessage();
+      return;
+    }
   }
   const handleOrderNow = async (id) => {
-    if (userData) {
+    if (userData && userData.email) {
       const viewedProductData = {
         customer: userData.email,
         product: id,
       };
       // const res = await PostCartData(viewedProductData)
-      // console.log("This is Cart Added",res)
+      // console.log("This is Ordered Product",res)
       setproductId(id);
-      navigate('/cart', { replace: true })
+      nav('/cart', { replace: true })
+    }
+    else {
+      ShowLoginErrorMessage();
+      return;
     }
   }
 
@@ -104,7 +112,7 @@ function Product({ setproductId }) {
       };
       const res = await PostViewData(viewedProductData)
     }
-    nav('/productDetails', { state: product }, { replace: true })
+    nav('/productDetails', { state: product, replace: true })
   }
 
   const handleWishlist = async (product) => {
@@ -113,7 +121,7 @@ function Product({ setproductId }) {
         customer: userData.email,
         product: product.product_id,
       };
-      const res = await PostWishedlistedData(viewedProductData)      
+      const res = await PostWishedlistedData(viewedProductData)
     }
   }
 
@@ -138,7 +146,7 @@ function Product({ setproductId }) {
 
   return (
     <>
-      <ToastContainer />
+      <ToastContainer position='top-right' style={{top:'90px' }}/>
       <div className='row text-center mx-0'>
         <div className='d-flex justify-content-between align-items-center px-4 my-3'>
           <h1 className="mb-0">Products</h1>
@@ -206,7 +214,7 @@ function Product({ setproductId }) {
                           ))
                           ) :
                           (<div > </div>)}
-                        <FavoriteBorderOutlinedIcon onClick={()=>handleWishlist(i)} />
+                        <FavoriteBorderOutlinedIcon onClick={() => handleWishlist(i)} />
                         <img src={i.product_image} alt='Image' className='animate__animated animate__flip' />
                       </div>
                       <div className='info'>
@@ -225,7 +233,7 @@ function Product({ setproductId }) {
                         readOnly
                       />
                       <p> Vendor : <strong>
-                       {i.vendor.first_name}  {i.vendor.last_name} 
+                        {i.vendor.first_name}  {i.vendor.last_name}
                       </strong></p>
                     </div>
                     <div className='d-flex justify-content-between gap-4'>

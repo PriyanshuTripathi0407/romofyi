@@ -110,6 +110,10 @@
    gap: 10px;
 }
 
+.user h3{
+   color: red;
+}
+
 .user img {
    height: 30px;
    width: 30px;

@@ -3,10 +3,12 @@ import axios from 'axios'
 const API_BASE_URL = 'http://127.0.0.1:8000';
 const savedUser = localStorage.getItem('user');
 let email = '';
+let id= '';
 if (savedUser) {
   const parsedData = JSON.parse(savedUser);
   if (parsedData && parsedData.user) {
     email = parsedData.user.email;
+    id= parsedData.user.id;
   }
 }
 
@@ -29,8 +31,8 @@ export const getUserOrderedData= () =>{
 }
 
 export const GetUserOrderedItem= () =>{
-  return axios.get(`${API_BASE_URL}/orders/`,
-    {params: { customer_email: email }}
+  return axios.get(`${API_BASE_URL}/user-product/`,
+    {params: { customer_id: id }}
   );
 }
 
@@ -40,7 +42,7 @@ export const PostUserOrderData = (data) => {
 
 
 export const GetUserOrderatVendorDashboard= () =>{
-  return axios.get(`${API_BASE_URL}/order-items/`,
+  return axios.get(`${API_BASE_URL}/orders/`,
     {params: { customer_email: email }}
   );
 }

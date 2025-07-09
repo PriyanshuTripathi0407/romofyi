@@ -22,14 +22,17 @@ function Order() {
 
   const handleGetUserOrderedItem = async () => {
     if(userData.role== "Vendor"){
+      console.log("This is Vendor Order Items Response for Vendor : ")
       const res = await GetUserOrderatVendorDashboard()
-      console.log("Get Order Items Response for Vendor : ", res.data.order_items)
+      console.log("Get Order Items Response for Vendor : ", res.data.orders)
       setOrderedItem(res.data.order_items)
     }
     else if(userData.role== "Customer"){
-      const res = await getUserOrderedData()
-      console.log("Get Order Items Response for User : ", res.data.order_items)
-      setOrderedItem(res.data.order_items)
+      console.log("This is Customer Order Items Response for Customer : ")
+      // const res = await getUserOrderedData()
+      const res = await GetUserOrderatVendorDashboard()
+      console.log("Get Order Items Response for Customer : ", res.data)
+      // setOrderedItem(res.data.order_items)
     }
 
   }

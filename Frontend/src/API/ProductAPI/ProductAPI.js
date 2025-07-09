@@ -21,7 +21,7 @@ export const GetVendorProductData = () => {
 }
 
 export const GetVendorOrderedProductData = () => {
-     return axios.get(`${API_BASE_URL}/order-item/`,
+     return axios.get(`${API_BASE_URL}/order-items/`,
       { params: { vendor: vendorId } }
     );
 
