@@ -4,46 +4,38 @@ import fastDelivery from '../../Image/fast.png'
 import orderPlaced from '../../Image/order-delivery.png'
 import packaged from '../../Image/box.png'
 import delivered from '../../Image/delivery-man.png'
-import { GetUserOrderatVendorDashboard,getUserOrderedData } from '../../API/OrderedProductAPI/OrderedProductAPI'
+import { GetUserOrderatVendorDashboard, getUserOrderedData, GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI'
 
 
 function Order() {
-  const [orderedItem, setOrderedItem] = useState(); // to get ordered item from backend
-  
+  const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
+
   const [userData, setUserData] = useState({})
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       const parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
+      console.log("Role in Order.js role : ", parsedData.user.role)
       handleGetUserOrderedItem();
     }
   }, []);
 
   const handleGetUserOrderedItem = async () => {
-    if(userData.role== "Vendor"){
-      console.log("This is Vendor Order Items Response for Vendor : ")
-      const res = await GetUserOrderatVendorDashboard()
-      console.log("Get Order Items Response for Vendor : ", res.data.orders)
-      setOrderedItem(res.data.order_items)
-    }
-    else if(userData.role== "Customer"){
-      console.log("This is Customer Order Items Response for Customer : ")
-      // const res = await getUserOrderedData()
-      const res = await GetUserOrderatVendorDashboard()
-      console.log("Get Order Items Response for Customer : ", res.data)
-      // setOrderedItem(res.data.order_items)
-    }
-
+    console.log("This is Customer Order Items Response for Customer : ")
+    const res = await GetUserOrderedItem()
+    console.log("Get Order Items Response for Customer : ", res.data)
+    // setOrderedItem(res.data.orders)
+    // Here we left for showing data of User Order
   }
   return (
     <div className='container-fluid my-3'>
       <div className='row orderContainer p-2'>
         <h3>Your Orders</h3>
         {orderedItem ?
-          orderedItem.map((product) => (
-            <>
-              <div className='col-4  d-flex flex-column'>
+          orderedItem.map((product,index) => (
+            <div>
+              <div className='col-4  d-flex flex-column' key={index}>
                 <div className='ImageWrapper'>
                   <img src={product.product.product_image} alt='' />
                   <p>{product.product.product_name}</p>
@@ -70,17 +62,17 @@ function Order() {
                   <li><span className='item'>Order Status: {product.order.status} </span></li>
                   <li><span className='item'>Product Weight:</span></li>
                   <li><span className='item'>Product Color: {product.product.product_color}</span></li>
-                  <li><span className='item'>Product Category: {product.product.product_category.name} </span></li>
+                  {/* <li><span className='item'>Product Category: {product.product.product_category.name} </span></li> */}
                   <li><span className='item'>Product Sub-category: </span></li>
                   <li><span className='item'>Product Origin: {product.product.vendor} </span></li>
                   <li><span className='item'>Product Quantity: {product.quantity} </span></li>
-                  <li><span className='item'>Product Tags: {product.product.product_tag[0].name} </span></li>
+                  {/* <li><span className='item'>Product Tags: {product.product.product_tag[0].name} </span></li> */}
                 </ul>
               </div>
-            </>
+            </div>
           ))
           :
-          <>
+          <div>
             <div className='col-4 order d-flex flex-column'>
               <div className='ImageWrapper'>
                 <img src={orderPlaced} alt='' />
@@ -113,7 +105,7 @@ function Order() {
                 <li><span className='item'>Product Tags: </span></li>
               </ul>
             </div>
-          </>
+          </div>
         }
       </div>
 

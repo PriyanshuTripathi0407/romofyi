@@ -15,7 +15,7 @@ import { getData } from '../../API/ProductAPI/ProductAPI.js'
 import { getViewData } from '../../API/ViewProductAPI/ViewProductAPI.js';
 import { getCartData } from '../../API/CartAPI/AddedtoCartProductAPI.js';
 import { getSearchedData } from '../../API/SearchedProductAPI/SearchedProductAPI.js';
-import { GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI.js';
+import { getUserOrderedData, GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI.js';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -89,7 +89,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const handleGetUserOrderedItem = async () => {
     const res = await GetUserOrderedItem()
     console.log("Get Order Items Response in UserDashboard.js : ", res.data)
-    setOrderedItem(res.data.order_items)
+    setOrderedItem(res.data.orders[0])
   }
 
 

@@ -3,6 +3,7 @@ import axios from 'axios'
 const API_BASE_URL = 'http://127.0.0.1:8000';
 
 let savedUser = localStorage.getItem('user');
+console.log(savedUser)
 let vendorId= '';
 if (savedUser) {
   const parsedData = JSON.parse(savedUser);  
