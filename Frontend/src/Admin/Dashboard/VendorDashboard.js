@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import ProductTable from '../../Components/Tables/ProductTable'
 import CustomerTable from '../../Components/Tables/CustomerTable'
 
+
 const VendorDashboard = ({ loginId, setLoginId }) => {
     const [showProfile, setShowProfile] = useState(false)
     const [previewImage, setPreviewImage] = useState(null);

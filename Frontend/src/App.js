@@ -33,6 +33,7 @@ import PageNotFound from './Components/ShowMessages/PageNotFound.js'
 import { getData } from './API/ProductAPI/ProductAPI.js';
 import VendorDashboard from './Admin/Dashboard/VendorDashboard.js';
 import PrivateRouter from './Components/Routes/PrivateRouter.js';
+import Ordercard from './Components/Order/Ordercard.js';
 
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
     { path: '/vendor-dashboard', element: <VendorDashboard loginId={loginId} setLoginId={setLoginId} /> },
     { path: '/home', element: <Home /> },
     { path: '*', element: <PageNotFound /> },
+    { path: '/order-card', element: <Ordercard/> },
     {
       path: '/userinfo', element: <UserInfo loginId={loginId} setLoginId={setLoginId} />
     },
@@ -102,7 +104,7 @@ function App() {
 
   return (
     <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-      <BrowserRouter>
+      <BrowserRouter>      
         <Header cartProduct={cartProduct} />
         {loginId ? <UserMenuItems /> : <NavbarMenu />}
         <Routes>

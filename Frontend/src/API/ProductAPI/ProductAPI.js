@@ -9,6 +9,7 @@ if (savedUser) {
   const parsedData = JSON.parse(savedUser);  
   if (parsedData && parsedData.user) {
     vendorId = parsedData.user.id;
+    console.log("Vendor id",vendorId)
    
   }
 }
