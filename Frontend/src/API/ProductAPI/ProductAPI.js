@@ -9,7 +9,7 @@ if (savedUser) {
   const parsedData = JSON.parse(savedUser);  
   if (parsedData && parsedData.user) {
     vendorId = parsedData.user.id;
-    console.log("This is vendor in API", vendorId)
+   
   }
 }
 
