@@ -15,7 +15,7 @@ if (savedUser) {
 
 export const getViewData = () => {
   return axios.get(`${API_BASE_URL}/viewed-products/`,
-    {params: { customer_email: email }}
+    {params: { customer: email }}
   );
 }
 

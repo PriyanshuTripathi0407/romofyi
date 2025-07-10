@@ -101,6 +101,7 @@ function Product({ setproductId }) {
   }
 
   function handleSearch(e) {
+    console.log("Searched ",e.target.value)
     setSearchedProduct(e.target.value);
   }
 
@@ -133,18 +134,12 @@ function Product({ setproductId }) {
       };
       // console.log("Searched in Product.js : ", viewedProductData)
       const res = await PostSearchedData(viewedProductData)
-      // console.log("Post Response in Product.js : ", res.data)
+      console.log("Post Response in Product.js : ", res.data)
     }
   }
 
 
-
-
-
-
-
-
-  return (
+return (
     <>
       <ToastContainer position='top-right' style={{top:'90px' }}/>
       <div className='row text-center mx-0'>
