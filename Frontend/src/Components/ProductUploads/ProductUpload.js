@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Form, Input, InputNumber, Select, Button,message, Upload, Avatar } from "antd";
+import { Form, Input, InputNumber, Select, Button, message, Upload, Avatar } from "antd";
 import { useForm } from 'antd/es/form/Form';
 import './ProductUpload.css'
 import { UploadOutlined } from "@ant-design/icons";
-import {PostData} from '../../API/ProductAPI/ProductAPI'
+import { PostData } from '../../API/ProductAPI/ProductAPI'
 
 
 const { Option } = Select;
@@ -12,8 +12,8 @@ const ProductUpload = () => {
   const [form] = Form.useForm();
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
- 
- 
+
+
 
   const handleImageChange = (info) => {
     const file = info.file.originFileObj;
@@ -24,19 +24,19 @@ const ProductUpload = () => {
   };
 
   const postData = async (formValues) => {
-     console.log("This is my uploaded product without img", formValues)
+    console.log("This is my uploaded product without img", formValues)
     const formData = new FormData();
-  
+
     // Append all form fields
     for (let key in formValues) {
       formData.append(key, formValues[key]);
     }
-  
+
     // Append image file
     if (selectedImageFile) {
       formData.append('image', selectedImageFile);
     }
-  
+
     try {
       const response = await PostData(formData);
       console.log("This is my Response in product Upload", response)
@@ -46,7 +46,7 @@ const ProductUpload = () => {
       message.error("Registration Failed");
     }
   };
-  
+
 
   return (
     <div className='productUploadContainer'>
@@ -116,12 +116,12 @@ const ProductUpload = () => {
               ))}
             </Select>
           </Form.Item>
+          <Form.Item name="product_description" label="Description" rules={[{ required: true }]}>
+            <TextArea rows={4} cols={80} placeholder="Enter product description" />
+          </Form.Item>
         </div>
-        <Form.Item name="product_description" label="Description" rules={[{ required: true }]}>
-          <TextArea rows={4} cols={80} placeholder="Enter product description" />
-        </Form.Item>
 
-        <div className='show-inline'>
+        <div className='show-inline '>
           <Form.Item>
             <Button type="primary" htmlType="submit">Upload Product</Button>
           </Form.Item>

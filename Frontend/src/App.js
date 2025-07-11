@@ -34,6 +34,7 @@ import { getData } from './API/ProductAPI/ProductAPI.js';
 import VendorDashboard from './Admin/Dashboard/VendorDashboard.js';
 import PrivateRouter from './Components/Routes/PrivateRouter.js';
 import Ordercard from './Components/Order/Ordercard.js';
+import OrderDataModel from './Components/Order/OrderDataModel.js';
 
 
 function App() {
@@ -92,6 +93,7 @@ function App() {
       path: '/userinfo', element: <UserInfo loginId={loginId} setLoginId={setLoginId} />
     },
     { path: '/order', element: <Order /> },
+    { path: '/orderdatamodel', element: <OrderDataModel /> },
     {
       path: '/cart',
       element: <Cart cartProduct={cartProduct} setPaymentSessionID= {setPaymentSessionID} setCartProduct={setCartProduct} />

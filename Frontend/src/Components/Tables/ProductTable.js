@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Table } from "antd";
+import { Rate, Table } from "antd";
 import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI';
 
 const ProductTable = () => {
@@ -14,7 +14,16 @@ const ProductTable = () => {
         },
         { title: 'Tag', dataIndex: 'product_tag', render: (tag) => tag[0].name || 'N/A' },
         { title: 'Price', dataIndex: 'product_price' },
-        { title: 'Ratings', dataIndex: 'product_rating' },
+        {
+        title: 'Ratings',
+        dataIndex: 'product_rating',
+        render: (rating) => (
+            <div>
+                <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>{rating} </span> 
+                <Rate disabled value={1} style={{ fontSize: '16px' }} /> 
+            </div>
+        ),
+    },
         {
             title: 'Image', dataIndex: 'product_image', render: (url) => (
                 <img

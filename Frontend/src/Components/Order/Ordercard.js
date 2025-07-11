@@ -1,16 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
+import { Avatar, Button, Form, Input, Upload } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import previewImage from '../../Image/BannerGirl.png'
+import { Modal } from 'antd';
+import { useForm } from 'antd/es/form/Form';
 
-const Ordercard = ({ order, onStatusChange }) => {
-    const [status, setStatus] = useState('pending');
+const Ordercard = () => {
+    const [showProfile, setShowProfile] = useState(false)
+    const [previewImage, setPreviewImage] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
+    const [status, setStatus] = useState('pending');
+    const [form] = useForm();
+    const handleModifiedData = () => {
+        alert("Data Uploaded")
+        console.log()
+    }
+    const ShowModal = (record) => {
+        form.setFieldsValue(record)
+    }
 
-    const handleStatusChange = async () => {
-        setIsUpdating(true);
-
-        setIsUpdating(false);
+    const handleStatusChange = (item) => {
+        console.log("Sending this data in model", item)
+        setOrderedProductData(item)
+        ShowModal(item)
     };
 
+    const handleChangeStatus = (item) => {
+        console.log("Sending this data in model", item)
+        setShowProfile(true);
+
+    };
+
+    const [orderedProductData, setOrderedProductData] = useState();
     const [orderedProducts, setOrderedProducts] = useState();
     let savedUser = localStorage.getItem('user');
 
@@ -26,49 +48,198 @@ const Ordercard = ({ order, onStatusChange }) => {
             console.error('Error fetching vendor product data:', error);
         }
     };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString(); // Default locale format (can customize)
+    };
+
+    const openModal = (item) => {
+        setOrderedProductData(item);
+        setShowProfile(true);
+        form.setFieldsValue({
+            product_id: item.product.product_id,
+            product_name: item.product.product_name,
+            product_color: item.product.product_color,
+            order_by: item.order.customer.first_name,
+            status: item.order.status,
+        });
+    };
 
     return (
-        <div className="card mb-3">
-            {orderedProducts.map((item, index) => (
-                <div className="card-body" key={index}>
-                    <h5 className="card-title">Order ID:{item.id} </h5>
-                    <h5 className="card-title">Order created at:{item.order.created_at} </h5>
-                    <h6 className="card-subtitle mb-2 text-muted">Customer: {item.order.customer.first_name} {item.order.customer.last_name}</h6>
-                    <h6 className="card-subtitle mb-2 text-muted">Customer: {item.order.customer.address}</h6>
-                    <p className="card-text">
-                        <strong>Item:</strong> {item.product.product_name}<br />
-                        <strong>Quantity:</strong> {item.quantity}<br />
-                        <strong>Status:</strong>{item.order.status}
-                    </p>
+        <>
+            <div className="card">
+                {orderedProducts && orderedProducts.map((item, index) => (
+                    <div className="card-body card-border m-3" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>
+                        <div className="d-flex justify-content-between" style={{ color: '#183661' }}>
+                            <p><strong>Order ID:</strong> {item.order.id} </p>
+                            <p><strong>Product ID:</strong> {item.product.product_id} </p>
+                            <p><strong>Ordered at:</strong> {formatDate(item.order.created_at)} </p>
+                        </div>
 
-                    <div className="input-group mb-3">
-                        <label className="input-group-text"
-                        //   htmlFor={`status-select-${order.id}`}
-                        >Update Status</label>
-                        <select
-                            className="form-select"
-                            id={`status-select-${item.id}`}
-                            value={status}
-                            onChange={(e) => setStatus(e.target.value)}
-                        >
-                            {item.status_choices.map(([value, label]) => (
-                                <option key={value} value={value}>
-                                    {label}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="text-start" style={{ color: '#183661' }}>
+                                <h6 className="card-subtitle mb-2" style={{ color: '#183661' }}>
+                                    <strong>Customer:</strong> {item.order.customer.first_name} {item.order.customer.last_name}
+                                </h6>
+                                <h6 className="card-subtitle mb-2" style={{ color: '#183661' }}>
+                                    <strong>Address:</strong> {item.order.customer.address}
+                                </h6>
+                                <h6 className="mb-2" style={{ color: '#183661' }}>
+                                    <strong>Quantity:</strong> {item.quantity}<br />
+                                </h6>
+                                <h6 className="mb-2" style={{ color: '#183661' }}>
+                                    <strong>Status:</strong> {item.order.status}
+                                </h6>
+                            </div>
+
+                            <div>
+                                <img src={item.product.product_image} alt="Product" className="img-fluid rounded-circle"
+                                    style={{
+                                        width: '150px',
+                                        height: '150px',
+                                        objectFit: 'contain',
+                                        marginRight: '10px',
+                                        border: '3px solid #183661'
+                                    }} />
+                                <p className="card-text" style={{ color: '#183661' }}>
+                                    <strong>Item:</strong> {item.product.product_name}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="input-group mb-3 justify-content-left">
+                            <Button
+                                style={{
+                                    backgroundColor: '#183661',
+                                    color: 'gold',
+                                    borderColor: '#183661',
+                                    fontWeight: 'bold',
+                                    marginLeft: '100px',
+                                    marginTop: '10px',
+                                    fontSize: '16px'
+                                }}
+                                onClick={() => openModal(item)}
+                            >Update Status
+                            </Button>
+                        </div>
+
+
+                        {showProfile && (
+                            <Modal
+                                open={showProfile}
+                                onCancel={() => setShowProfile(false)}
+                                footer={null}
+                                width="60vw"
+                                centered
+                            >
+                                <div className="edit-profile-container">
+                                    <h3 className="form-title">Romofyi Order Update</h3>
+                                    <Form layout="vertical" className="profile-form" onFinish={handleModifiedData} form={form}>
+                                        <div className="image-name-container">
+                                            <Form.Item label="Product Id" name="product_id">
+                                                <Input placeholder={orderedProductData.product.product_id || "Product Id"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+                                            <Form.Item label="Product Name" name="product_name">
+                                                <Input placeholder={orderedProductData.product.product_name || "Product Name"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+                                            <Form.Item label="Color" name="product_color">
+                                                <Input placeholder={orderedProductData.product.product_color || "Color"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+
+                                            <div className="image-upload-container">
+                                                <Avatar
+                                                    size={100}
+                                                    src={previewImage || (orderedProductData ? orderedProductData.product.product_image : previewImage)}
+                                                    disabled />
+                                                <Form.Item
+                                                    name="image"
+                                                    valuePropName="file"
+                                                    getValueFromEvent={(e) => {
+                                                        const file = e?.file?.originFileObj;
+                                                        if (file) {
+                                                            const reader = new FileReader();
+                                                            reader.onload = () => {
+                                                                setPreviewImage(reader.result);
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                        return file;
+                                                    }}
+                                                >
+                                                    <Upload showUploadList={false} beforeUpload={() => false}>
+                                                        {/* Upload Button (if needed) */}
+                                                    </Upload>
+                                                </Form.Item>
+                                            </div>
+                                        </div>
+                                        <div className="image-name-container">
+                                            <Form.Item label="Order by" name="order_by">
+                                                <Input placeholder={orderedProductData.product.product_id || "Product Id"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+                                            <Form.Item label="Current Status" name="status">
+                                                <Input placeholder={orderedProductData.product.product_name || "Product Name"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+                                            <Form.Item label="Color" name="product_color">
+                                                <Input placeholder={orderedProductData.product.product_color || "Color"} style={{color:'gold'}} disabled />
+                                            </Form.Item>
+
+                                        </div>
+
+                                        <div className="input-group mb-3 justify-content-left">
+                                            <label
+                                                className="input-group-text"
+                                                htmlFor={`status-select-${orderedProductData.order.id}`}
+                                                style={{
+                                                    backgroundColor: 'white',
+                                                    color: '#183661',
+                                                    fontWeight: 'bold',
+                                                }}
+                                            >
+                                                Update Status
+                                            </label>
+                                            <select
+                                                className="form-select"
+                                                id={`status-select-${orderedProductData.id}`}
+                                                value={status}
+                                                onChange={(e) => setStatus(e.target.value)}
+                                                style={{
+                                                    backgroundColor: '#f8f9fa',
+                                                    borderColor: '#183661',
+                                                    maxWidth: '150px',
+                                                }}
+                                            >
+                                                {orderedProductData.status_choices.map(([value, label]) => (
+                                                    <option key={value} value={value}>
+                                                        {label}
+                                                    </option>
+                                                ))}
+                                            </select>
+
+                                            <Button
+                                                style={{
+                                                    backgroundColor: 'gold',
+                                                    color: '#183661',
+                                                    borderColor: '#183661',
+                                                    fontWeight: 'bold',
+                                                    marginLeft: '100px',
+                                                    marginTop: '10px',
+                                                }}
+                                                onClick={handleStatusChange}
+                                                disabled={isUpdating}
+                                            >
+                                                {isUpdating ? 'Saving...' : 'Save'}
+                                            </Button>
+                                        </div>
+                                    </Form>
+                                </div>
+                            </Modal>
+                        )}
+
+
                     </div>
-
-                    <button
-                        className="btn btn-primary"
-                        onClick={handleStatusChange}
-                    //   disabled={isUpdating}
-                    >
-                        {isUpdating ? 'Updating...' : 'Update Status'}
-                    </button>
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
+        </>
     );
 };
 

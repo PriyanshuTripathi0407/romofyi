@@ -13,6 +13,11 @@ body{font-family: 'Roboto',sans-serif;}
   to   { transform: rotate(360deg); }
 }
 
+.card-border{
+  border: 1px solid #183661;
+  box-shadow: 5px 5px 5px #183661a7;
+}
+
 .show-between{
   width: 100%;
   height: auto;
@@ -608,3 +613,7 @@ body{font-family: 'Roboto',sans-serif;}
 
 
 /* Dashboard css ends here */
+
+
+
+
