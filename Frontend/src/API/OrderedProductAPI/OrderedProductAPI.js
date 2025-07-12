@@ -9,6 +9,7 @@ if (savedUser) {
   if (parsedData && parsedData.user) {
     email = parsedData.user.email;
     id= parsedData.user.id;
+    console.log("User id ",id)
   }
 }
 

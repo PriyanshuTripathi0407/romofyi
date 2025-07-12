@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
+import { GetVendorOrderedProductData, PostOrderedProductStatus } from '../../API/ProductAPI/ProductAPI';
 import { Avatar, Button, Form, Input, Upload } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import previewImage from '../../Image/BannerGirl.png'
@@ -11,26 +11,22 @@ const Ordercard = () => {
     const [previewImage, setPreviewImage] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
     const [status, setStatus] = useState('pending');
-    const [form] = useForm();
-    const handleModifiedData = () => {
-        alert("Data Uploaded")
-        console.log()
-    }
-    const ShowModal = (record) => {
-        form.setFieldsValue(record)
-    }
+    const [form] = useForm();  
+    
 
-    const handleStatusChange = (item) => {
+    const handleStatusChange = async(item) => {
         console.log("Sending this data in model", item)
-        setOrderedProductData(item)
-        ShowModal(item)
+        const data= {
+            order_item_id: item.order_item_id,
+            status: status,
+        }
+        console.log("Sending this data in backend", data)
+        const res= await PostOrderedProductStatus(data);
+        console.log("Sending this data in backend", res)
+               
     };
 
-    const handleChangeStatus = (item) => {
-        console.log("Sending this data in model", item)
-        setShowProfile(true);
-
-    };
+   
 
     const [orderedProductData, setOrderedProductData] = useState();
     const [orderedProducts, setOrderedProducts] = useState();
@@ -57,6 +53,7 @@ const Ordercard = () => {
         setOrderedProductData(item);
         setShowProfile(true);
         form.setFieldsValue({
+            order_item_id:item.id,
             product_id: item.product.product_id,
             product_name: item.product.product_name,
             product_color: item.product.product_color,
@@ -134,7 +131,7 @@ const Ordercard = () => {
                             >
                                 <div className="edit-profile-container">
                                     <h3 className="form-title">Romofyi Order Update</h3>
-                                    <Form layout="vertical" className="profile-form" onFinish={handleModifiedData} form={form}>
+                                    <Form layout="vertical" className="profile-form" onFinish={handleStatusChange} form={form}>
                                         <div className="image-name-container">
                                             <Form.Item label="Product Id" name="product_id">
                                                 <Input placeholder={orderedProductData.product.product_id || "Product Id"} style={{color:'gold'}} disabled />
@@ -179,8 +176,8 @@ const Ordercard = () => {
                                             <Form.Item label="Current Status" name="status">
                                                 <Input placeholder={orderedProductData.product.product_name || "Product Name"} style={{color:'gold'}} disabled />
                                             </Form.Item>
-                                            <Form.Item label="Color" name="product_color">
-                                                <Input placeholder={orderedProductData.product.product_color || "Color"} style={{color:'gold'}} disabled />
+                                            <Form.Item label="Order Id" name="order_item_id">
+                                                <Input placeholder={orderedProductData.id || "Undefined"} style={{color:'gold'}} disabled />
                                             </Form.Item>
 
                                         </div>
@@ -224,7 +221,7 @@ const Ordercard = () => {
                                                     marginLeft: '100px',
                                                     marginTop: '10px',
                                                 }}
-                                                onClick={handleStatusChange}
+                                                htmlType='submit'
                                                 disabled={isUpdating}
                                             >
                                                 {isUpdating ? 'Saving...' : 'Save'}

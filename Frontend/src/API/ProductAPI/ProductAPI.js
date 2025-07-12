@@ -9,8 +9,7 @@ if (savedUser) {
   const parsedData = JSON.parse(savedUser);  
   if (parsedData && parsedData.user) {
     vendorId = parsedData.user.id;
-    console.log("Vendor id",vendorId)
-  
+    console.log("Vendor id",vendorId) 
    
   }
 }
@@ -28,6 +27,10 @@ export const GetVendorOrderedProductData = () => {
       { params: { vendor: vendorId } }
     );
 
+}
+
+export const PostOrderedProductStatus = (data) => {
+     return axios.patch(`${API_BASE_URL}/order-items/`, data );
 }
 
 

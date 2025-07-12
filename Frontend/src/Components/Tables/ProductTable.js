@@ -20,7 +20,7 @@ const ProductTable = () => {
         render: (rating) => (
             <div>
                 <span style={{ marginLeft: '8px', fontWeight: 'bold' }}>{rating} </span> 
-                <Rate disabled value={1} style={{ fontSize: '16px' }} /> 
+                <Rate disabled value={rating} style={{ fontSize: '16px' }} /> 
             </div>
         ),
     },
