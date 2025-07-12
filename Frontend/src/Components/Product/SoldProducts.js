@@ -1,74 +1,85 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './SoldProduct.css'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import NoDataFound from '../ShowMessages/NoDataFound';
+import { Button } from 'antd';
+import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
 
 const SoldProducts = () => {
-    const [soldProducts, setSoldProducts] = useState()
-    function handleViewDetails() {
+    const [orderedProducts, setOrderedProducts] = useState();
 
-    }
+    useEffect(() => {
+        getVendorOrderedProductData();
+    }, [])
+
+    const getVendorOrderedProductData = async () => {
+        try {
+            const resp = await GetVendorOrderedProductData();
+            console.log('This is Ordered Product in sold Product', resp.data);
+            setOrderedProducts(resp.data.order_items);
+        } catch (error) {
+            console.error('Error fetching vendor product data:', error);
+        }
+    };
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString(); // Default locale format (can customize)
+    };
+
     return (
         <div className='SoldProductContainer'>
             <div className='col'>
-                {soldProducts ? 
-                (
-                    <div>
-                        <h1>Sold Product List </h1>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>ID</th>
-                                    <th>Product</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            {/* <tbody>
-                                {soldProducts.map((i, index) => (
-                                    <tr key={i.product_id}>
-                                        <td>{index + 1}</td>
-                                        <td>{i.product_id}</td>
-                                        <td>
-                                            <div className='productShow'>
-                                                <img src={i.product_image} alt='Product' />
-                                                <div className='productName'>{i.product_name}</div>
-                                            </div>
-                                        </td>
-                                        <td>&#8377;{i.product_price}</td>
-                                        <td>
-                                            <div className='cartOperation'>
-                                                <input
-                                                    type='number'
-                                                    min='1'
-                                                    max='20'
-                                                    value={i.count || 1}                                                    
-                                                />
-                                            </div>
-                                        </td>
-                                        <td>&#8377;{(i.count || 1) * i.product_price}</td>
-                                        <td >
-                                            <button className='action' onClick={() => handleViewDetails(i.product_id)}><ClearOutlinedIcon style={{ fontSize: '15px' }} /></button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody> */}
-                        </table>
-                    </div>
-                ) 
-                : 
-                (
-                    <div>
-                        <h2> Sold Products Data </h2>
-                    <NoDataFound/>
-                    </div>
-                )
+                <h2>Sold Products Data</h2>
+                {orderedProducts && orderedProducts.length > 0 ?
+                    orderedProducts.filter(i => i.status_display === "Delivered").map((item, index) => (
+                        <div className="card-body card-border m-3 p-2" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>                  
+
+                            <div className="d-flex justify-content-between align-items-center">
+                                <div className="text-start" style={{ color: '#183661' }}>
+                                    <p className="card-subtitle mb-2"><strong>Order ID:</strong> {item.order.id} </p>
+                                    <p className="card-subtitle mb-2"><strong>Product ID:</strong> {item.product.product_id} </p>
+                                    <p className="card-subtitle mb-2"><strong>Ordered at:</strong> {formatDate(item.order.created_at)} </p>
+                                    <h6 className="card-subtitle mb-2" style={{ color: '#183661' }}>
+                                        <strong>Customer:</strong> {item.order.customer.first_name} {item.order.customer.last_name}
+                                    </h6>
+                                    <h6 className="card-subtitle mb-2" style={{ color: '#183661' }}>
+                                        <strong>Address:</strong> {item.order.customer.address}
+                                    </h6>
+                                    <h6 className="mb-2" style={{ color: '#183661' }}>
+                                        <strong>Quantity:</strong> {item.quantity}<br />
+                                    </h6>
+                                    <h6 className="mb-2" style={{ color: '#183661' }}>
+                                        <strong>Status:</strong> {item.status_display}
+                                    </h6>
+                                </div>
+
+                                <div>
+                                    <img src={item.product.product_image} alt="Product" className="img-fluid rounded-circle"
+                                        style={{
+                                            width: '150px',
+                                            height: '150px',
+                                            objectFit: 'contain',
+                                            marginRight: '10px',
+                                            border: '3px solid #183661'
+                                        }} />
+                                    <p className="card-text" style={{ color: '#183661' }}>
+                                        <strong>Item:</strong> {item.product.product_name}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    ))
+                    :
+                    (
+                        <div>
+                            <NoDataFound />
+                        </div>
+                    )
                 }
-            </div >
-        </div >
+            </div>
+        </div>
+
     )
 }
 

@@ -1,10 +1,13 @@
-.orderContainer{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; margin: 5px;}
+
+.orderContainer{font-family: cursive; font-size: 20px;background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; margin: 5px;}
 
 .order{background-color: #183661;box-shadow: 0 2px 4px #183661; border-radius: 10px; color: #ffd700; position: relative; padding: 10px 5px; border: 1px solid gold;}
 .order h5{text-align: center;}
 .order .item{font-weight: 500; font-size: 16px; font-family: cursive;}
 .order ul li{ list-style:disc; margin: 0px 0px 10px 0px;}
 .orderContainer .order .ImageWrapper{height: 250px; margin: 5px; padding: 10px; text-align: center;}
-.ImageWrapper img{background-color: gold; height: 90%; width: 100%;  object-fit: contain; border: 10px solid white !important;}
-.StatusWrapper{height: 80px; margin: 2px; border: 1px solid gold; padding: 10px; text-align: center;}
-.StatusWrapper img{ height: 60px;  width: 60px; margin: 0px 10px;  object-fit: contain; border: 1px solid gold; background-color: gold; border-radius: 10px;}
+.ImageWrapper img{height: 90%; width: 100%;  object-fit: contain; border: 10px solid white !important;}
+.StatusWrapper{height: 80px; margin: 2px; padding: 10px; text-align: left;}
+.StatusWrapper img{  height: 60px;  width: 60px; margin: 0px 10px;  object-fit: contain;}
+.card-box{box-shadow: 10px 10px 12px #1836616c; background-color: rgba(127, 255, 212, 0.59) !important;}
+

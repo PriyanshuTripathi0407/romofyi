@@ -7,7 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import Settings from '../Settings/Settings';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 const UserInfo = ({ loginId, setLoginId }) => {
@@ -48,7 +48,7 @@ const UserInfo = ({ loginId, setLoginId }) => {
     function handleLogOut() {
         setLoginId(false);
         logout();
-        nav('/',{ replace: true })
+        nav('/', { replace: true })
     }
     const userName = "Romofyi";
     return (
@@ -60,10 +60,18 @@ const UserInfo = ({ loginId, setLoginId }) => {
                 </div>
                 <div className='col-md-5 info'>
                     <ul className='d-flex align-items-center mt-2 list-unstyled gap-4' >
-                        <li><LocalMallIcon /> Order </li>
-                        <li><HistoryIcon /> History </li>
-                        <li><FavoriteIcon /> Favourites </li>
-                        <li onClick={handleSettings}><SettingsIcon /> Settings </li>
+                        <Link to='/order'>
+                            <LocalMallIcon /> Order
+                        </Link>
+                        <Link to='/order'>
+                            <HistoryIcon /> History
+                        </Link>
+                        <Link to='/wishlist'>
+                            <FavoriteIcon /> Favourites
+                        </Link>
+                        <Link to='/setting'>
+                            <SettingsIcon /> Settings
+                        </Link>
                     </ul>
                 </div>
                 <div className='col-md-2'>

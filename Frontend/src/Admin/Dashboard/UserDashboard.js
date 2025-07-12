@@ -47,10 +47,10 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const parsedData = JSON.parse(savedUser);
+      let parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
-      handleGetViewedData(parsedData.user)
-      handleGetCartData(parsedData.user)
+      handleGetViewedData();
+      handleGetCartData(parsedData.user);
       handleGetSearchedData();
       handleGetUserOrderedItem();
     }
@@ -68,7 +68,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     setProduct(response.data);
   }
 
-  const handleGetViewedData = async (user) => {
+  const handleGetViewedData = async () => {
     const res = await getViewData();
     console.log("Get Viewed product in UserDashboard.js:", res.data.viewed_products)
     setViewedProduct(res.data.viewed_products.product)

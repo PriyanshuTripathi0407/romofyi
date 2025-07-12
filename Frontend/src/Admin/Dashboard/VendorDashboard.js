@@ -6,9 +6,9 @@ import ProductUpload from '../../Components/ProductUploads/ProductUpload'
 import SoldProducts from '../../Components/Product/SoldProducts'
 import CustomerProductReviews from '../../Components/Reviews/CustomerProductReviews'
 import RequestedProduct from '../../Components/Product/RequestedProduct'
-import { Form, Input, Modal, Select, Upload, Button, Avatar } from 'antd'
+import { Form, Input, Modal, Upload, Button, Avatar } from 'antd'
 import { useForm } from 'antd/es/form/Form'
-import { UploadOutlined, UserOutlined } from '@ant-design/icons';
+import { UploadOutlined } from '@ant-design/icons';
 import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom'
 import ProductTable from '../../Components/Tables/ProductTable'
@@ -60,7 +60,7 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
         nav('/', { replace: true })
     }
 
-    console.log("This is vendor data in vendor Dashboard", userData)
+    // console.log("This is vendor data in vendor Dashboard", userData)
     return (
         <div className='container-fluid'>
             <div className='row'>

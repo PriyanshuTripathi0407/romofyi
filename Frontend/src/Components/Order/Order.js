@@ -5,7 +5,7 @@ import orderPlaced from '../../Image/order-delivery.png'
 import packaged from '../../Image/box.png'
 import delivered from '../../Image/delivery-man.png'
 import { GetUserOrderatVendorDashboard, getUserOrderedData, GetUserOrderedItem } from '../../API/OrderedProductAPI/OrderedProductAPI'
-
+import OrderDataModel from './OrderDataModel'
 
 function Order() {
   const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
@@ -33,44 +33,7 @@ function Order() {
       <div className='row orderContainer p-2'>
         <h3>Your Orders</h3>
         {orderedItem ?
-          orderedItem.map((product, index) => (
-            <>
-              <div className='col-5  d-flex flex-column' key={index}>
-                <div className='ImageWrapper'>
-                  <img src={product?.product?.product_image} alt='' />
-                  <p>{product?.product?.product_name}</p>
-                </div> <hr />
-                <div>
-                  <h5>Ordered Product Status </h5>
-                  <div className='StatusWrapper'>
-                    <img src={orderPlaced} alt='' />
-                    <img src={packaged} alt='' />
-                    <img src={fastDelivery} alt='' />
-                    <img src={delivered} alt='' />
-                  </div>
-                </div>
-              </div>
-              {/* <div className='col-1 '>
-              </div> */}
-
-              <div className='col-7 order mb-2'>
-                <h5> Ordered Product Details </h5>
-                <ul>
-                  <li><span className='item'>Product Id: {product?.product?.product_id} </span></li>
-                  <li><span className='item'>Product Name: {product?.product?.product_name} </span></li>
-                  <li><span className='item'>Product Price: {product?.product?.product_price} </span></li>
-                  <li><span className='item'>Order Status: {product?.order?.status} </span></li>
-                  {/* <li><span className='item'>Product Weight:</span></li> */}
-                  <li><span className='item'>Product Color: {product?.product?.product_color}</span></li>
-                  {/* <li><span className='item'>Product Category: {product.product.product_category.name} </span></li> */}
-                  <li><span className='item'>Product Sub-category: </span></li>
-                  <li><span className='item'>Product Origin: {product?.product?.vendor.first_name} {product?.product?.vendor.last_name} </span></li>
-                  <li><span className='item'>Product Quantity: {product?.quantity} </span></li>
-                  {/* <li><span className='item'>Product Tags: {product.product.product_tag[0].name} </span></li> */}
-                </ul>
-              </div>
-            </>
-          ))
+          <OrderDataModel/>
           :
           <>
             <div className='col-4 order d-flex flex-column'>

@@ -27,22 +27,20 @@ function Wishlist() {
             <div className='row wishlistContainer'>
                 <h4>Wishlisted Product Details <FavoriteIcon /> </h4>
                 {wishlistData ?
-                    wishlistData.map((product,index) => (
+                    wishlistData.map((product, index) => (
                         <>
-                            <div className='wishlist' key={index.id}>
-                                <div className='ImageWrapper col-3'>
-                                    <img src={product.product.product_image} alt='' />
-                                </div>
-
-                                <div className='col-9'>
-                                    <h4> Wishlisted Product </h4>
-                                    <ul >
-                                        <li><span className='item'>Product ID: {product.product.product_id} </span></li>
-                                        <li><span className='item'>Product Name: {product.product.product_name}</span></li>
-                                        <li><span className='item'>Product Price:{product.product.product_price} </span></li>
-                                        <li><span className='item'>Product Brand: {product.product.product_category.name}</span></li>
-                                        <li><span className='item'>Product Tags: {product.product.product_tag[0].name} </span></li>
-                                    </ul>
+                            <div className='card  card-box' key={index.id}>
+                                <div className='d-flex justify-content-between align-items-center'>
+                                    <div className='ImageWrapper'>
+                                        <img src={product.product.product_image} alt='' />
+                                    </div>
+                                    <div>
+                                        <p className='item card-title'>Product ID: {product.product.product_id} </p>
+                                        <p className='item card-title'>Product Name: {product.product.product_name}</p>
+                                        <p className='item card-title'>Product Price:{product.product.product_price} </p>
+                                        <p className='item card-title'>Product Brand: {product.product.product_category.name}</p>
+                                        <p className='item card-title'>Product Tags: {product.product.product_tag[0].name} </p>
+                                    </div>
                                 </div>
                             </div>
                         </>

@@ -1,14 +1,15 @@
 import axios from 'axios'
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
-const savedUser = localStorage.getItem('user');
+let savedUser = localStorage.getItem('user');
 console.log(savedUser)
 let email = '';
 if (savedUser) {
-  const parsedData = JSON.parse(savedUser);
+  let parsedData = JSON.parse(savedUser);
   // Check if parsedData and parsedData.user exist
   if (parsedData && parsedData.user) {
     email = parsedData.user.email;
+    console.log("User email ",email)
   }
 }
 

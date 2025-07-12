@@ -6,7 +6,7 @@ let savedUser = localStorage.getItem('user');
 console.log(savedUser)
 let vendorId= '';
 if (savedUser) {
-  const parsedData = JSON.parse(savedUser);  
+  let parsedData = JSON.parse(savedUser);  
   if (parsedData && parsedData.user) {
     vendorId = parsedData.user.id;
     console.log("Vendor id",vendorId) 

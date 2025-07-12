@@ -86,13 +86,20 @@
 }
 
 .head3 a {
-   text-decoration: none;
+   text-decoration: none !important;
 }
 
 
 
 .info {
    cursor: pointer;
+}
+.info a {
+   text-decoration: none !important;
+}
+.info a:hover {
+   color: #183661;  /* You can choose any color you like */
+   font-weight: 500;  /* Optional: You can add hover effect */
 }
 
 .info ul li:hover {

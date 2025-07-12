@@ -22,7 +22,7 @@ const Ordercard = () => {
         }
         console.log("Sending this data in backend", data)
         const res= await PostOrderedProductStatus(data);
-        console.log("Sending this data in backend", res)
+        console.log("Getting status updated data from backend", res.data)
                
     };
 
@@ -58,7 +58,7 @@ const Ordercard = () => {
             product_name: item.product.product_name,
             product_color: item.product.product_color,
             order_by: item.order.customer.first_name,
-            status: item.order.status,
+            status: item.status_display,
         });
     };
 
@@ -85,7 +85,7 @@ const Ordercard = () => {
                                     <strong>Quantity:</strong> {item.quantity}<br />
                                 </h6>
                                 <h6 className="mb-2" style={{ color: '#183661' }}>
-                                    <strong>Status:</strong> {item.order.status}
+                                    <strong>Status:</strong> {item.status_display}
                                 </h6>
                             </div>
 
