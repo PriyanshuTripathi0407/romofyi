@@ -103,7 +103,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     nav('/product', { replace: true })
   }
 
-
+  const BASE_URL = 'http://localhost:8000';
   var settings = {
     dots: false,
     infinite: true,
@@ -122,11 +122,37 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     autoplay: true,
   };
 
-
+  console.log("This is userData", userData)
   return (
     <div className='container-fluid' >
+      <UserInfo loginId={loginId} setLoginId={setLoginId} />
+      <div className='row m-2'>
+        <div className='card'>
+          <div className='card-body d-flex justify-content-left align-items-center'>
+            <div className='ImgWrapper'>
+              <img src={`${BASE_URL}${userData.image}`} alt='User_Image' />
+            </div>
+            <div className='row'>
+              <div className='col-5'>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> ID : </strong></p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> Name : </strong></p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> Email : </strong></p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> Mobile : </strong></p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> Address : </strong></p>
+              </div>
+              <div className='col-7'>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData.id} </p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.first_name} {userData.last_name}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.email}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.contact} </p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.address}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
       <div className='row'>
-        <UserInfo loginId={loginId} setLoginId={setLoginId} />
 
         {/* Your Activities components */}
         <div className='row border py-2 '>

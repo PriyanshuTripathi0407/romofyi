@@ -27,7 +27,6 @@ const UserInfo = ({ loginId, setLoginId }) => {
     // }, []);
 
     const [userData, setUserData] = useState({});
-
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {

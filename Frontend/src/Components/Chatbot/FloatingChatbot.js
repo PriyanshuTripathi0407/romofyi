@@ -17,7 +17,7 @@ const FloatingChatbot = () => {
 
             <button onClick={toggleChat} style={styles.floatingButton}>
                 <img src={chatIcon} alt="Chat" style={styles.icon} />
-                <h6 style={styles.chatText}>Need <br/>Help?</h6>
+                <h6 style={styles.chatText}>Need Help?</h6>
             </button>
         </>
     );
@@ -26,7 +26,7 @@ const FloatingChatbot = () => {
 const styles = {
     floatingButton: {
         position: "fixed",
-        bottom: 55,
+        bottom: 30,
         right: 10,
         width: 40,
         height: 40,
@@ -58,7 +58,7 @@ const styles = {
         backgroundColor: "gold",
         padding:'5px',
         display: "flex",
-        fontSize: 15,
+        fontSize: 10,
         color: "#183661",
         marginTop: 4,
         fontWeight: "bold",
