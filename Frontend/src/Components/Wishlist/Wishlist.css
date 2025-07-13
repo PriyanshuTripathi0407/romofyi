@@ -1,4 +1,4 @@
- .wishlistContainer{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative;}
+ .wishlistContainer{font-family: cursive; font-size: 20px;  background-color: #183661; box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; padding: 10px;}
 
  .wishlist{background-color: #183661;box-shadow: 0 2px 4px #183661; border-radius: 10px; color: gold; position: relative; padding: 10px 5px; display: flex; flex-direction: row; height: 320px;}
  .wishlist h4{ text-align: center;}
@@ -9,4 +9,4 @@
 .ImageWrapper img{background-color: gold; height: 90%; width: 90%;  object-fit: contain; border: 1px solid gold;}
 .StatusWrapper{height: 80px; margin: 2px; border: 1px solid gold; padding: 10px; text-align: center;}
 .StatusWrapper img{ height: 60px;  width: 60px; margin: 0px 15px;  object-fit: contain; border: 1px solid gold; background-color: gold; border-radius: 10px;}
-.card-box{box-shadow: 10px 10px 12px #1836616c; background-color: rgba(127, 255, 212, 0.59) !important;}
+.box-card{box-shadow: 2px 2px 2px cadetblue; background-color: rgba(127, 255, 212, 0.59) !important; width: max-content !important; margin: 0 30px 0 0; }

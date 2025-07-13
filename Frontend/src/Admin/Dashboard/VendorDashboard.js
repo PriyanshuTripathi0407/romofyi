@@ -13,6 +13,7 @@ import { useAuth } from '../../AuthContext';
 import { useNavigate } from 'react-router-dom'
 import ProductTable from '../../Components/Tables/ProductTable'
 import CustomerTable from '../../Components/Tables/CustomerTable'
+import Ordercard from '../../Components/Order/Ordercard'
 
 
 const VendorDashboard = ({ loginId, setLoginId }) => {
@@ -103,7 +104,7 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                             {activeSection === "productList" && <ProductTable />}
                             {activeSection === "uploadProduct" && <ProductUpload />}
                             {activeSection === "soldProduct" && <SoldProducts />}
-                            {activeSection === "requestedProduct" && <RequestedProduct />}
+                            {activeSection === "requestedProduct" && <Ordercard />}
                             {activeSection === "customerReviews" && <CustomerProductReviews />}
                             {activeSection === "customerTable" && <CustomerTable />}
 

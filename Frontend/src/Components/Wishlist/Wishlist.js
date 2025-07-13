@@ -29,18 +29,16 @@ function Wishlist() {
                 {wishlistData ?
                     wishlistData.map((product, index) => (
                         <>
-                            <div className='card  card-box' key={index.id}>
-                                <div className='d-flex justify-content-between align-items-center'>
+                            <div className='card  box-card my-2' key={index.id}>
+                                <div className='d-flex justify-content-center align-items-center flex-column'>
                                     <div className='ImageWrapper'>
                                         <img src={product.product.product_image} alt='' />
                                     </div>
                                     <div>
-                                        <p className='item card-title'>Product ID: {product.product.product_id} </p>
-                                        <p className='item card-title'>Product Name: {product.product.product_name}</p>
-                                        <p className='item card-title'>Product Price:{product.product.product_price} </p>
-                                        <p className='item card-title'>Product Brand: {product.product.product_category.name}</p>
-                                        <p className='item card-title'>Product Tags: {product.product.product_tag[0].name} </p>
-                                    </div>
+                                        <p className='card-title'><strong> Product ID: </strong> {product.product.product_id} </p>
+                                        <p className='card-title'><strong> Product Name: </strong> {product.product.product_name}</p>
+                                        <p className='card-title'><strong> Product Price: </strong>{product.product.product_price} </p>
+                                       </div>
                                 </div>
                             </div>
                         </>

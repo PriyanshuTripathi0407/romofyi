@@ -35,6 +35,8 @@ import VendorDashboard from './Admin/Dashboard/VendorDashboard.js';
 import PrivateRouter from './Components/Routes/PrivateRouter.js';
 import Ordercard from './Components/Order/Ordercard.js';
 import OrderDataModel from './Components/Order/OrderDataModel.js';
+import Chatbot from './Components/Chatbot/Chatbot.js';
+import FloatingChatbot from './Components/Chatbot/FloatingChatbot.js';
 
 
 function App() {
@@ -65,7 +67,8 @@ function App() {
   const commonRoutes = [
     { path: '/', element: <Home /> },
     { path: '/about', element: <About /> },
-    { path: '*', element: <PageNotFound /> },
+    { path: '/chat-bot', element: <Chatbot /> },
+    { path: '*', element: <Chatbot /> },
     { path: '/product', element: <Product setproductId={setProductId} /> },
     { path: '/newarrivals', element: <NewArrivals /> },
     { path: '/fashion', element: <Fashion /> },
@@ -126,6 +129,7 @@ function App() {
             />
           ))}
         </Routes>
+        <FloatingChatbot />
         <Footer />
       </BrowserRouter>
     </SnackbarProvider>

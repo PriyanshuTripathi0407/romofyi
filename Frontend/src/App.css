@@ -40,7 +40,7 @@ body{font-family: 'Roboto',sans-serif;}
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 60px;
+  gap: 60px; 
 }
 .show-col-wrap{
   padding: 0 0 0 20px;
@@ -161,6 +161,7 @@ body{font-family: 'Roboto',sans-serif;}
 .Dashboard h1{font-size: 72px;
   background: -webkit-linear-gradient(right,#183661,violet);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;}
 
 
@@ -297,30 +298,10 @@ body{font-family: 'Roboto',sans-serif;}
 
 
 /* From Uiverse.io by ammarsaa */
-.form {
-  
-}
 
 .form button {
   margin-left: 120px;
   width: 120px;
-}
-
-.adv {
-
-}
-
-.adv h1 {
-
-}
-
-.adv p {
- 
-}
-
-
-.title {
-
 }
 
 .flex {
@@ -336,15 +317,6 @@ body{font-family: 'Roboto',sans-serif;}
 .form h2 {
   color: gold;
   text-shadow: 2px 2px #183661;
-}
-
-.form input {
-
-}
-
-
-.submit {
- 
 }
 
 .submit:hover {
