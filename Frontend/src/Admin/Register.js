@@ -5,6 +5,7 @@ import { getData, PostData, PutData } from '../API/API'
 import { useForm } from 'antd/es/form/Form';
 import './Register.css'
 import { useNavigate } from 'react-router-dom';
+import { PostRegistrationEmail } from '../API/SendEmail/RegistrationEmailAPI';
 
 
 function Register() {
@@ -19,7 +20,7 @@ function Register() {
   const [previewImage, setPreviewImage] = useState(null);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
 
- const postData = async (formValues) => {
+const postData = async (formValues) => {
   const formData = new FormData();
 
   // Append all form fields
@@ -27,21 +28,36 @@ function Register() {
     formData.append(key, formValues[key]);
   }
 
-  // Append image file
   if (selectedImageFile) {
     formData.append('image', selectedImageFile);
   }
 
   try {
+    console.log("Data sending for Registration: ", formData);
+    console.log("Data sending from Form: ", formValues);
     const response = await PostData(formData);
-    message.success("Registered Successfully!!");
-    navigate('/login', { replace: true });
-    getRegistration();
+    console.log("Registration response:", response.data);
+
+    // Assuming the backend returns success status
+    if (response?.status === 201 || response?.data?.success) {
+      message.success("Registration successful!");
+      navigate('/login', { replace: true });
+      const data= {
+        email: formValues.email,
+        message: "Welcome to Romofyi !! We're excited to have you on board. Here's your account information. You can now Log in to your account and start Shopping! ",
+        subject:"Registration successfully !! ",
+      }
+      const res= await PostRegistrationEmail(data);
+      console.log(res, "response from mail")
+    } else {
+      message.error("Something went wrong during registration.");
+    }
   } catch (error) {
-    console.error(error);
-    message.error("Registration Failed");
+    console.error("Registration error:", error);
+    message.error("Registration failed");
   }
 };
+
 
 
   const ShowModal = (record) => {
