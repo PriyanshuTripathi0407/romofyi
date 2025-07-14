@@ -5,7 +5,8 @@ import { getData, PostData, PutData } from '../API/API'
 import { useForm } from 'antd/es/form/Form';
 import './Register.css'
 import { useNavigate } from 'react-router-dom';
-import { PostRegistrationEmail } from '../API/SendEmail/RegistrationEmailAPI';
+import { PostRegistrationEmail } from '../API/SendEmail/SendEmailAPI'
+
 
 
 function Register() {
@@ -21,6 +22,17 @@ function Register() {
   const [selectedImageFile, setSelectedImageFile] = useState(null);
 
 const postData = async (formValues) => {
+
+  const requiredFields = ['first_name','confirm_password','role','contact','image', 'last_name', 'email', 'password'];
+
+  // Check if any required field is missing
+  for (let field of requiredFields) {
+    if (!formValues[field]) {
+      message.error(`${field.replace('_', ' ')} is required.`);  
+      return; 
+    }
+  }
+
   const formData = new FormData();
 
   // Append all form fields
@@ -44,8 +56,9 @@ const postData = async (formValues) => {
       navigate('/login', { replace: true });
       const data= {
         email: formValues.email,
-        message: "Welcome to Romofyi !! We're excited to have you on board. Here's your account information. You can now Log in to your account and start Shopping! ",
-        subject:"Registration successfully !! ",
+        subject:"Successful Registration 🥳🎉✨",
+        username: formValues.first_name + " " + formValues.last_name,
+        password: formValues.password 
       }
       const res= await PostRegistrationEmail(data);
       console.log(res, "response from mail")
@@ -53,8 +66,8 @@ const postData = async (formValues) => {
       message.error("Something went wrong during registration.");
     }
   } catch (error) {
-    console.error("Registration error:", error);
-    message.error("Registration failed");
+    console.error("This is Registration error:", error.response.data.error);
+    message.error(error.response.data.error || "Registration failed");
   }
 };
 

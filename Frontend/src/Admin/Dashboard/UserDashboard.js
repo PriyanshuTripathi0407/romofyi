@@ -122,7 +122,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     autoplay: true,
   };
 
-  console.log("This is userData", userData)
+ 
   return (
     <div className='container-fluid' >
       <UserInfo loginId={loginId} setLoginId={setLoginId} />

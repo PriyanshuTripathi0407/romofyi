@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import ReadytoPayment from '../ShowMessages/ReadytoPayment'
 import { PostUserOrderData } from '../../API/OrderedProductAPI/OrderedProductAPI'
+import { message } from 'antd';
+import { PostOrderPlacedEmail } from '../../API/SendEmail/SendEmailAPI';
 
 const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
 
@@ -62,18 +64,44 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
     const [showAnimation, setShowAnimation] = useState(false);
      
     const handleUserOrder = async () => {
-        const items = cartProduct.map(item => ({
-            product_id: item.id,
-            count: item.count || 1,
-        }))
 
-        const orderProduct= {
-            customer: userData.id,
-            items: items
-        }
+        try{
+            const items = cartProduct.map(item => ({
+                product_id: item.id,
+                count: item.count || 1,
+                name: item.product_name,
+                image: item.product_image,
+                price: item.product_price,                
+            }))
+    
+            const orderProduct= {
+                customer: userData.id,
+                items: items
+            }   
         
-        const resp = await PostUserOrderData(orderProduct);
-        console.log("This is Order Data Added", resp.data)
+            
+            console.log("This is Order Product Data: ", orderProduct)
+            const resp = await PostUserOrderData(orderProduct);
+             if (resp?.status === 201){
+                 console.log("This is Order Data Added", resp.data)
+                 const data= {
+                    username: userData.first_name + " " + userData.last_name,
+                    subject:"Order 🎁 placed successfully !! 🎉✨",
+                    email: userData.email,
+                    date: new Date(),
+                    items: items,
+                    address: userData.address,
+                    total: cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0),                    
+                 }
+                 const res= await PostOrderPlacedEmail(data);
+                 console.log("Order Placed ", res)
+             } 
+            
+
+        }catch(error){
+             message.error("Order didn't placed failed");
+        }
+
     }
 
     
