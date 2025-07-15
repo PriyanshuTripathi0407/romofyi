@@ -12,9 +12,19 @@ const SoldProducts = () => {
         getVendorOrderedProductData();
     }, [])
 
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            let parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user)
+        }
+    }, []);
+
+
     const getVendorOrderedProductData = async () => {
         try {
-            const resp = await GetVendorOrderedProductData();
+            const resp = await GetVendorOrderedProductData(userData.id);
             console.log('This is Ordered Product in sold Product', resp.data);
             setOrderedProducts(resp.data.order_items);
         } catch (error) {
@@ -32,7 +42,7 @@ const SoldProducts = () => {
                 <h2>Sold Products Data</h2>
                 {orderedProducts && orderedProducts.length > 0 ?
                     orderedProducts.filter(i => i.status_display === "Delivered").map((item, index) => (
-                        <div className="card-body card-border m-3 p-2" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>                  
+                        <div className="card-body card-border m-3 p-2" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>
 
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="text-start" style={{ color: '#183661' }}>

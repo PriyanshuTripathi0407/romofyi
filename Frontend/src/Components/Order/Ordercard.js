@@ -25,6 +25,15 @@ const Ordercard = () => {
 
     };
 
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            let parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user)
+        }
+    }, []);
+
 
 
     const [orderedProductData, setOrderedProductData] = useState();
@@ -36,7 +45,7 @@ const Ordercard = () => {
     }, [savedUser])
     const getVendorOrderedProductData = async () => {
         try {
-            const resp = await GetVendorOrderedProductData();
+            const resp = await GetVendorOrderedProductData(userData.id);
             console.log('This is Ordered Product', resp.data);
             setOrderedProducts(resp.data.order_items);
         } catch (error) {

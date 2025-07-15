@@ -22,10 +22,9 @@ const OrderDataModel = () => {
 
     const handleGetUserOrderedItem = async () => {
         console.log("This is Customer Order Items Response for Customer : ")
-        const res = await GetUserOrderedItem()
+        const res = await GetUserOrderedItem(userData.id)
         console.log("Get Order Items Response for Customer : ", res.data)
         setOrderedItem(res.data.orders)
-        // Here we left for showing data of User Order
     }
 
     const formatDate = (dateString) => {

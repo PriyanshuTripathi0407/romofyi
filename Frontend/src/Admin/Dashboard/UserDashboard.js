@@ -50,7 +50,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
       let parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
       handleGetViewedData();
-      handleGetCartData(parsedData.user);
+      handleGetCartData();
       handleGetSearchedData();
       handleGetUserOrderedItem();
     }
@@ -74,20 +74,20 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     setViewedProduct(res.data.viewed_products.product)
   }
 
-  const handleGetCartData = async (user) => {
-    const res = await getCartData();
+  const handleGetCartData = async () => {
+    const res = await getCartData(userData.email);
     console.log("Get Cart product in UserDashboard.js:", res.data.cart_products.product)
     setCartProduct(res.data.cart_products.product)
   }
 
   const handleGetSearchedData = async () => {
-    const res = await getSearchedData()
+    const res = await getSearchedData(userData.email)
     console.log("Get Searched product data in UserDashboard.js : ", res.data.searched_products.product)
     setSearchedProduct(res.data.searched_products.product)
   }
 
   const handleGetUserOrderedItem = async () => {
-    const res = await GetUserOrderedItem()
+    const res = await GetUserOrderedItem(userData.id)
     console.log("Get Order Items Response in UserDashboard.js : ", res.data)
     setOrderedItem(res.data.orders[0])
   }

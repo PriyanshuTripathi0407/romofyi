@@ -7,12 +7,21 @@ const CustomerTable = () => {
     const [orderedProducts, setOrderedProducts] = useState();
     let savedUser = localStorage.getItem('user');
 
+     const [userData, setUserData] = useState({})
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      let parsedData = JSON.parse(savedUser);
+      setUserData(parsedData.user)
+    }
+  }, []);
+
     useEffect(() => {
         getVendorOrderedProductData();
     }, [savedUser])
     const getVendorOrderedProductData = async () => {
         try {
-            const resp = await GetVendorOrderedProductData();
+            const resp = await GetVendorOrderedProductData(userData.id);
             console.log('This is Ordered Product in Customer Table', resp.data);
             // console.log('This is Ordered Product in Customer Tabl resp.data);
             setOrderedProducts(resp.data.order_items);
