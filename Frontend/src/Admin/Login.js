@@ -28,6 +28,7 @@ function Login({ loginId, setLoginId }) {
 
         try {
             const response = await postData(formData);
+            console.log("This is response of login from db ",response.data )
             if (response.status === 200 && response.data.success) {
                 login(response.data);
                 setLoginResult('success');
