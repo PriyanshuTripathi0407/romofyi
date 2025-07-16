@@ -2,27 +2,15 @@ import axios from 'axios'
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
 
-let savedUser = localStorage.getItem('user');
-console.log(savedUser)
-let vendorId= '';
-if (savedUser) {
-  let parsedData = JSON.parse(savedUser);  
-  if (parsedData && parsedData.user) {
-    vendorId = parsedData.user.id;
-    console.log("Vendor id",vendorId) 
-   
-  }
-}
 
-
-export const GetVendorProductData = () => {
+export const GetVendorProductData = (vendorId) => {
     return axios.get(`${API_BASE_URL}/vendor-product/`,
       { params: { vendor: vendorId } }
     );
 
 }
 
-export const GetVendorOrderedProductData = () => {
+export const GetVendorOrderedProductData = (vendorId) => {
      return axios.get(`${API_BASE_URL}/order-items/`,
       { params: { vendor: vendorId } }
     );

@@ -10,12 +10,22 @@ const RequestedProduct = () => {
     const [orderedProducts, setOrderedProducts] = useState();
     let savedUser = localStorage.getItem('user');
 
+    const [userData, setUserData] = useState({})
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            let parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user)
+        }
+    }, []);
+
     useEffect(() => {
         getVendorOrderedProductData();
     }, [savedUser])
+    
     const getVendorOrderedProductData = async () => {
         try {
-            const resp = await GetVendorOrderedProductData();
+            const resp = await GetVendorOrderedProductData(userData.id);
             console.log('This is Ordered Product', resp.data);
             setOrderedProducts(resp.data.order_items);
         } catch (error) {
@@ -28,9 +38,9 @@ const RequestedProduct = () => {
             <h2> Ordered Products Data </h2>
             <div className='col'>
                 {orderedProducts ?
-                    (                        
+                    (
                         <div>
-                           <Ordercard/>
+                            <Ordercard />
                         </div>
                     )
                     :
