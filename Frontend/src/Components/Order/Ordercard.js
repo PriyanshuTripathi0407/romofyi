@@ -5,7 +5,7 @@ import { Modal } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import NoDataFound from '../ShowMessages/NoDataFound';
 
-const Ordercard = () => {
+const Ordercard = ({orderedProducts}) => {
     const [showProfile, setShowProfile] = useState(false)
     const [previewImage, setPreviewImage] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
@@ -25,33 +25,7 @@ const Ordercard = () => {
 
     };
 
-    const [userData, setUserData] = useState({})
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            let parsedData = JSON.parse(savedUser);
-            setUserData(parsedData.user)
-        }
-    }, []);
-
-
-
-    const [orderedProductData, setOrderedProductData] = useState();
-    const [orderedProducts, setOrderedProducts] = useState();
-    let savedUser = localStorage.getItem('user');
-
-    useEffect(() => {
-        getVendorOrderedProductData();
-    }, [savedUser])
-    const getVendorOrderedProductData = async () => {
-        try {
-            const resp = await GetVendorOrderedProductData(userData.id);
-            console.log('This is Ordered Product', resp.data);
-            setOrderedProducts(resp.data.order_items);
-        } catch (error) {
-            console.error('Error fetching vendor product data:', error);
-        }
-    };
+    const [orderedProductData, setOrderedProductData] = useState();     
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleString(); // Default locale format (can customize)

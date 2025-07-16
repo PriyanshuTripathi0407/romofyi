@@ -22,6 +22,7 @@ export const getUserOrderedData= (email) =>{
 }
 
 export const GetUserOrderedItem= (id) =>{
+  if (!id) return Promise.reject("Missing user ID");
   return axios.get(`${API_BASE_URL}/user-product/`,
     {params: { customer_id: id }}
   );

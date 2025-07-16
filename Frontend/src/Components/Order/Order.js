@@ -10,30 +10,48 @@ import OrderDataModel from './OrderDataModel'
 function Order() {
   const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
 
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState(null)
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const parsedData = JSON.parse(savedUser);
+      let parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
-      console.log("Role in Order.js role : ", parsedData.user.role)
-      handleGetUserOrderedItem();
     }
   }, []);
 
+  useEffect(() => {
+    if (userData?.id) {
+      handleGetUserOrderedItem();
+    }
+  }, [userData])
+
+
   const handleGetUserOrderedItem = async () => {
-    console.log("This is Customer Order Items Response for Customer : ")
-    const res = await GetUserOrderedItem(userData.id)
-    console.log("Get Order Items Response for Customer : ", res.data)
-    setOrderedItem(res.data.orders)
-    // Here we left for showing data of User Order
+    if (!userData?.id) {
+      console.warn("User ID is missing");
+      return;
+    }
+    console.log("Fetching ordered items for user ID:", userData.id);
+    try {
+      await GetUserOrderedItem(userData.id)
+        .then(res => {
+          console.log("Order Data:", res.data);
+          setOrderedItem(res.data.orders);
+        })
+        .catch(err => {
+          console.warn("Skipped fetch because:", err);
+        });
+    } catch (err) {
+      console.error("Error fetching order item:", err);
+    }
   }
+
   return (
     <div className='container-fluid my-3'>
       <div className='row orderContainer p-2'>
         <h3>Your Orders</h3>
         {orderedItem ?
-          <OrderDataModel/>
+          <OrderDataModel />
           :
           <>
             <div className='col-4 order d-flex flex-column'>

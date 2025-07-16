@@ -43,20 +43,28 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
-  const [userData, setUserData] = useState({})
+  const [userData, setUserData] = useState(null)
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       let parsedData = JSON.parse(savedUser);
       setUserData(parsedData.user)
-      handleGetViewedData();
-      handleGetCartData();
-      handleGetSearchedData();
-      handleGetUserOrderedItem();
     }
   }, []);
 
+  useEffect(() => {
+    if (userData?.email) {
+      handleGetViewedData();
+      handleGetCartData();
+      handleGetSearchedData();
+    }
+  }, [userData]);
 
+  useEffect(() => {
+    if (userData?.id) {
+      handleGetUserOrderedItem();
+    }
+  }, [userData])
 
 
   useEffect(() => {
@@ -69,28 +77,60 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   }
 
   const handleGetViewedData = async () => {
-    const res = await getViewData();
-    console.log("Get Viewed product in UserDashboard.js:", res.data.viewed_products)
-    setViewedProduct(res.data.viewed_products.product)
+    if (!userData?.email) return;
+    try {
+      const res = await getViewData(userData.email);
+      console.log("Get Viewed product in UserDashboard.js:", res.data.viewed_products)
+      setViewedProduct(res.data.viewed_products.product)
+    } catch (error) {
+      console.error("Error in getViewData", error)
+    }
+
   }
 
   const handleGetCartData = async () => {
-    const res = await getCartData(userData.email);
-    console.log("Get Cart product in UserDashboard.js:", res.data.cart_products.product)
-    setCartProduct(res.data.cart_products.product)
+    if (!userData?.email) return;
+    try {
+      const res = await getCartData(userData.email);
+      console.log("Get Cart product in UserDashboard.js:", res.data.cart_products.product)
+      setCartProduct(res.data.cart_products.product)
+    } catch (error) {
+      console.error("Error in getCartData ", error)
+    }
   }
 
   const handleGetSearchedData = async () => {
-    const res = await getSearchedData(userData.email)
-    console.log("Get Searched product data in UserDashboard.js : ", res.data.searched_products.product)
-    setSearchedProduct(res.data.searched_products.product)
+    if (!userData.email) return;
+    try {
+      const res = await getSearchedData(userData.email)
+      console.log("Get Searched product data in UserDashboard.js : ", res.data.searched_products.product)
+      setSearchedProduct(res.data.searched_products.product)
+    } catch (error) {
+      console.error("Error in getSearchedData ", error);
+    }
+
   }
 
   const handleGetUserOrderedItem = async () => {
-    const res = await GetUserOrderedItem(userData.id)
-    console.log("Get Order Items Response in UserDashboard.js : ", res.data)
-    setOrderedItem(res.data.orders[0])
-  }
+    if (!userData?.id) {
+      console.warn("User ID is missing");
+      return;
+    }
+    console.log("Fetching ordered items for user ID:", userData.id);
+    try {
+      await GetUserOrderedItem(userData.id)
+        .then(res => {
+          console.log("Order Data:", res.data);
+          setOrderedItem(res.data.orders[0]);
+        })
+        .catch(err => {
+          console.warn("Skipped fetch because:", err);
+        });
+    } catch (err) {
+      console.error("Error fetching order item:", err);
+    }
+  };
+
 
 
   const handleNavigationOrderPage = () => {
@@ -122,7 +162,10 @@ const UserDashboard = ({ loginId, setLoginId }) => {
     autoplay: true,
   };
 
- 
+  if (!userData) {
+    return <div>Loading user dashboard...</div>;
+  }
+
   return (
     <div className='container-fluid' >
       <UserInfo loginId={loginId} setLoginId={setLoginId} />
@@ -130,7 +173,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
         <div className='card'>
           <div className='card-body d-flex justify-content-left align-items-center'>
             <div className='ImgWrapper'>
-              <img src={`${BASE_URL}${userData.image}`} alt='User_Image' />
+              <img src={userData?.image ? `${BASE_URL}${userData.image}` : romo} alt='User_Image' />
+
             </div>
             <div className='row'>
               <div className='col-5'>
@@ -141,11 +185,11 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <p className="card-subtitle mb-2" style={{ color: '#183661' }}><strong> Address : </strong></p>
               </div>
               <div className='col-7'>
-                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData.id} </p>
-                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.first_name} {userData.last_name}</p>
-                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.email}</p>
-                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.contact} </p>
-                <p className="card-subtitle mb-2" style={{ color: '#183661' }}> {userData.address}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData?.id}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData?.first_name} {userData?.last_name}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData?.email}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData?.contact}</p>
+                <p className="card-subtitle mb-2" style={{ color: '#183661' }}>{userData?.address}</p>
               </div>
             </div>
           </div>
@@ -166,8 +210,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               </div>
               {viewedProduct ?
                 <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
-                  <h6>{viewedProduct.product_name} </h6>
-                  <img src={viewedProduct.product_image} alt='Product_Image' />
+                  <h6>{viewedProduct?.product_name} </h6>
+                  <img src={viewedProduct?.product_image ? viewedProduct?.product_image : romo} alt='Product_Image' />
                 </div>
                 :
                 <p>You've not viewed any products yet </p>
@@ -185,8 +229,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               </div>
               {searchedProduct ?
                 <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
-                  <h6>{searchedProduct.product_name} </h6>
-                  <img src={searchedProduct.product_image} alt='Product_Image' />
+                  <h6>{searchedProduct?.product_name} </h6>
+                  <img src={searchedProduct.product_image ? searchedProduct.product_image : romo} alt='Product_Image' />
                 </div>
                 :
                 <p>You didn't searched anything </p>
@@ -204,8 +248,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               </div>
               {cartProduct ?
                 <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationCartPage}>
-                  <h6>{cartProduct.product_name} </h6>
-                  <img src={cartProduct.product_image} alt='Product_Image' />
+                  <h6>{cartProduct?.product_name} </h6>
+                  <img src={cartProduct.product_image ? cartProduct.product_image : romo} alt='Product_Image' />
                 </div>
                 :
                 <p>Your Cart is empty yet </p>
@@ -223,7 +267,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               {orderedItem ?
                 <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationOrderPage}>
                   <p>Order Status: {orderedItem?.order?.status}</p>
-                  <img src={orderedItem?.product?.product_image} alt='Product_Image' />
+                  <img src={orderedItem?.product?.product_image ? orderedItem?.product?.product_image : romo} alt='Product_Image' />
                 </div>
                 :
                 <p>You've not ordered yet </p>
@@ -246,7 +290,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
             {dbproduct.map(
               (product, index) => (
                 <div className='topProducts p-2' key={index}>
-                  <img src={product.product_image} alt='Image ' />
+                  <img src={product.product_image ? product?.product_image : romo} alt='Image ' />
                   <Rating name='read-only-rating' value={parseFloat(product.product_rating) || 0} readOnly />
                   <h6>{product.product_name}</h6>
                 </div>

@@ -5,35 +5,11 @@ import NoDataFound from '../ShowMessages/NoDataFound';
 import { Button } from 'antd';
 import { GetVendorOrderedProductData } from '../../API/ProductAPI/ProductAPI';
 
-const SoldProducts = () => {
-    const [orderedProducts, setOrderedProducts] = useState();
-
-    useEffect(() => {
-        getVendorOrderedProductData();
-    }, [])
-
-    const [userData, setUserData] = useState({})
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            let parsedData = JSON.parse(savedUser);
-            setUserData(parsedData.user)
-        }
-    }, []);
-
-
-    const getVendorOrderedProductData = async () => {
-        try {
-            const resp = await GetVendorOrderedProductData(userData.id);
-            console.log('This is Ordered Product in sold Product', resp.data);
-            setOrderedProducts(resp.data.order_items);
-        } catch (error) {
-            console.error('Error fetching vendor product data:', error);
-        }
-    };
+const SoldProducts = ({orderedProducts}) => {
+       
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleString(); // Default locale format (can customize)
+        return date.toLocaleString(); 
     };
 
     return (

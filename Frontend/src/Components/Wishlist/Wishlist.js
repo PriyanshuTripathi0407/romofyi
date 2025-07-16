@@ -18,7 +18,7 @@ function Wishlist() {
     }, []);
 
     const handleGetWishlistedData = async () => {
-        const res = await getWishlistedData();
+        const res = await getWishlistedData(userData.email);
         console.log("Wishlist Data ", res.data.wishlisted_products)
         setWishlistedData(res.data.wishlisted_products)
     }

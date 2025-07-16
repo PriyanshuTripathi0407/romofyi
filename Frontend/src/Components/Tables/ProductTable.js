@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Rate, Table } from "antd";
+import { message, Rate, Spin, Table } from "antd";
 import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI';
 
-const ProductTable = () => {
-    const [Productdata, setProductData] = useState([]);
+const ProductTable = ({Productdata,loading}) => {  
+
     const col = [
         { title: 'Product Id', dataIndex: 'product_id' },
         { title: 'Name', dataIndex: 'product_name' },
@@ -34,35 +34,19 @@ const ProductTable = () => {
         },
     ]
 
-    const [userData, setUserData] = useState({})
-    useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            let parsedData = JSON.parse(savedUser);
-            setUserData(parsedData.user)
-        }
-    }, []);
-
-
-    useEffect(() => {
-        getRegisteredVendorProductData();
-    }, [])
-
-    const getRegisteredVendorProductData = async () => {
-        try {
-            const resp = await GetVendorProductData(userData.id);
-            setProductData(resp.data.product);
-            console.log('This is vendor Product', resp.data);
-        } catch (error) {
-            console.error('Error fetching vendor product data:', error);
-        }
-    };
-
-
-
     return (
-        <div>
-            <Table dataSource={Productdata} columns={col} />
+        <div>          
+            {loading ? (
+                <div >
+                    <Spin tip="Loading products..." />
+                </div>
+            ) : (
+                <Table
+                    dataSource={Productdata} columns={col}
+                    rowKey={(record) => record.product_id || record.id}
+                    locale={{ emptyText: 'No products found' }}
+                />
+            )}
         </div>
     )
 }

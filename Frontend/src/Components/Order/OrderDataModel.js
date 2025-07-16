@@ -9,22 +9,40 @@ import delivered from '../../Image/delivery-man.png'
 const OrderDataModel = () => {
     const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
 
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null)
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
-            const parsedData = JSON.parse(savedUser);
+            let parsedData = JSON.parse(savedUser);
             setUserData(parsedData.user)
-            console.log("Role in Order.js role : ", parsedData.user.role)
-            handleGetUserOrderedItem();
         }
     }, []);
 
+    useEffect(() => {
+        if (userData?.id) {
+            handleGetUserOrderedItem();
+        }
+    }, [userData])
+
+
     const handleGetUserOrderedItem = async () => {
-        console.log("This is Customer Order Items Response for Customer : ")
-        const res = await GetUserOrderedItem(userData.id)
-        console.log("Get Order Items Response for Customer : ", res.data)
-        setOrderedItem(res.data.orders)
+        if (!userData?.id) {
+            console.warn("User ID is missing");
+            return;
+        }
+        console.log("Fetching ordered items for user ID:", userData.id);
+        try {
+            await GetUserOrderedItem(userData.id)
+                .then(res => {
+                    console.log("Order Data:", res.data);
+                    setOrderedItem(res.data.orders);
+                })
+                .catch(err => {
+                    console.warn("Skipped fetch because:", err);
+                });
+        } catch (err) {
+            console.error("Error fetching order item:", err);
+        }
     }
 
     const formatDate = (dateString) => {
@@ -35,11 +53,10 @@ const OrderDataModel = () => {
     return (
         <div >
             {orderedItem && orderedItem.map((product, index) => (
-
-                <div class="card mb-3 card-box">
-                    <h5 class="card-header"> <strong> Order Id: {product.order.id}</strong> </h5>             
+                <div className="card mb-3 card-box" key={index}>
+                    <h5 className="card-header"> <strong> Order Id: {product.order.id}</strong> </h5>
                     <div className='d-flex justify-content-between'>
-                        <div class="card-body">
+                        <div className="card-body">
                             <img src={product.product.product_image} alt="Product" className="img-fluid rounded-circle"
                                 style={{
                                     width: '150px',
@@ -55,7 +72,7 @@ const OrderDataModel = () => {
                                 <strong>Product Id:</strong> {product.product.product_id}
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div className="card-body">
                             <h5 className="card-title"><strong>Order Created : </strong> {formatDate(product.order.created_at)}</h5>
                             <h5 className="card-title"><strong>Order Status: </strong> {product?.status_display}</h5>
                             <h5 className="card-title"><strong>Price: </strong> {product?.product?.product_price}</h5>

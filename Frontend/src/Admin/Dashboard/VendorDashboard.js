@@ -6,7 +6,7 @@ import ProductUpload from '../../Components/ProductUploads/ProductUpload'
 import SoldProducts from '../../Components/Product/SoldProducts'
 import CustomerProductReviews from '../../Components/Reviews/CustomerProductReviews'
 import RequestedProduct from '../../Components/Product/RequestedProduct'
-import { Form, Input, Modal, Upload, Button, Avatar } from 'antd'
+import { Form, Input, Modal, Upload, Button, Avatar, message } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { UploadOutlined } from '@ant-design/icons';
 import { useAuth } from '../../AuthContext';
@@ -14,10 +14,14 @@ import { useNavigate } from 'react-router-dom'
 import ProductTable from '../../Components/Tables/ProductTable'
 import CustomerTable from '../../Components/Tables/CustomerTable'
 import Ordercard from '../../Components/Order/Ordercard'
+import { GetVendorOrderedProductData, GetVendorProductData } from '../../API/ProductAPI/ProductAPI'
 
 
 const VendorDashboard = ({ loginId, setLoginId }) => {
-    const [showProfile, setShowProfile] = useState(false)
+    const [showProfile, setShowProfile] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [Productdata, setProductData] = useState([]);
+    const [orderedProducts, setOrderedProducts] = useState();
     const [previewImage, setPreviewImage] = useState(null);
     const BASE_URL = 'http://localhost:8000';
     const [form] = useForm();
@@ -25,18 +29,56 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
     const nav = useNavigate();
 
 
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null);
+    const [loadingUser, setLoadingUser] = useState(true);
     useEffect(() => {
-        const savedUser = localStorage.getItem('user');
-        if (savedUser) {
-            const parsedData = JSON.parse(savedUser);
-            setUserData(parsedData.user)
+        try {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                const parsedData = JSON.parse(savedUser);
+                setUserData(parsedData.user);
+            }
+        } catch (error) {
+            console.error("Error parsing user from localStorage:", error);
+            message.error("Failed to load user data.");
+        } finally {
+            setLoadingUser(false);
         }
     }, []);
 
 
-    const [activeSection, setActiveSection] = useState("dashboard");
+    useEffect(() => {
+        if (userData?.id) {
+            getRegisteredVendorProductData();
+            getVendorOrderedProductData();
+        }
+    }, [userData])
 
+    const getRegisteredVendorProductData = async () => {
+        try {
+            const resp = await GetVendorProductData(userData.id);
+            setProductData(resp.data.product);
+            console.log('This is vendor Product', resp.data);
+        } catch (error) {
+            console.error('Error fetching vendor product data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+ 
+
+    const getVendorOrderedProductData = async () => {
+        try {
+            const resp = await GetVendorOrderedProductData(userData.id);
+            console.log('This is Ordered Product', resp.data);
+            setOrderedProducts(resp.data.order_items);
+        } catch (error) {
+            console.error('Error fetching vendor product data:', error);
+        }
+    };
+
+
+    const [activeSection, setActiveSection] = useState("dashboard");
     function switchSection(section) {
         setActiveSection(section);
         if (section === "showProfile") {
@@ -50,7 +92,8 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
         setActiveSection("dashboard");
     }
 
-    function handleModifiedData() {
+    function handleModifiedData(values) {
+        console.log("Modified Data ", values)
     }
 
 
@@ -61,7 +104,10 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
         nav('/', { replace: true })
     }
 
-    // console.log("This is vendor data in vendor Dashboard", userData)
+    if (loadingUser) {
+        return <div className="loading-screen">Loading Vendor Dashboard...</div>;
+    }
+
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -70,12 +116,12 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                     <div className='sidebar'>
                         <div className='show-flex bio' onClick={() => ShowProfile()}>
                             <div className='imageWrapper' >
-                                <img src={userData.image ? `${BASE_URL}${userData.image}` : vendorImage} alt='Vendor Image' />
+                                <img src={userData?.image ? `${BASE_URL}${userData.image}` : vendorImage} alt='User_Image' />
                             </div>
                             <div className='vendor-info'>
-                                <h6>{userData.email || "SHOJ123"} </h6>
-                                <h6>{userData.first_name || "Ajay Sinha"} {userData.last_name} </h6>
-                                <h6>{userData.first_name || "Ajay "} Fruits Shop</h6>
+                                <h6>{userData?.email || "ROMO001"} </h6>
+                                <h6>{userData?.first_name || "Romo Vendor"} {userData?.last_name} </h6>
+                                <h6>{userData?.first_name || "Romofyi "} Fruits Shop</h6>
                             </div>
                         </div>
                         <div className="position-sticky">
@@ -101,14 +147,12 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                     <div className='right-container'>
                         <div className='right'>
                             {activeSection === "dashboard" && <VendorCharts />}
-                            {activeSection === "productList" && <ProductTable />}
+                            {activeSection === "productList" && <ProductTable loading={loading} Productdata={Productdata} />}
                             {activeSection === "uploadProduct" && <ProductUpload />}
-                            {activeSection === "soldProduct" && <SoldProducts />}
-                            {activeSection === "requestedProduct" && <Ordercard />}
+                            {activeSection === "soldProduct" && <SoldProducts orderedProducts={orderedProducts} />}
+                            {activeSection === "requestedProduct" && <Ordercard orderedProducts={orderedProducts} />}
                             {activeSection === "customerReviews" && <CustomerProductReviews />}
-                            {activeSection === "customerTable" && <CustomerTable />}
-
-
+                            {activeSection === "customerTable" && <CustomerTable orderedProducts={orderedProducts} />}
                         </div>
                         <div>
                             {showProfile &&
@@ -126,7 +170,7 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                                                 <div className='image-upload-container'>
                                                     <Avatar
                                                         size={100}
-                                                        src={previewImage || (userData.image ? `${BASE_URL}${userData.image}` : vendorImage)}
+                                                        src={previewImage || (userData?.image ? `${BASE_URL}${userData.image}` : vendorImage)}
                                                     />
                                                     <Form.Item
                                                         name="image"
