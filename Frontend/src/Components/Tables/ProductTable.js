@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { message, Rate, Spin, Table } from "antd";
-import { GetVendorProductData } from '../../API/ProductAPI/ProductAPI';
-
+import React from 'react'
+import { Rate, Spin, Table } from "antd";
 const ProductTable = ({Productdata,loading}) => {  
 
     const col = [

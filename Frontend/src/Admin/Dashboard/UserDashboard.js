@@ -248,7 +248,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
               </div>
               {cartProduct ?
                 <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationCartPage}>
-                  <h6>{cartProduct?.product_name} </h6>
+                  <h6>{cartProduct.product_name} </h6>
                   <img src={cartProduct.product_image ? cartProduct.product_image : romo} alt='Product_Image' />
                 </div>
                 :

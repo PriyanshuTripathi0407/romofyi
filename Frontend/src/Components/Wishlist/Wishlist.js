@@ -7,20 +7,31 @@ import './Wishlist.css'
 function Wishlist() {
 
     const [wishlistData, setWishlistedData] = useState()
-    const [userData, setUserData] = useState({})
+    const [userData, setUserData] = useState(null)
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
             const parsedData = JSON.parse(savedUser);
             setUserData(parsedData.user)
-            handleGetWishlistedData();
         }
     }, []);
+    
+    useEffect(()=>{
+        if(userData.email){
+            handleGetWishlistedData();
+        }
+    },[userData])
 
     const handleGetWishlistedData = async () => {
-        const res = await getWishlistedData(userData.email);
-        console.log("Wishlist Data ", res.data.wishlisted_products)
-        setWishlistedData(res.data.wishlisted_products)
+        if (!userData) return;
+        try{
+            const res = await getWishlistedData(userData.email);
+            console.log("Wishlist Data ", res.data.wishlisted_products)
+            setWishlistedData(res.data.wishlisted_products)
+        }catch(error){
+            console.error("Error in Wishlist Data ",error);
+            
+        }
     }
     return (
         <div className='container-fluid my-3'>
