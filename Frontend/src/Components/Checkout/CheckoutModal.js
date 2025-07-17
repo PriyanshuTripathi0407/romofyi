@@ -1,60 +1,79 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Card } from 'antd';
 
 const CheckoutModal = ({ showModal, setShowModal, userData, cartProduct, handleCheckout }) => {
+
+    const getUserData = (field) => userData?.[field] || 'Not available';
+    const getCartTotal = () => cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0);
+    const getItemName = (item) => item.product_name || 'Unknown Product';
+    const getItemPrice = (item) => item.product_price || 0;
+
     return (
-        <Modal show={showModal} onCancel={() => setShowModal(false)}>
-            <Modal.Header closeButton>
-                <Modal.Title>Romofyi Checkout Information</Modal.Title>
-            </Modal.Header>
-            <Modal.Body style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+        <Modal
+            show={showModal}
+            onCancel={() => setShowModal(false)}
+            footer={null}
+            title="Romofyi Checkout Information"
+            style={{ top: 20 }}
+            centered
+        >
+            <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+
                 {/* User Info */}
-                <div className="card" style={{ marginBottom: '20px' }}>
-                    <div className="card-body">
-                        <h5 className="card-title">User Information</h5>
-                        <p><strong>Name:</strong> {userData?.first_name} {userData?.last_name}</p>
-                        <p><strong>Email:</strong> {userData?.email}</p>
-                        <p><strong>Phone:</strong> {userData?.phone || 'Not provided'}</p>
-                        <p><strong>Address:</strong> {userData?.address || 'Not available'}</p>
-                    </div>
-                </div>
+                <Card title="User Information" style={{ marginBottom: '20px' }}>
+                    <p><strong>Name:</strong> {getUserData('first_name')} {getUserData('last_name')}</p>
+                    <p><strong>Email:</strong> {getUserData('email')}</p>
+                    <p><strong>Phone:</strong> {getUserData('phone')}</p>
+                    <p><strong>Address:</strong> {getUserData('address')}</p>
+                </Card>
 
                 {/* Cart Product Information */}
-                <div className="card" style={{ marginBottom: '20px' }}>
-                    <div className="card-body">
-                        <h5 className="card-title">Items to be Purchased</h5>
-                        <ul style={{ listStyleType: 'none', padding: 0 }}>
-                            {cartProduct.map((item, index) => (
-                                <li key={item.product_id} style={{ marginBottom: '10px' }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <span>{item.product_name} (x{item.count || 1})</span>
-                                        <span>₹{item.product_price * (item.count || 1)}</span>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
+                <Card title="Items to be Purchased" style={{ marginBottom: '20px' }}>
+                    <ul style={{ listStyleType: 'none', padding: 0 }}>
+                        {cartProduct?.length > 0 ? cartProduct.map((item, index) => (
+                            <li key={item.product_id} style={{ marginBottom: '10px' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                    <span>{getItemName(item)} (x{item.count || 1})</span>
+                                    <span>₹{getItemPrice(item) * (item.count || 1)}</span>
+                                </div>
+                            </li>
+                        )) : (
+                            <p>No items in the cart.</p>
+                        )}
+                    </ul>
+                </Card>
 
                 {/* Order Summary */}
-                <div className="card" style={{ marginBottom: '20px' }}>
-                    <div className="card-body">
-                        <h5 className="card-title">Order Summary</h5>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <span>Total Amount:</span>
-                            <span>₹{cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0)}</span>
-                        </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
-                            <span>Delivery:</span>
-                            <span>Free</span>
-                        </div>
+                <Card title="Order Summary" style={{ marginBottom: '20px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <span><strong>Total Amount:</strong></span>
+                        <span>₹{getCartTotal()}</span>
                     </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
+                        <span><strong>Delivery:</strong></span>
+                        <span>Free</span>
+                    </div>
+                </Card>
+
+                {/* Checkout Button */}
+                <div style={{ textAlign: 'right' }}>
+                    <Button
+                        type="default"
+                        onClick={() => setShowModal(false)}
+                        style={{ marginRight: '10px' }}
+                    >
+                        Close
+                    </Button>
+                    <Button
+                        type="primary"
+                        onClick={handleCheckout}
+                        disabled={cartProduct.length === 0}
+                    >
+                        Pay Now
+                    </Button>
                 </div>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
-                <Button variant="primary" onClick={handleCheckout}>Pay Now</Button>
-            </Modal.Footer>
+
+            </div>
         </Modal>
     );
 };

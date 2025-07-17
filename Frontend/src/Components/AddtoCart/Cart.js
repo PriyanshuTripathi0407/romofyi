@@ -15,7 +15,7 @@ import CheckoutModal from '../Checkout/CheckoutModal';
 
 const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
 
-    const [showModal,setShowModal]= useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(null);
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
@@ -150,9 +150,10 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
         }, 2000);
     };
 
-    const handleUserOrderCheckout= async()=>{
-        const userOrder = await handleUserOrder();
-        const checkout= await handleCheckout();
+    const handleUserOrderCheckout = async () => {
+        // const userOrder = await handleUserOrder();
+        // const checkout = await handleCheckout();
+        const rs= ()=> setShowModal(true)
     }
 
     if (showAnimation) {
@@ -238,7 +239,7 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                     </div>
                 </div>
                 <div className='productPayment'>
-                    <h1 onClick={handleUserOrder} className="payNowBtn">
+                    <h1 onClick={handleUserOrderCheckout} className="payNowBtn">
                         Continue to Order <ArrowCircleRightOutlinedIcon />
                     </h1>
                 </div>
@@ -248,10 +249,11 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                     </Link>
                 </div>
             </div>
-             {showModal  ?            
-            <CheckoutModal showModal={ showModal}  setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout}  />
-                : <></>
-            }           
+            {showModal ?
+                <CheckoutModal showModal={showModal} setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout} />
+                :
+                <></>
+            }
 
         </div>
     );
