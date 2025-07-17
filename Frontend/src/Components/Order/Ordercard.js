@@ -5,27 +5,42 @@ import { Modal } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import NoDataFound from '../ShowMessages/NoDataFound';
 
-const Ordercard = ({orderedProducts}) => {
+const Ordercard = ({ orderedProducts, setOrderedProducts }) => {
     const [showProfile, setShowProfile] = useState(false)
     const [previewImage, setPreviewImage] = useState(null);
     const [isUpdating, setIsUpdating] = useState(false);
     const [status, setStatus] = useState('pending');
     const [form] = useForm();
 
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
+        try {
+            const savedUser = localStorage.getItem('user');
+            if (savedUser) {
+                const parsedData = JSON.parse(savedUser);
+                setUserData(parsedData.user);
+            }
+        } catch (error) {
+            console.error("Error parsing user from localStorage:", error);
+        }
+    }, []);
 
     const handleStatusChange = async (item) => {
         console.log("Sending this data in model", item)
-        const data = {
-            order_item_id: item.order_item_id,
-            status: status,
+        if (userData.id) {
+            const data = {
+                order_item_id: item.order_item_id,
+                status: status,
+                vendor: userData.id
+            }
+            const res = await PostOrderedProductStatus(data);
+            console.log("Getting status updated data from backend", res.data.updated_order_item)
+            setOrderedProducts(res.data.updated_order_item)
+            setShowProfile(false);
         }
-        console.log("Sending this data in backend", data)
-        const res = await PostOrderedProductStatus(data);
-        console.log("Getting status updated data from backend", res.data)
-
     };
 
-    const [orderedProductData, setOrderedProductData] = useState();     
+    const [orderedProductData, setOrderedProductData] = useState();
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleString(); // Default locale format (can customize)
@@ -33,7 +48,6 @@ const Ordercard = ({orderedProducts}) => {
 
     const openModal = (item) => {
         setOrderedProductData(item);
-        setShowProfile(true);
         form.setFieldsValue({
             order_item_id: item.id,
             product_id: item.product.product_id,
@@ -42,6 +56,9 @@ const Ordercard = ({orderedProducts}) => {
             order_by: item.order.customer.first_name,
             status: item.status_display,
         });
+        setTimeout(() => {
+            setShowProfile(true);
+        }, 0);
     };
 
     return (

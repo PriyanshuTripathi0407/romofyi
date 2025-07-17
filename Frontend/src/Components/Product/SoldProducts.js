@@ -19,7 +19,6 @@ const SoldProducts = ({orderedProducts}) => {
                 {orderedProducts && orderedProducts.length > 0 ?
                     orderedProducts.filter(i => i.status_display === "Delivered").map((item, index) => (
                         <div className="card-body card-border m-3 p-2" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>
-
                             <div className="d-flex justify-content-between align-items-center">
                                 <div className="text-start" style={{ color: '#183661' }}>
                                     <p className="card-subtitle mb-2"><strong>Order ID:</strong> {item.order.id} </p>

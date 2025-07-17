@@ -150,7 +150,7 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
                             {activeSection === "productList" && <ProductTable loading={loading} Productdata={Productdata} />}
                             {activeSection === "uploadProduct" && <ProductUpload />}
                             {activeSection === "soldProduct" && <SoldProducts orderedProducts={orderedProducts} />}
-                            {activeSection === "requestedProduct" && <Ordercard orderedProducts={orderedProducts} />}
+                            {activeSection === "requestedProduct" && <Ordercard orderedProducts={orderedProducts} setOrderedProducts={setOrderedProducts} />}
                             {activeSection === "customerReviews" && <CustomerProductReviews />}
                             {activeSection === "customerTable" && <CustomerTable orderedProducts={orderedProducts} />}
                         </div>

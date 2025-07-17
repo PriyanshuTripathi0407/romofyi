@@ -11,20 +11,20 @@ import ReadytoPayment from '../ShowMessages/ReadytoPayment'
 import { PostUserOrderData } from '../../API/OrderedProductAPI/OrderedProductAPI'
 import { message } from 'antd';
 import { PostOrderPlacedEmail } from '../../API/SendEmail/SendEmailAPI';
+import CheckoutModal from '../Checkout/CheckoutModal';
 
-const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
+const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
 
-
-    const [userData, setUserData] = useState({})
-      useEffect(() => {
+    const [showModal,setShowModal]= useState(true);
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
-          const parsedData = JSON.parse(savedUser);
-          setUserData(parsedData.user)
+            const parsedData = JSON.parse(savedUser);
+            setUserData(parsedData.user);
         }
-      }, []);
+    }, []);
 
-    // console.log(paymentSessionID, "This is paymentSessionID of Cart 1 ")
     const handleIncrease = (id) => {
         setCartProduct((prevCart) =>
             prevCart.map((item) =>
@@ -59,102 +59,105 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
         }
     };
 
-
     const stripePromise = loadStripe('pk_test_51RXFo72eRp4TJiWZ9KuZmQKA3d65X0UASU1jgzXEIzUxCy0XORTzCdpZwdg8ue1hTdRc0xarOtVdE0XYgiWEK8S400VlzoisnI'); // Replace with your real publishable key
     const [showAnimation, setShowAnimation] = useState(false);
-     
-    const handleUserOrder = async () => {
 
-        try{
+
+
+    const handleUserOrder = async () => {
+        if (!userData.id) {
+            message.error("Missing user ID");
+            return;
+        }
+
+        try {
             const items = cartProduct.map(item => ({
                 product_id: item.id,
                 count: item.count || 1,
                 name: item.product_name,
                 image: item.product_image,
-                price: item.product_price,                
-            }))
-    
-            const orderProduct= {
+                price: item.product_price,
+            }));
+
+            const orderProduct = {
                 customer: userData.id,
                 items: items
-            }   
-        
-            
-            console.log("This is Order Product Data: ", orderProduct)
+            };
+
+            console.log("This is Order Product Data: ", orderProduct);
             const resp = await PostUserOrderData(orderProduct);
-             if (resp?.status === 201){
-                 console.log("This is Order Data Added", resp.data)
-                 const data= {
+            if (resp?.status === 201) {
+                console.log("This is Order Data Added", resp.data);
+                const data = {
                     username: userData.first_name + " " + userData.last_name,
-                    subject:"Order 🎁 placed successfully !! 🎉✨",
+                    subject: "Order 🎁 placed successfully !! 🎉✨",
                     email: userData.email,
                     date: new Date(),
                     items: items,
                     address: userData.address,
-                    total: cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0),                    
-                 }
-                 const res= await PostOrderPlacedEmail(data);
-                 console.log("Order Placed ", res)
-             } 
-            
-
-        }catch(error){
-             message.error("Order didn't placed failed");
-        }
-
-    }
-
-    
-    const handleCheckout = async () => {
-        if (cartProduct.length < 0) {
-            alert("Please add products in Cart")
-        }
-        else {
-            setShowAnimation(true); // Show animation immediately
-            setTimeout(async () => {
-                const totalAmount = cartProduct.reduce((total, item) => {
-                    return total + (item.product_price * (item.count || 1));
-                }, 0);
-
-                try {
-                    const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            items: cartProduct.map(item => ({
-                                product_name: item.product_name,
-                                product_price: item.product_price,
-                                count: item.count || 1,
-                            }))
-                        }),
-
-                    });
-
-                    const data = await res.json();
-                    // Waits for the server to respond, and parses the returned JSON data
-                    if (data.id) {
-                        const stripe = await stripePromise;
-                        await stripe.redirectToCheckout({ sessionId: data.id });                        
-                        setPaymentSessionID(data.id)
-                    } else {
-                        alert('Failed to create Stripe session');
-                    }
-                } catch (error) {
-                    console.error('Error during Stripe checkout:', error);
-                    alert('Error initiating payment');
-                }
-            }, 2000);
+                    total: cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0),
+                };
+                const res = await PostOrderPlacedEmail(data);
+                console.log("Order Placed ", res);
+            }
+        } catch (error) {
+            message.error("Order placement failed");
+            console.error("Error placing order:", error);
         }
     };
-   
+
+    const handleCheckout = async () => {
+        if (cartProduct.length === 0) {
+            message.warning("Please add products to the cart.");
+            return;
+        }
+
+        setShowAnimation(true);
+        setTimeout(async () => {
+            const totalAmount = cartProduct.reduce((total, item) => {
+                return total + (item.product_price * (item.count || 1));
+            }, 0);
+
+            try {
+                const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        items: cartProduct.map(item => ({
+                            product_name: item.product_name,
+                            product_price: item.product_price,
+                            count: item.count || 1,
+                        }))
+                    }),
+                });
+
+                const data = await res.json();
+                if (data.id) {
+                    const stripe = await stripePromise;
+                    await stripe.redirectToCheckout({ sessionId: data.id });
+                    setPaymentSessionID(data.id);
+                } else {
+                    message.error('Failed to create Stripe session.');
+                }
+            } catch (error) {
+                console.error('Error during Stripe checkout:', error);
+                message.error('Error initiating payment.');
+            } finally {
+                setShowAnimation(false);
+            }
+        }, 2000);
+    };
+
+    const handleUserOrderCheckout= async()=>{
+        const userOrder = await handleUserOrder();
+        const checkout= await handleCheckout();
+    }
 
     if (showAnimation) {
         return <ReadytoPayment />;
     }
-
-    //  console.log(paymentSessionID, "This is paymentSessionID of Cart 2 ")
 
     return (
         <div className='cartContainer'>
@@ -180,7 +183,7 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
                             </thead>
                             <tbody>
                                 {cartProduct.map((i, index) => (
-                                    <tr key={i.product_id}>
+                                    <tr key={i.product_id || index}>
                                         <td>{index + 1}</td>
                                         <td>{i.product_id}</td>
                                         <td>
@@ -218,7 +221,7 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
                 <div className='paymentDetails'>
                     <h1><PaymentIcon /> Payment Details </h1>
                     <div className='priceInfo'>
-                        {cartProduct.map((item,index) => (
+                        {cartProduct.map((item, index) => (
                             <div className='item' key={index}>
                                 <p>{item.product_name}</p>
                                 <p>&#8377;{item.product_price}</p>
@@ -245,6 +248,11 @@ const AddtoCart = ({ cartProduct, setCartProduct,setPaymentSessionID }) => {
                     </Link>
                 </div>
             </div>
+             {showModal  ?            
+            <CheckoutModal showModal={ showModal}  setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout}  />
+                : <></>
+            }           
+
         </div>
     );
 };
