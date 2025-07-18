@@ -101,7 +101,7 @@ function App() {
     { path: '/orderdatamodel', element: <OrderDataModel /> },
     {
       path: '/cart',
-      element: <Cart cartProduct={cartProduct} setPaymentSessionID= {setPaymentSessionID} setCartProduct={setCartProduct} />
+      element: <Cart cartProduct={cartProduct} setPaymentSessionID= {setPaymentSessionID} setCartProduct={setCartProduct} paymentSessionID={paymentSessionID} />
     },
     { path: '/setting', element: <Settings /> },
     { path: '/wishlist', element: <Wishlist /> },

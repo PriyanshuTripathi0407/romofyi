@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Modal, Button, Card } from 'antd';
 
-const CheckoutModal = ({showModal, setShowModal, userData, cartProduct, handleCheckout }) => {    
+const CheckoutModal = ({showModal,orderId, setShowModal, userData, cartProduct, handleCheckout }) => {    
 
     const getUserData = (field) => userData?.[field] || 'Not available';
     const getCartTotal = () => cartProduct.reduce((total, item) => total + (item.count || 1) * item.product_price, 0);
     const getItemName = (item) => item.product_name || 'Unknown Product';
     const getItemPrice = (item) => item.product_price || 0;
-    console.log("Check out Modal called ")
+
+    
     return (
         <Modal
             show={showModal}
@@ -24,8 +25,11 @@ const CheckoutModal = ({showModal, setShowModal, userData, cartProduct, handleCh
                 <Card title="User Information" style={{ marginBottom: '20px' }}>
                     <p><strong>Name:</strong> {getUserData('first_name')} {getUserData('last_name')}</p>
                     <p><strong>Email:</strong> {getUserData('email')}</p>
-                    <p><strong>Phone:</strong> {getUserData('phone')}</p>
+                    <p><strong>Phone:</strong> {getUserData('contact')}</p>
                     <p><strong>Address:</strong> {getUserData('address')}</p>
+                </Card>
+                <Card title="Order Information">
+                    <p><strong>Order Id:</strong> {orderId}</p>
                 </Card>
 
                 {/* Cart Product Information */}

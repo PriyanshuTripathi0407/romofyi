@@ -13,10 +13,11 @@ import { message } from 'antd';
 import { PostOrderPlacedEmail } from '../../API/SendEmail/SendEmailAPI';
 import CheckoutModal from '../Checkout/CheckoutModal';
 
-const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
+const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSessionID }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [orderId, setOrderId] = useState('');
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
@@ -84,8 +85,8 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                 items: items
             };
 
-            console.log("This is Order Product Data: ", orderProduct);
             const resp = await PostUserOrderData(orderProduct);
+            setOrderId(resp.data.order_id)
             if (resp?.status === 201) {
                 console.log("This is Order Data Added", resp.data);
                 const data = {
@@ -119,27 +120,37 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
             }, 0);
 
             try {
-                const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        items: cartProduct.map(item => ({
-                            product_name: item.product_name,
-                            product_price: item.product_price,
-                            count: item.count || 1,
-                        }))
-                    }),
-                });
+                if (orderId) {
+                    const res = await fetch('http://localhost:8000/api/create-checkout-session/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            items: cartProduct.map(item => ({
+                                product_name: item.product_name,
+                                product_price: item.product_price,
+                                count: item.count || 1,
+                            })),
+                            user: userData.id,
+                            order: orderId,
+                        }),
+                    });
 
-                const data = await res.json();
-                if (data.id) {
-                    const stripe = await stripePromise;
-                    await stripe.redirectToCheckout({ sessionId: data.id });
-                    setPaymentSessionID(data.id);
-                } else {
-                    message.error('Failed to create Stripe session.');
+                    const data = await res.json();
+                    if (data.id) {
+                        const stripe = await stripePromise;
+                        await stripe.redirectToCheckout({ sessionId: data.id });
+                        const paymentData = {
+                            stripe_session_id: data.id,
+                            user: userData.id,
+                            order: orderId,
+                        }
+                        localStorage.setItem('payment', JSON.stringify(paymentData))
+                        setPaymentSessionID(data.id);
+                    } else {
+                        message.error('Failed to create Stripe session.');
+                    }
                 }
             } catch (error) {
                 console.error('Error during Stripe checkout:', error);
@@ -147,19 +158,48 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
             } finally {
                 setShowAnimation(false);
             }
+
         }, 2000);
     };
 
     const handleUserOrderCheckout = async () => {
-        // const userOrder = await handleUserOrder();
+        if (!orderId) {
+            await handleUserOrder();
+        }
         // const checkout = await handleCheckout();
         setShowModal(true);
     }
 
+
+
+    useEffect(() => {
+        if (!paymentSessionID) return;
+        const handlepaymentStatus = async () => {
+            try {
+                const resp = await fetch('http://localhost:8000/api/payments/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session_id: paymentSessionID,
+                        user: userData.id,
+                        order: orderId,
+                    }),
+                });
+                const data = await resp.json();
+                console.log("This is payment status data from Stripe via backend", data);
+                console.log("Response of payment status data from Stripe via backend", resp);
+            } catch (error) {
+                console.error("Error checking payment status", error);
+            }
+        };
+        handlepaymentStatus();
+    }, [paymentSessionID, userData, orderId]);
+
     if (showAnimation) {
         return <ReadytoPayment />;
     }
-
     return (
         <div className='cartContainer'>
             <div className='col-7 addCart'>
@@ -239,7 +279,10 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                     </div>
                 </div>
                 <div className='productPayment'>
-                    <h1 onClick={handleUserOrderCheckout} className="payNowBtn">
+                    <h1
+                        onClick={userData ? handleUserOrderCheckout : () => message.error("User not loaded")}
+                        className="payNowBtn"
+                    >
                         Continue to Order <ArrowCircleRightOutlinedIcon />
                     </h1>
                 </div>
@@ -250,7 +293,7 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                 </div>
             </div>
             {showModal && (
-                <CheckoutModal showModal={showModal} setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout} />
+                <CheckoutModal orderId={orderId} showModal={showModal} setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout} />
             )}
 
         </div>
