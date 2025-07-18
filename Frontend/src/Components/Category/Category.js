@@ -35,7 +35,7 @@ const Category = () => {
     const nav = useNavigate()
 
     function send(e) {
-        nav('/product', { state: e }, { replace: true })
+        nav('/product', { state: e }, { replace: true });
     }
 
     const settings = {

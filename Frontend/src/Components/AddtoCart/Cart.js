@@ -153,7 +153,7 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
     const handleUserOrderCheckout = async () => {
         // const userOrder = await handleUserOrder();
         // const checkout = await handleCheckout();
-        const rs= ()=> setShowModal(true)
+        setShowModal(true);
     }
 
     if (showAnimation) {
@@ -249,11 +249,9 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID }) => {
                     </Link>
                 </div>
             </div>
-            {showModal ?
+            {showModal && (
                 <CheckoutModal showModal={showModal} setShowModal={setShowModal} userData={userData} cartProduct={cartProduct} handleCheckout={handleCheckout} />
-                :
-                <></>
-            }
+            )}
 
         </div>
     );

@@ -37,6 +37,7 @@ import Ordercard from './Components/Order/Ordercard.js';
 import OrderDataModel from './Components/Order/OrderDataModel.js';
 import Chatbot from './Components/Chatbot/Chatbot.js';
 import FloatingChatbot from './Components/Chatbot/FloatingChatbot.js';
+import CheckoutModal from './Components/Checkout/CheckoutModal.js';
 
 
 function App() {
@@ -96,6 +97,7 @@ function App() {
       path: '/userinfo', element: <UserInfo loginId={loginId} setLoginId={setLoginId} />
     },
     { path: '/order', element: <Order /> },
+    { path: '/checkout', element: <CheckoutModal /> },
     { path: '/orderdatamodel', element: <OrderDataModel /> },
     {
       path: '/cart',

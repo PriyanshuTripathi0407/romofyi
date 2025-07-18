@@ -29,6 +29,10 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const [orderedItem, setOrderedItem] = useState([]); // to get ordered item from backend
   const nav = useNavigate()
 
+  function send(e){
+    nav('/product', { state: e , replace:true });
+  }
+
   const icons = [
     <HourglassTopOutlinedIcon key="top" fontSize="large" />,
     <HourglassFullOutlinedIcon key="full" fontSize="large" />,
@@ -139,8 +143,8 @@ const UserDashboard = ({ loginId, setLoginId }) => {
   const handleNavigationCartPage = () => {
     nav('/cart', { replace: true })
   }
-  const handleNavigationProductPage = () => {
-    nav('/product', { replace: true })
+  const handleNavigationProductPage = (e) => {
+    nav('/product', { state: e , replace:true })
   }
 
   const BASE_URL = 'http://localhost:8000';
@@ -209,7 +213,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Last Viewed Products</h5>
               </div>
               {viewedProduct ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={()=>handleNavigationProductPage(viewedProduct.product_category.name)}>
                   <h6>{viewedProduct?.product_name} </h6>
                   <img src={viewedProduct?.product_image ? viewedProduct?.product_image : romo} alt='Product_Image' />
                 </div>
@@ -228,7 +232,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
                 <h5>Searched Products</h5>
               </div>
               {searchedProduct ?
-                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={handleNavigationProductPage}>
+                <div className='d-flex justify-content-center align-items-center viewProduct gap-4' onClick={()=>handleNavigationProductPage(searchedProduct.product_category.name)}>
                   <h6>{searchedProduct?.product_name} </h6>
                   <img src={searchedProduct.product_image ? searchedProduct.product_image : romo} alt='Product_Image' />
                 </div>

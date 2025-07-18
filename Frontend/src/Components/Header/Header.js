@@ -19,7 +19,9 @@ export default function Header({ cartProduct }) {
                     <Link to='/' > <img src={romo} alt=''></img> </Link>
                 </div>
                 <ul >
-                    <li> <MailOutlineOutlinedIcon fontSize='small' /> </li>
+                  <Link to='/checkout' >
+                  <li> <MailOutlineOutlinedIcon fontSize='small' /> </li>
+                  </Link>  
                     <li><FacebookOutlinedIcon fontSize='small' /></li>
                     <li><XIcon fontSize='small' /></li>
                     <li><LinkedInIcon fontSize='small' /></li>

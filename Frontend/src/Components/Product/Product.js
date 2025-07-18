@@ -24,7 +24,7 @@ function Product({ setproductId }) {
 
   const nav = useNavigate();
   const locate = useLocation();
-  const categoryProduct = locate.state
+  const categoryProduct = locate.state;
 
   const message = () => toast(" Added to Cart Successfully")
   const [ProductData, setProductData] = useState([])
