@@ -146,7 +146,21 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
                             user: userData.id,
                             order: orderId,
                         }
-                        localStorage.setItem('payment', JSON.stringify(paymentData))
+
+                        try {
+                            const resp = await fetch('http://localhost:8000/api/payments/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(paymentData),
+                            });
+                            const data = await resp.json();
+                            console.log("This is payment status data from Stripe via backend", data);
+                            console.log("Response of payment status data from Stripe via backend", resp);
+                        } catch (error) {
+                            console.error("Error checking payment status", error);
+                        }
                         setPaymentSessionID(data.id);
                     } else {
                         message.error('Failed to create Stripe session.');
@@ -169,33 +183,6 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
         // const checkout = await handleCheckout();
         setShowModal(true);
     }
-
-
-
-    useEffect(() => {
-        if (!paymentSessionID) return;
-        const handlepaymentStatus = async () => {
-            try {
-                const resp = await fetch('http://localhost:8000/api/payments/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        session_id: paymentSessionID,
-                        user: userData.id,
-                        order: orderId,
-                    }),
-                });
-                const data = await resp.json();
-                console.log("This is payment status data from Stripe via backend", data);
-                console.log("Response of payment status data from Stripe via backend", resp);
-            } catch (error) {
-                console.error("Error checking payment status", error);
-            }
-        };
-        handlepaymentStatus();
-    }, [paymentSessionID, userData, orderId]);
 
     if (showAnimation) {
         return <ReadytoPayment />;
