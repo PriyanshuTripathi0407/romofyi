@@ -67,7 +67,15 @@ const Ordercard = ({ orderedProducts, setOrderedProducts }) => {
             <div className="card">
                 {orderedProducts ?
                     orderedProducts.map((item, index) => (
-                        <div className="card-body card-border m-3" key={item.id} style={{ border: '1px solid #183661', borderRadius: '10px' }}>
+                        <div
+                            className="card-body card-border m-3"
+                            key={item.id}
+                            style={{
+                                backgroundColor: item.order.is_paid ? '#d4edda' : '#ffffff',  // light green or white
+                                border: '1px solid #183661',
+                                borderRadius: '10px'
+                            }}
+                        >
                             <div className="d-flex justify-content-between" style={{ color: '#183661' }}>
                                 <p><strong>Order ID:</strong> {item.order.id} </p>
                                 <p><strong>Product ID:</strong> {item.product.product_id} </p>
@@ -84,6 +92,9 @@ const Ordercard = ({ orderedProducts, setOrderedProducts }) => {
                                     </h6>
                                     <h6 className="mb-2" style={{ color: '#183661' }}>
                                         <strong>Quantity:</strong> {item.quantity}<br />
+                                    </h6>
+                                    <h6 className="mb-2" style={{ color: '#183661' }}>
+                                        <strong>Payment:</strong> {item.order.is_paid ? "Paid Done" : "Not Paid Yet"}
                                     </h6>
                                     <h6 className="mb-2" style={{ color: '#183661' }}>
                                         <strong>Status:</strong> {item.status_display}

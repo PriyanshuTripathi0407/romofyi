@@ -82,7 +82,8 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
 
             const orderProduct = {
                 customer: userData.id,
-                items: items
+                items: items,
+                // session_id: session,
             };
 
             const resp = await PostUserOrderData(orderProduct);
@@ -105,6 +106,7 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
             message.error("Order placement failed");
             console.error("Error placing order:", error);
         }
+
     };
 
     const handleCheckout = async () => {
@@ -138,30 +140,16 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
                     });
 
                     const data = await res.json();
+                    // console.log("User Order Id ",orderId)
+                    // if (!orderId) {
+                    //     await handleUserOrder(data.id);
+                    // }                   
+
+                    // Stripe Payment Code 
                     if (data.id) {
+                        console.log("This is session Id in Cart ",data.id)
                         const stripe = await stripePromise;
                         await stripe.redirectToCheckout({ sessionId: data.id });
-                        const paymentData = {
-                            stripe_session_id: data.id,
-                            user: userData.id,
-                            order: orderId,
-                        }
-
-                        // try {
-                        //     const resp = await fetch('http://localhost:8000/api/payments/', {
-                        //         method: 'POST',
-                        //         headers: {
-                        //             'Content-Type': 'application/json',
-                        //         },
-                        //         body: JSON.stringify(paymentData),
-                        //     });
-                        //     const data = await resp.json();
-                        //     console.log("This is payment status data from Stripe via backend", data);
-                        //     console.log("Response of payment status data from Stripe via backend", resp);
-                        // } catch (error) {
-                        //     console.error("Error checking payment status", error);
-                        // }
-                        setPaymentSessionID(data.id);
                     } else {
                         message.error('Failed to create Stripe session.');
                     }

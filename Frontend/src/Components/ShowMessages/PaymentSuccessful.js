@@ -24,19 +24,36 @@ const PaymentSuccessful = ({ paymentSessionID }) => {
   //     console.error("Error checking payment status", error);
   //   }
   // } 
+
   console.log("This is session ID ", sessionId)
   useEffect(() => {
     if (sessionId) {
+      // First API call: Payment API
       fetch('http://localhost:8000/api/payments/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stripe_session_id: sessionId }),
       })
-      .then(res => res.json())
-      .then(data => console.log("Payment recorded", data))
-      .catch(err => console.error("Failed to record payment", err));
+        .then(res => res.json())
+        .then(data => {
+          console.log("Payment recorded", data);
+
+          // Now that the payment is recorded, call the second API (order with session)
+          fetch('http://localhost:8000/api/order-with-session/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stripe_session_id: sessionId }),
+          })
+            .then(res => res.json())
+            .then(orderData => {
+              console.log("Order updated with session", orderData);
+            })
+            .catch(err => console.error("Failed to update order with session", err));
+        })
+        .catch(err => {
+          console.error("Failed to record payment", err);
+        });
     }
-      // console.log("Payment API is called ")
   }, [sessionId]);
 
   const navigate = useNavigate();

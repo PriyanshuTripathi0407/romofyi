@@ -78,6 +78,8 @@ const OrderDataModel = () => {
                             <h5 className="card-title"><strong>Price: </strong> {product?.product?.product_price}</h5>
                             <h5 className="card-title"><strong>Vendor Name: </strong> {product?.product?.vendor.first_name} {product?.product?.vendor.last_name}</h5>
                             <h5 className="card-title"><strong>Quantity: </strong> {product?.quantity}</h5>
+                            <h5 className="card-title"><strong>Payment Done: </strong> {product?.order.is_paid ? "Paid" : "Unpaid"}</h5>
+
 
                         </div>
                     </div>
