@@ -147,20 +147,20 @@ const AddtoCart = ({ cartProduct, setCartProduct, setPaymentSessionID, paymentSe
                             order: orderId,
                         }
 
-                        try {
-                            const resp = await fetch('http://localhost:8000/api/payments/', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(paymentData),
-                            });
-                            const data = await resp.json();
-                            console.log("This is payment status data from Stripe via backend", data);
-                            console.log("Response of payment status data from Stripe via backend", resp);
-                        } catch (error) {
-                            console.error("Error checking payment status", error);
-                        }
+                        // try {
+                        //     const resp = await fetch('http://localhost:8000/api/payments/', {
+                        //         method: 'POST',
+                        //         headers: {
+                        //             'Content-Type': 'application/json',
+                        //         },
+                        //         body: JSON.stringify(paymentData),
+                        //     });
+                        //     const data = await resp.json();
+                        //     console.log("This is payment status data from Stripe via backend", data);
+                        //     console.log("Response of payment status data from Stripe via backend", resp);
+                        // } catch (error) {
+                        //     console.error("Error checking payment status", error);
+                        // }
                         setPaymentSessionID(data.id);
                     } else {
                         message.error('Failed to create Stripe session.');

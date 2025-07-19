@@ -12,7 +12,7 @@ const CheckoutModal = ({showModal,orderId, setShowModal, userData, cartProduct, 
     return (
         <Modal
             show={showModal}
-            visible={true}
+            open={true}
             onCancel={() => setShowModal(false)}
             footer={null}
             title="Romofyi Checkout Information"

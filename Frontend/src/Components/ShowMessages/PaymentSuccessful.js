@@ -2,10 +2,44 @@ import React, { useEffect } from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useNavigate } from 'react-router-dom';
 import './LottieAnimation.css';
+import { useSearchParams } from 'react-router-dom';
 
 const PaymentSuccessful = ({ paymentSessionID }) => {
+  const [params] = useSearchParams();
+  const sessionId = params.get("session_id");
+
+  // const handlecheckout = async() => {
+  //   try {
+  //     const resp = await fetch('http://localhost:8000/api/payments/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(paymentData),
+  //     });
+  //     const data = await resp.json();
+  //     console.log("This is payment status data from Stripe via backend", data);
+  //     console.log("Response of payment status data from Stripe via backend", resp);
+  //   } catch (error) {
+  //     console.error("Error checking payment status", error);
+  //   }
+  // } 
+  console.log("This is session ID ", sessionId)
+  useEffect(() => {
+    if (sessionId) {
+      fetch('http://localhost:8000/api/payments/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ stripe_session_id: sessionId }),
+      })
+      .then(res => res.json())
+      .then(data => console.log("Payment recorded", data))
+      .catch(err => console.error("Failed to record payment", err));
+    }
+      // console.log("Payment API is called ")
+  }, [sessionId]);
+
   const navigate = useNavigate();
-  // const payment = localStorage.getItem('payment')
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate('/cart', { replace: true });
