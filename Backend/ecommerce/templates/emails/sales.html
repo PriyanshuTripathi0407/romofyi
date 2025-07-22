@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sale Alert - Don’t Miss Out!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 650px;
+      margin: 30px auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      padding: 30px;
+    }
+    .header img {
+      height: 40px;
+    }
+    .banner {
+      background-color: #e91e63;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    .banner h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .product {
+      display: flex;
+      gap: 20px;
+      margin: 30px 0;
+      align-items: center;
+    }
+    .product img {
+      width: 150px;
+      border-radius: 5px;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-info h3 {
+      margin: 0 0 10px;
+      color: #333;
+    }
+    .price {
+      margin-top: 5px;
+      font-size: 16px;
+    }
+    .price del {
+      color: #999;
+      margin-right: 8px;
+    }
+    .cta {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .cta a {
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      font-weight: bold;
+      display: inline-block;
+    }
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header with logo -->
+    <div class="header">
+      <img src="cid:logo" alt="Romofyi Logo">
+    </div>
+
+    <!-- Main Sale Banner -->
+    <div class="banner">
+      <h2>{{ sale_title }}</h2>
+      <p>{{ sale_subtitle }}</p>
+    </div>
+
+    <!-- Product Promo Section -->
+    <div class="product">
+      <img src="{{ product_image_url }}" alt="{{ product_name }}">
+      <div class="product-info">
+        <h3>{{ product_name }}</h3>
+        <p>{{ product_description }}</p>
+        <div class="price">
+          <del>₹{{ original_price }}</del>
+          <strong>₹{{ sale_price }}</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Button -->
+    <div class="cta">
+      <a href="{{ product_link }}" target="_blank">Shop Now</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>You received this email because you subscribed to product updates.</p>
+      <p>&copy; 2025 Romofyi | All rights reserved.</p>
+            <p>Romofyi : One Stop Shop, Raipur, Chhattisgarh, India</p>
+    </div>
+  </div>
+</body>
+</html>

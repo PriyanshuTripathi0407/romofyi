@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Successful</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 650px;
+      margin: 30px auto;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      padding: 30px;
+    }
+    .header img {
+      height: 40px;
+    }
+    .success-box {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 5px;
+      padding: 15px;
+      margin: 20px 0;
+    }
+    .order-summary {
+      font-size: 14px;
+      margin-top: 20px;
+    }
+    .order-summary p {
+      margin: 6px 0;
+    }
+    .footer {
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header with logo -->
+    <div class="header">
+      <img src="cid:logo" alt="Romofyi Logo">
+    </div>
+
+    <h2 style="margin-top: 20px;">Payment Successful ✅</h2>
+
+    <!-- Success Message -->
+    <div class="success-box">
+      <strong>Thank you, {{ username }}!</strong>
+      <p>Your payment for Order <strong>#{{ order_id }}</strong> was successful.</p>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+      <p><strong>Amount Paid:</strong> ₹{{ amount_paid }}</p>
+      <p><strong>Payment Mode:</strong> {{ payment_method }}</p>
+      <p><strong>Date & Time:</strong> {{ payment_date }}</p>
+      <p><strong>Order ID:</strong> {{ order_id }}</p>
+      <p><strong>Billing Email:</strong> {{ email }}</p>
+    </div>
+
+    <p style="margin-top: 20px;">You’ll receive another email once your order is packed and shipped.</p>
+
+    <p>Thanks again for shopping with Romofyi! 💙</p>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2025 Romofyi | All rights reserved.</p>
+            <p>Romofyi : One Stop Shop, Raipur, Chhattisgarh, India</p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
+            margin: 0;
+            padding: 0;
+        }
+        a{
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container {
+            background: #ffffff;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn{
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .logo {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 1px solid gold;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>
+                <span>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB3jk6ZUmgTvxoo7IFSpNmnMnt00uBHx_QwA&s"
+                        alt="Romofyi_logo" class="logo">
+                </span>
+                Welcome to Romofyi, {{ username }} 👋
+            </h2>
+        </div>
+
+        <p>We're excited to have you on board. Here's your account information:</p>
+
+        <ul>
+            <li><strong>Email:</strong> {{ email }}</li>
+            <li><strong>Username:</strong> {{ username }}</li>
+            <li><strong>Password:</strong> {{ password }}</li>
+        </ul>
+
+        <p>You can now <a href="{{ login_url }}" class="btn">Log in to your account</a> and start Shopping!</p>
+
+        <p>Need help? Just reply to this email or contact support.</p>
+
+        <div class="footer">
+            <p>&copy; 2025 Romofyi | All rights reserved.</p>
+            <p>Romofyi : One Stop Shop, Raipur, Chhattisgarh, India</p>
+        </div>
+    </div>
+</body>
+
+</html>

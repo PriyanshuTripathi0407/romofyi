@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Order Confirmation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background: #ffffff;
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .header {
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+    }
+
+    .header img {
+      height: 40px;
+    }
+
+    .details {
+      margin: 20px 0;
+    }
+
+    .details p {
+      margin: 4px 0;
+    }
+
+    .order-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .order-table th,
+    .order-table td {
+      border: 1px solid #eee;
+      padding: 10px;
+      text-align: left;
+    }
+
+    .order-table th {
+      background: #f8f8f8;
+    }
+
+    .total {
+      text-align: right;
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      margin-top: 40px;
+    }
+
+    .logo {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      border: 1px solid gold;
+      object-fit: contain;
+    }
+
+    .itemImage {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      border: 1px solid gold;
+      object-fit: contain;
+    }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header with logo -->
+    <div class="header">
+      <h2>
+        <span>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSB3jk6ZUmgTvxoo7IFSpNmnMnt00uBHx_QwA&s"
+            alt="Romofyi_logo" class="logo">
+        </span>
+        Welcome to Romofyi, {{ username }} 👋
+      </h2>
+      <!-- OrderId: #{{ order_id }} -->
+    </div>
+
+    <!-- Greeting -->
+    <p>Hi {{ username }},</p>
+    <p>Thanks for shopping with Romofyi! Your order has been successfully placed.</p>
+
+    <!-- Order Info -->
+    <div class="details">
+      <p><strong>Order Date:</strong> {{ order_date }}</p>
+      <p><strong>Payment Method:</strong> Stripe Pay </p>
+      <!-- {{ payment_method }} -->
+      <p><strong>Shipping Address:</strong> {{ address }}</p>
+    </div>
+
+    <!-- Items Table -->
+    <table class="order-table">
+      <thead>
+        <tr>
+          <th>Product Id</th>                   
+          <th>Product Name</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in items %}
+        <tr>
+          <td>{{ item.product_id }}</td>
+          <!-- <td> <img src="{{item.image}}" alt="" class="itemImage"> </td> -->
+          <td>{{ item.name }}</td>
+          <td>{{ item.count }}</td>
+          <td>₹{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="total">
+      Grand Total: ₹{{ grand_total }}
+    </div>
+
+    <p style="margin-top: 25px;">You’ll receive another update once your order status updates from Vendor side.</p>
+
+    <p>Thank you for shopping with us!<br>The Romofyi Team</p>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>&copy; 2025 Romofyi | All rights reserved.</p>
+      <p>Romofyi : One Stop Shop, Raipur, Chhattisgarh, India</p>
+    </div>
+  </div>
+</body>
+
+</html>
