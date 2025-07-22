@@ -14,6 +14,7 @@ from django.http import JsonResponse, HttpResponse
 from payments.models import *
 from romofyi.models import *
 # Replace with your actual test secret key from Stripe
+stripe.api_key = "sk_test_51RXFo72eRp4TJiWZf2gQXl2BX51WKSsYvez26vWbCzf4lWQJ4sYkuQocBdETGZJQJC5MuOWu1cS7SvX9Ipl1AdVC00yOBMpSV8"
 
 @csrf_exempt
 def create_checkout_session(request):
