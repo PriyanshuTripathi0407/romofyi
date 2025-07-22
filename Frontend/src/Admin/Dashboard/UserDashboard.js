@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-const UserDashboard = ({ loginId, setLoginId }) => {
+const UserDashboard = () => {
   const [index, setIndex] = useState(0);
   const [dbproduct, setProduct] = useState([]); // to get data from backend
   const [viewedProduct, setViewedProduct] = useState([]); // to get Viewed data from backend
@@ -172,7 +172,7 @@ const UserDashboard = ({ loginId, setLoginId }) => {
 
   return (
     <div className='container-fluid' >
-      <UserInfo loginId={loginId} setLoginId={setLoginId} />
+      <UserInfo />
       <div className='row m-2'>
         <div className='card'>
           <div className='card-body d-flex justify-content-left align-items-center'>

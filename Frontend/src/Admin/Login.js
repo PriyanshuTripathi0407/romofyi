@@ -1,126 +1,139 @@
-
-import React, { useState, useEffect } from 'react'
-import { Button, Input, Form, Select, message } from 'antd'
+import React, { useState, useEffect } from 'react';
+import { Button, Input, Form, Select } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { postData } from '../API/LoginAPI/LoginAPI';
 import { ToastContainer, toast } from 'react-toastify';
-import { useForm } from 'antd/es/form/Form';
 import { useAuth } from '../AuthContext';
 import { useSnackbar } from 'notistack';
 import HighlightOffOutlinedIcon from '@mui/icons-material/HighlightOffOutlined';
-import LoggedInMessage from '../Components/ShowMessages/LoggedInMessage'
+import LoggedInMessage from '../Components/ShowMessages/LoggedInMessage';
 
-function Login({ loginId, setLoginId }) {
-    const { login } = useAuth();
-    const navigate = useNavigate();
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    const [role, setRole] = useState('');
+function Login() {
+  const { login } = useAuth(); // ✅ use context login
+  const navigate = useNavigate();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const InvalidCredentials = () => toast.error(" Invalid Credentials !!! ")
+  const [showAnimation, setShowAnimation] = useState(false);
+  const [loginResult, setLoginResult] = useState(null);
+  const [userRole, setUserRole] = useState('');
 
-    const [showAnimation, setShowAnimation] = useState(false);
-    const [loginResult, setLoginResult] = useState(null);
+  const handleLogin = async (formData) => {
+    console.log("Login Form Data:", formData);
+    setShowAnimation(true);
 
-    const getLoggedIn = async (formData) => {
-        console.log(formData, "This is my form Data in Login Page ")
-        setShowAnimation(true);
+    try {
+      const response = await postData(formData);
+      console.log("Login Response:", response.data);
 
-        try {
-            const response = await postData(formData);
-            console.log("This is response of login from db ",response.data )
-            if (response.status === 200 && response.data.success) {
-                login(response.data);
-                setLoginResult('success');
-                if (formData.role === 'Admin') {
-                    setRole('Admin')
-                }
-                else if (formData.role === 'Customer') {
-                    setRole('Customer')
-                }
-                else {
-                    setRole('Vendor')
-                }
-            } else {
-                setLoginResult('fail');
-            }
-        } catch (error) {
-            setLoginResult('fail');
-            console.error(error);
-        }
-    };
-
-
-    useEffect(() => {
-        if (showAnimation) {
-            const timer = setTimeout(() => {
-                if (loginResult === 'success') {
-                    enqueueSnackbar("Logged In Successfully", { variant: 'success' });
-                    setLoginId(true);
-                    if (role === 'Customer') {
-                        navigate('/user-dashboard', { replace: true });
-                    }
-                    else if (role === 'Vendor') {
-                        navigate('/vendor-dashboard', { replace: true });
-                    }
-
-                } else if (loginResult === 'fail') {
-                    enqueueSnackbar("Invalid Credentials !!", {
-                        variant: 'error',
-                        persist: false,
-                        action: (key) => (
-                            <p onClick={() => closeSnackbar(key)} style={{ paddingTop: '12px', cursor: 'pointer' }}>
-                                <HighlightOffOutlinedIcon />
-                            </p>
-                        )
-                    });
-                    setShowAnimation(false); // Hide animation and go back to form
-                    setLoginResult(null); // Reset
-                }
-            }, 2500); // 2.5 sec animation
-
-            return () => clearTimeout(timer);
-        }
-    }, [showAnimation, loginResult]);
-
-    if (showAnimation) {
-        return <LoggedInMessage />;
+      if (response.status === 200 && response.data.success) {
+        // ✅ Store tokens & user info using context
+        login(response.data);
+        setUserRole(response.data.user?.role || '');
+        setLoginResult('success');
+      } else {
+        setLoginResult('fail');
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      setLoginResult('fail');
     }
+  };
 
-    return (
-        <div className='loginContainer' >
-            <ToastContainer />
-            <Form className='formContainer' layout="horizontal" labelCol={{ span: 10 }}        // fixed label width
-                wrapperCol={{ span: 8 }} onFinish={getLoggedIn}>
-                <h1>LOGIN FORM</h1><br />
-                <div className='item'>
-                    <Form.Item label='Email' name='email' rules={[{ required: true, message: 'Please input your email!' }]}>
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div className='item'>
-                    <Form.Item label='Password' name='pass' rules={[{ required: true, message: 'Please input your password!' }]}>
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div className='item'>
-                    <Form.Item label='Role: ' name='role' rules={[{ required: true, message: 'Please select role !!' }]}>
-                        <Select
-                            placeholder="Select Role.. "
-                            options={[{ value: 'Customer', label: 'Customer', },
-                            { value: 'Admin', label: 'Admin', },
-                            { value: 'Vendor', label: 'Vendor', },]} />
-                    </Form.Item>
-                </div>
+  useEffect(() => {
+    if (showAnimation) {
+      const timer = setTimeout(() => {
+        if (loginResult === 'success') {
+          enqueueSnackbar("Logged In Successfully", { variant: 'success' });
 
-                <Button htmlType='submit' className='submitbtn'>Login</Button>
-                <div className='info'>
-                    <p>New here?<Link to='/register'><span className='reglink'>Register</span></Link></p>
-                </div>
-            </Form>
+          // ✅ Redirect based on role
+          if (userRole.toLowerCase() === 'customer') {
+            navigate('/user-dashboard', { replace: true });
+          } else if (userRole.toLowerCase() === 'vendor') {
+            navigate('/vendor-dashboard', { replace: true });
+          } else {
+            navigate('/', { replace: true }); // fallback
+          }
+        } else if (loginResult === 'fail') {
+          enqueueSnackbar("Invalid Credentials !!", {
+            variant: 'error',
+            persist: false,
+            action: (key) => (
+              <p
+                onClick={() => closeSnackbar(key)}
+                style={{ paddingTop: '12px', cursor: 'pointer' }}
+              >
+                <HighlightOffOutlinedIcon />
+              </p>
+            ),
+          });
+          setShowAnimation(false);
+          setLoginResult(null);
+        }
+      }, 2500);
 
+      return () => clearTimeout(timer);
+    }
+  }, [showAnimation, loginResult, userRole]);
+
+  if (showAnimation) {
+    return <LoggedInMessage />;
+  }
+
+  return (
+    <div className='loginContainer'>
+      <ToastContainer />
+      <Form
+        className='formContainer'
+        layout='horizontal'
+        labelCol={{ span: 10 }}
+        wrapperCol={{ span: 8 }}
+        onFinish={handleLogin}
+      >
+        <h1>LOGIN FORM</h1><br />
+        <div className='item'>
+          <Form.Item
+            label='Email'
+            name='email'
+            rules={[{ required: true, message: 'Please input your email!' }]}
+          >
+            <Input />
+          </Form.Item>
         </div>
-    )
+        <div className='item'>
+          <Form.Item
+            label='Password'
+            name='pass'
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password />
+          </Form.Item>
+        </div>
+        <div className='item'>
+          <Form.Item
+            label='Role:'
+            name='role'
+            rules={[{ required: true, message: 'Please select a role!' }]}
+          >
+            <Select
+              placeholder='Select Role...'
+              options={[
+                { value: 'Customer', label: 'Customer' },
+                { value: 'Vendor', label: 'Vendor' },
+                { value: 'Admin', label: 'Admin' },
+              ]}
+            />
+          </Form.Item>
+        </div>
+
+        <Button htmlType='submit' className='submitbtn'>Login</Button>
+
+        <div className='info'>
+          <p>New here? <Link to='/register'><span className='reglink'>Register</span></Link></p>
+        </div>
+      </Form>
+    </div>
+  );
 }
 
-export default Login
+export default Login;

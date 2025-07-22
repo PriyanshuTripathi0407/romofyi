@@ -35,6 +35,7 @@ const Ordercard = ({ orderedProducts, setOrderedProducts }) => {
             }
             const res = await PostOrderedProductStatus(data);
             console.log("Getting status updated data from backend", res.data.updated_order_item)
+            //Add Order updation Email here
             setOrderedProducts(res.data.updated_order_item)
             setShowProfile(false);
         }

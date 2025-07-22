@@ -19,17 +19,17 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (userData) => {
-        console.log("This is User Data to store in lS ",userData)
+        console.log("This is User Data to store in lS ", userData)
         const loginTime = new Date().getTime();  // Timestamp of login
         const sessionData = { ...userData, loginTime };
-        console.log("This is session Data ",sessionData)
+        console.log("This is session Data ", sessionData)
         setUser(sessionData);
         localStorage.setItem('user', JSON.stringify(sessionData));
     };
 
     const logout = () => {
         localStorage.removeItem('user');
-        
+        setUser({}); 
     };
 
     return (

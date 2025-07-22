@@ -9,7 +9,7 @@ import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import InstagramIcon from '@mui/icons-material/Instagram';
 
-export default function Header({ cartProduct }) {
+export default function Header() {
 
     return (
        

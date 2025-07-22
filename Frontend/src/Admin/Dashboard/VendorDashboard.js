@@ -98,7 +98,6 @@ const VendorDashboard = ({ loginId, setLoginId }) => {
 
 
     function handleLogOut() {
-        setLoginId(false);
         logout();
         localStorage.removeItem('user')
         nav('/', { replace: true })
